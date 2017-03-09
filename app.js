@@ -21,5 +21,5 @@ app.get("/",function(req,res){
     console.log("Hello world")
 })
 
-app.listen(3000)
+app.listen(3000);
 

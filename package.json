@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/SamKirkiles/Teller-API#readme",
   "dependencies": {
+    "apiai": "^4.0.1",
     "body-parser": "^1.17.0",
     "express": "^4.15.0",
     "plaid": "^1.2.0",
