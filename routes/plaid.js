@@ -1,18 +1,14 @@
 var express = require("express")
 var router = express.Router();
 var plaid = require('plaid');
+require('dotenv').config()
 
-var client_id = '58b19b60bdc6a44288ea2050'
-var public_key = 'e839335cc584216e29feff916f1d77'
-var secret = 'b9f6580301de6cf4bac33353f87f4e'
 
-var plaidClient = new plaid.Client(client_id,secret,plaid.environments.tartan);
+var plaidClient = new plaid.Client(process.env.PLAID_CLIENT_ID,process.env.PLAID_SECRET,plaid.environments.tartan);
 
 router.post("/authenticate", function(req,res){
     var publicToken = req.body.public_token
-    
-    console.log(publicToken);
-    
+        
     plaidClient.exchangeToken(publicToken, function(err,exchangeTokenRes){
         if (err != null){
             //handle error
@@ -21,7 +17,7 @@ router.post("/authenticate", function(req,res){
 
             var access_token = exchangeTokenRes.access_token;
 
-            //save this acces token to database 
+            //save this acces token to database
 
             plaidClient.getAuthUser(access_token, function(err, authRes){
                 if (err != null){
@@ -34,5 +30,12 @@ router.post("/authenticate", function(req,res){
         }
     });
 });
+
+function getBalance(access_token, callback){
+    plaidClient.getBalance(access_token, function(err, mfaResponse, response){
+        console.log(response)
+        console.log(mfaResponse)
+    });
+}
 
 module.exports = router

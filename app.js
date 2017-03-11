@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var messenger = require(__dirname + "/routes/messenger.js");
 var plaid = require(__dirname + "/routes/plaid.js");
+require('dotenv').config()
 
 var app = express()
 
@@ -21,5 +22,5 @@ app.get("/",function(req,res){
     console.log("Hello world")
 })
 
-app.listen(3000);
+app.listen(process.env.PORT);
 
