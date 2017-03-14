@@ -1,14 +1,44 @@
 <html>
-    <body> 
-        <form id="some-id" method="POST" action="/authenticate"></form>
+    <head>
+        <script src="/static/js/jquery.js"></script>
+    </head>
 
-        <script
-            src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"
-            data-client-name="Teller"
-            data-form-id="some-id"
-            data-key="test_key"
-            data-product="auth"
-            data-env="tartan">
+    <body> 
+        
+        <button id="link-button">Link Account</button>
+
+
+
+
+        <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+
+        <script type = text/javascript>
+            var handler = Plaid.create({
+                clientName: 'Teller',
+                env: 'sandbox',
+                apiVersion: 'v2',
+                key: 'e839335cc584216e29feff916f1d77',
+                product: 'auth',
+                onSuccess: function(public_token, metadata) {
+                    $.post('/authenticate', {
+                        public_token: public_token,
+                    });
+                
+                    console.log(public_token);
+                    console.log("metadata: " + metadata);
+
+                },
+                onExit: function(err,metadata){
+                    if (err != null){
+                        //there was an error
+                    }
+                }
+            });
+        
+        $('#link-button').on('click',function(){
+            handler.open();
+            console.log("handler pressed");
+        });
         </script>
     </body>
 </html>
