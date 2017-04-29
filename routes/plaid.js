@@ -5,7 +5,7 @@ require('dotenv').config()
 var mysql = require('mysql');
 
 
-var plaidClient = new plaid.Client(
+const plaidClient = new plaid.Client(
     process.env.PLAID_CLIENT_ID,
     process.env.PLAID_SECRET,
     process.env.PLAID_PUBLIC_KEY,
@@ -13,7 +13,6 @@ var plaidClient = new plaid.Client(
 
 router.post("/authenticate", function(request,response){
     var publicToken = request.body.public_token
-    console.log(publicToken);
 
     plaidClient.exchangePublicToken(publicToken, function(err, res){
         if (err != null){
@@ -21,15 +20,22 @@ router.post("/authenticate", function(request,response){
             return
         }
         access_token = res.access_token;
-        console.log('Access Token: ' + access_token);
     });
 });
 
+
+
 function getBalance(access_token, callback){
-    plaidClient.getBalance(access_token, function(err, mfaResponse, response){
-        console.log(response)
-        console.log(mfaResponse)
+    plaidClient.getBalance(access_token, function(err, response){
+        callback(response.accounts);
     });
+
+    plaidClient.getInstitutions(10,10,function(err,response){
+        console.log(response)
+    })
 }
 
-module.exports = router
+module.exports = {
+    balance: getBalance,
+    router: router
+}

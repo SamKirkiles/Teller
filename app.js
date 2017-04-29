@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(messenger);
-app.use(plaid);
+app.use(plaid.router);
 
 app.set('views', __dirname + '/views');
 app.use("/static", express.static(path.join(__dirname, 'public')))
