@@ -4,6 +4,8 @@ var plaid = require('plaid');
 require('dotenv').config()
 var mysql = require('mysql');
 
+var fs = require("fs");
+
 
 const plaidClient = new plaid.Client(
     process.env.PLAID_CLIENT_ID,
@@ -30,12 +32,47 @@ function getBalance(access_token, callback){
         callback(response.accounts);
     });
 
-    plaidClient.getInstitutions(10,10,function(err,response){
-        console.log(response)
-    })
+}
+
+function generateInsitutionsCSV(){
+
+        //create writable stream
+        //add to stream every get insititutions call and keep looping to filesystem
+        //pipe to file system
+
+        fs.unlinkSync('file.csv')
+
+        var stream = fs.createWriteStream('file.csv',{
+             autoClose: true,
+             'mode': 0666,
+             flags:'a'
+        })
+
+        // while (var i > 10) {
+            counter = 0;
+
+        //retrieve all institutions starting at counter = 0
+        plaidClient.getInstitutions(500,counter,function(err,response){
+
+            console.log(err)
+            console.log(response.institutions)
+            for (var bank in response.institutions){
+                 
+                var responseString = response.institutions[bank].name.replace('(',"")
+                responseString = responseString.replace(')',"")
+                
+                stream.write("\""+responseString+"\",\n")
+            }
+            stream.end()
+        })
+        counter += 500;
+
+        // }
+
 }
 
 module.exports = {
     balance: getBalance,
-    router: router
+    router: router,
+    generateInsitutionsCSV: generateInsitutionsCSV
 }

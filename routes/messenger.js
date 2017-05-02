@@ -40,33 +40,9 @@ function receivedMessage(event){
         if (response){
             //CHECK BALANCE
             if (response.result.action === 'check-balance'){
-                
-                if (response.result.actionIncomplete){
-                    //action is not complete meaning we need to wait for another callback when we have all the infromation we can just print out what api.ai wants
-                    sendMessage(event.sender.id, response.result.fulfillment.speech)
-                }else{
-                    //we have the complete response meaning we have all the variables 
-                    plaid.balance('access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0',function(accounts){
-
-                    //go through all of the accounts returned from plaid API
-
-                    accounts.forEach(function(account) {
-
-                        //if the account type matches the type of account we want to see the balance of, we may continue 
-                        if (account.type === response.result.parameters.account){
-                            //check if the balance can be retrieved
-                            if (account.balances.available == null){
-                                sendMessage(event.sender.id,"The balance of this account is not available")
-                            }else{
-                                var balance = account.balances.available;
-                                var result = response.result.fulfillment.speech.replace('$balance',`$${balance}`)
-                                sendMessage(event.sender.id, result) 
-                            }
-                        } 
-                    }, this);
+                checkBalance(response, function(result){
+                    sendMessage(event.sender.id, result)
                 })
-
-                }
             }
 
             //VIEW ACCOUNTS
@@ -81,10 +57,55 @@ function receivedMessage(event){
                 });
 
             }
+        }else{
+            console.log("ERROR: Response was nil on receivedMessage")
         }
     });
 
 
+}
+
+function checkBalance(response, completion){
+
+    if (response.result.actionIncomplete){
+        //action is not complete meaning we need to wait for another callback when we have all the infromation we can just print out what api.ai wants
+        completion(response.result.fulfillment.speech)
+    }else{
+        //we have the complete response meaning we have all the required variables 
+        plaid.balance('access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0',function(accounts){
+
+        //go through all of the accounts returned from plaid API
+
+        //create empty array of accounts that we want to filter on
+        var returnedAccounts = [];
+
+        accounts.forEach(function(account) {
+            var quereiedAccount = response.result.parameters.account
+            var quereiedBank = response.result.parameters.bank
+
+            var accountType = account.type;
+            var bankName = account.name;
+
+        if (accountType === quereiedAccount || bankName === quereiedBank){
+                returnedAccounts.push(account)
+            }else if (quereiedAccount === null && quereiedBank === null){
+                returnedAccounts.push(account)
+            }
+        }
+        
+        , this);
+
+        var responseString = "Heres your balance rundown: \n \n"
+
+        returnedAccounts.forEach(function(account) {
+            var entry = account.name+": $"+ account.balances.current + "\n"
+            responseString+=entry
+        }, this);
+        completion(responseString)
+
+    })
+
+    }
 }
 
 function sendMessage(recipient, message, callback){

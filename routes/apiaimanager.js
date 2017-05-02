@@ -9,7 +9,6 @@ var sendTextRequest = function(text, callback){
 
     request.on('response', function(response) {
         callback(response, null)
-        console.log("this is another callback right here")
     });
 
     request.on('error', function(error) {
