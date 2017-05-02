@@ -48,7 +48,6 @@ function generateInsitutionsCSV(){
              flags:'a'
         })
 
-        // while (var i > 10) {
             counter = 0;
 
         //retrieve all institutions starting at counter = 0
@@ -67,7 +66,6 @@ function generateInsitutionsCSV(){
         })
         counter += 500;
 
-        // }
 
 }
 

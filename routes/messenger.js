@@ -90,7 +90,7 @@ function checkBalance(response, completion){
                 returnedAccounts.push(account)
             }else if (quereiedAccount === null && quereiedBank === null){
                 returnedAccounts.push(account)
-            }
+            } 
         }
         
         , this);
