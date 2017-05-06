@@ -1,9 +1,15 @@
+
+require('dotenv').config()
+
 var express = require('express')
 var router = express.Router();
 var bodyParser = require('body-parser');
 var apiaimanager = require(__dirname + "/apiaimanager.js")
 var request = require("request")
-require('dotenv').config()
+
+var path = require("path")
+
+var assert = require("assert")
 
 var plaid = require(__dirname + "/plaid.js")
 
@@ -65,6 +71,7 @@ function receivedMessage(event){
 
 }
 
+
 function checkBalance(response, completion){
 
     if (response.result.actionIncomplete){
@@ -86,9 +93,10 @@ function checkBalance(response, completion){
             var accountType = account.type;
             var bankName = account.name;
 
+
         if (accountType === quereiedAccount || bankName === quereiedBank){
                 returnedAccounts.push(account)
-            }else if (quereiedAccount === null && quereiedBank === null){
+            }else if (quereiedAccount === "" && typeof quereiedBank === 'undefined'){
                 returnedAccounts.push(account)
             } 
         }
@@ -132,4 +140,13 @@ function sendMessage(recipient, message, callback){
     });
 }
 
-module.exports = router;
+
+
+module.exports = {
+    router:router,
+    checkBalance:checkBalance,
+    testFunction: function(callback){
+        callback("Hello")
+    }
+};
+

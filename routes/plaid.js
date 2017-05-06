@@ -1,7 +1,10 @@
+var envPath = __dirname + "/../.env"
+require('dotenv').config({path:envPath})
+
 var express = require("express")
 var router = express.Router();
+
 var plaid = require('plaid');
-require('dotenv').config()
 var mysql = require('mysql');
 
 var fs = require("fs");

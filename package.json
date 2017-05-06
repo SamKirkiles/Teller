@@ -4,7 +4,7 @@
   "description": "Backend for Teller Chatbot",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./tests/test.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +16,9 @@
     "url": "https://github.com/SamKirkiles/Teller-API/issues"
   },
   "homepage": "https://github.com/SamKirkiles/Teller-API#readme",
+  "devDependencies": {
+    "mocha": "*"
+  },
   "dependencies": {
     "@types/jquery": "^2.0.41",
     "apiai": "^4.0.1",

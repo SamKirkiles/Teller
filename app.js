@@ -1,9 +1,9 @@
 var express = require("express");
 var path = require("path")
+require('dotenv').config()
 var bodyParser = require('body-parser');
 var messenger = require(__dirname + "/routes/messenger.js");
 var plaid = require(__dirname + "/routes/plaid.js");
-require('dotenv').config()
 
 var app = express()
 
@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(messenger);
+app.use(messenger.router);
 app.use(plaid.router);
 
 app.set('views', __dirname + '/views');
