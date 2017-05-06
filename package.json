@@ -4,7 +4,7 @@
   "description": "Backend for Teller Chatbot",
   "main": "app.js",
   "scripts": {
-    "test": "./tests/test.js"
+    "test": "mocha -R spec ./tests/test.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/SamKirkiles/Teller-API#readme",
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "^3.3.0"
   },
   "dependencies": {
     "@types/jquery": "^2.0.41",
