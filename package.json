@@ -4,7 +4,7 @@
   "description": "Backend for Teller Chatbot",
   "main": "app.js",
   "scripts": {
-    "test": "mocha -R spec ./tests/test.js"
+    "test": "mocha -R spec ./tests/balance.spec.js"
   },
   "repository": {
     "type": "git",

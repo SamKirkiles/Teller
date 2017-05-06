@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var apiaimanager = require(__dirname + "/apiaimanager.js")
 var request = require("request")
 
+var balance = require(__dirname + "/../balance.js")
+
 var path = require("path")
 
 var assert = require("assert")
@@ -46,14 +48,20 @@ function receivedMessage(event){
         if (response){
             //CHECK BALANCE
             if (response.result.action === 'check-balance'){
-                checkBalance(response, function(result){
-                    sendMessage(event.sender.id, result)
-                })
+                balance.checkBalance(
+                    response.result.parameters.account, 
+                    response.result.parameters.bank, 
+                    response.result.fulfillment.speech, 
+                    response.result.actionIncomplete, 
+                    'access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0', 
+                    function(result){
+                        sendMessage(event.sender.id, result)
+                    }
+                )
             }
 
             //VIEW ACCOUNTS
             if (response.result.action === 'view-accounts'){
-
                 plaid.balance('access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0',function(accounts){
                     sendMessage(event.sender.id, response.result.fulfillment.speech, function(){
                         accounts.forEach(function(account) {
@@ -61,7 +69,6 @@ function receivedMessage(event){
                         }, this);
                     })
                 });
-
             }
         }else{
             console.log("ERROR: Response was nil on receivedMessage")
@@ -69,51 +76,6 @@ function receivedMessage(event){
     });
 
 
-}
-
-
-function checkBalance(response, completion){
-
-    if (response.result.actionIncomplete){
-        //action is not complete meaning we need to wait for another callback when we have all the infromation we can just print out what api.ai wants
-        completion(response.result.fulfillment.speech)
-    }else{
-        //we have the complete response meaning we have all the required variables 
-        plaid.balance('access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0',function(accounts){
-
-        //go through all of the accounts returned from plaid API
-
-        //create empty array of accounts that we want to filter on
-        var returnedAccounts = [];
-
-        accounts.forEach(function(account) {
-            var quereiedAccount = response.result.parameters.account
-            var quereiedBank = response.result.parameters.bank
-
-            var accountType = account.type;
-            var bankName = account.name;
-
-
-        if (accountType === quereiedAccount || bankName === quereiedBank){
-                returnedAccounts.push(account)
-            }else if (quereiedAccount === "" && typeof quereiedBank === 'undefined'){
-                returnedAccounts.push(account)
-            } 
-        }
-        
-        , this);
-
-        var responseString = "Heres your balance rundown: \n \n"
-
-        returnedAccounts.forEach(function(account) {
-            var entry = account.name+": $"+ account.balances.current + "\n"
-            responseString+=entry
-        }, this);
-        completion(responseString)
-
-    })
-
-    }
 }
 
 function sendMessage(recipient, message, callback){
@@ -144,9 +106,5 @@ function sendMessage(recipient, message, callback){
 
 module.exports = {
     router:router,
-    checkBalance:checkBalance,
-    testFunction: function(callback){
-        callback("Hello")
-    }
 };
 
