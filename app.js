@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(messenger.router);
 app.use(plaid.router);
 
+
 app.set('views', __dirname + '/views');
 app.use("/static", express.static(path.join(__dirname, 'public')))
 
@@ -22,6 +23,7 @@ app.get("/",function(req,res){
 
   console.log("Hello world")
 })
+
 
 app.get("/signup",function(req,res){
   res.sendFile(__dirname + "/views/signup.html")

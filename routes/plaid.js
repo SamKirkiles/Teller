@@ -18,7 +18,7 @@ const plaidClient = new plaid.Client(
 
 router.post("/authenticate", function(request,response){
     var publicToken = request.body.public_token
-
+    
     plaidClient.exchangePublicToken(publicToken, function(err, res){
         if (err != null){
             console.log(err.error_message + err.error_code);

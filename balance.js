@@ -1,13 +1,21 @@
+
 var plaid = require(__dirname + "/routes/plaid.js")
 
-function checkBalance(accountType, bank, fulfillment, actionIncomlpete, userSandboxID, completion){
+/** This function returns a string response in a callback to a given query for a set of banks  
+ * @param {string} accountType - Account Type: The type of account to check the balance of
+ * @param {string} bank - Bank: the type of bank to use
+ * @param {string} fulfillment - Fulfillment: the fulfillment string to use 
+ * @param {string} plaidUserID - User ID: the plaid user ID to query the data from the user with
+ * @param {function} completion - Completion Block: the completion function called with one arg of string when the query is finished 
+*/
+function checkBalance(accountType, bank, fulfillment, actionIncomlpete, plaidUserID, completion){
 
     if (actionIncomlpete === true){
         completion(fulfillment)
     }else{
         //we need to continue with what we were doing
-
-        plaid.balance('access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0',function(accounts){
+        
+        plaid.balance(plaidUserID,function(accounts){
             var returnedAccounts = []
 
 
@@ -15,7 +23,8 @@ function checkBalance(accountType, bank, fulfillment, actionIncomlpete, userSand
                 //if the account type is the same as the kind the user wants
                 if (account.type === accountType || bank === account.name){
                     returnedAccounts.push(account)
-                }else if (accountType === "" && bank === "undefined"){
+                }else if (accountType === "" && typeof bank === "undefined"){
+                    console.log("we good nigga")
                     returnedAccounts.push(account)
                 }
 
@@ -34,7 +43,6 @@ function checkBalance(accountType, bank, fulfillment, actionIncomlpete, userSand
 
     }
 }
-
 module.exports = {
     checkBalance:checkBalance
 }

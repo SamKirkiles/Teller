@@ -1,21 +1,21 @@
 
 require('dotenv').config()
 
-var express = require('express')
-var router = express.Router();
-var bodyParser = require('body-parser');
-var apiaimanager = require(__dirname + "/apiaimanager.js")
-var request = require("request")
+let express = require('express')
+let router = express.Router();
+let bodyParser = require('body-parser');
+let apiaimanager = require(__dirname + "/apiaimanager.js")
+let request = require("request");
 
-var balance = require(__dirname + "/../balance.js")
+let balance = require(__dirname + "/../balance.js")
 
-var path = require("path")
+let path = require("path")
 
-var assert = require("assert")
+    let assert = require("assert")
 
-var plaid = require(__dirname + "/plaid.js")
+let plaid = require(__dirname + "/plaid.js")
 
-var jsonParser = bodyParser.json();
+let jsonParser = bodyParser.json();
 
 router.get('/webhook', function (req, res) {
     if (req.query['hub.verify_token'] === process.env.FB_VERIFY_TOKEN) {
