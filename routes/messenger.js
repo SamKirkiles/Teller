@@ -13,7 +13,7 @@ let path = require("path")
 
     let assert = require("assert")
 
-let plaid = require(__dirname + "/plaid.js")
+let plaid = require(__dirname + "/accountManager.js")
 
 let jsonParser = bodyParser.json();
 
@@ -21,7 +21,7 @@ router.get('/webhook', function (req, res) {
     if (req.query['hub.verify_token'] === process.env.FB_VERIFY_TOKEN) {
         res.send(req.query['hub.challenge']);
     } else {
-        res.send('Error, wrong validation token');    
+        res.send('Error, wrong validation token')
     }
 });
 
@@ -46,6 +46,7 @@ function receivedMessage(event){
     apiaimanager.textRequest(event.message.text,function(response, error){
 
         if (response){
+            console.log(response.result.action)
             //CHECK BALANCE
             if (response.result.action === 'check-balance'){
                 balance.checkBalance(
@@ -58,10 +59,8 @@ function receivedMessage(event){
                         sendMessage(event.sender.id, result)
                     }
                 )
-            }
+            }else if (response.result.action === 'view-accounts'){ //VIEW ACCOUNTS
 
-            //VIEW ACCOUNTS
-            if (response.result.action === 'view-accounts'){
                 plaid.balance('access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0',function(accounts){
                     sendMessage(event.sender.id, response.result.fulfillment.speech, function(){
                         accounts.forEach(function(account) {
@@ -69,8 +68,17 @@ function receivedMessage(event){
                         }, this);
                     })
                 });
+            }else if (response.result.action === 'view-transactions'){
+                response.result.parameters
+                balance.viewTransactions(response.result.parameters.date,response.result.parameters["date-period"],response.result.actionIncomplete, 'access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0', function(result){
+                    sendMessage(event.sender.id, result)
+                })
+            }else if (response.result.action.substr(0,9) === "smalltalk"){
+                sendMessage(event.sender.id, response.result.fulfillment.speech, function(){
+
+                })
             }
-        }else{
+        } else{
             console.log("ERROR: Response was nil on receivedMessage")
         }
     });
@@ -101,8 +109,6 @@ function sendMessage(recipient, message, callback){
         }
     });
 }
-
-
 
 module.exports = {
     router:router,

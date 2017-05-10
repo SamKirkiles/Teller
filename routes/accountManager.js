@@ -32,9 +32,26 @@ router.post("/authenticate", function(request,response){
 
 function getBalance(access_token, callback){
     plaidClient.getBalance(access_token, function(err, response){
-        callback(response.accounts);
+        if (err !== null){
+            console.error(err.error_message)
+        }else{
+            callback(response.accounts);
+        }
     });
 
+}
+
+/** Wrapper for plaid get Transactions
+ * @param {string} start_date - Start Date: The date to start fetching at
+ * @param {string} end_date - End Date: THe date to end fetching the transactios
+ * @param {string} access-token - Access Token: The access token to use to fetch the accounts
+ * @param {string} callback - Callback Function: The function to use to obtain a response
+ * */
+
+function getTransactions(start_date, end_date, access_token, callback){
+    plaidClient.getTransactions(access_token, start_date, end_date, {}, function(err,response){
+        callback(response)
+    })
 }
 
 function generateInsitutionsCSV(){
@@ -47,33 +64,34 @@ function generateInsitutionsCSV(){
 
         var stream = fs.createWriteStream('file.csv',{
              autoClose: true,
-             'mode': 0666,
+             'mode': "0666",
              flags:'a'
         })
 
-            counter = 0;
+        var counter = 0;
 
         //retrieve all institutions starting at counter = 0
         plaidClient.getInstitutions(500,counter,function(err,response){
 
             console.log(err)
             console.log(response.institutions)
-            for (var bank in response.institutions){
+            for (let bank in response.institutions){
                  
-                var responseString = response.institutions[bank].name.replace('(',"")
+                let responseString = response.institutions[bank].name.replace('(',"")
                 responseString = responseString.replace(')',"")
                 
                 stream.write("\""+responseString+"\",\n")
             }
             stream.end()
         })
-        counter += 500;
+        //counter += 500;
 
 
 }
 
 module.exports = {
     balance: getBalance,
+    transactions: getTransactions,
     router: router,
     generateInsitutionsCSV: generateInsitutionsCSV
 }

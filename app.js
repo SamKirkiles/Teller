@@ -3,7 +3,7 @@ var path = require("path")
 require('dotenv').config()
 var bodyParser = require('body-parser');
 var messenger = require(__dirname + "/routes/messenger.js");
-var plaid = require(__dirname + "/routes/plaid.js");
+var accountManager = require(__dirname + "/routes/accountManager.js");
 
 var app = express()
 
@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(messenger.router);
-app.use(plaid.router);
+app.use(accountManager.router);
 
 
 app.set('views', __dirname + '/views');
