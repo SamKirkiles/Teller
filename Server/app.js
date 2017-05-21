@@ -29,5 +29,7 @@ app.get("/signup",function(req,res){
   res.sendFile(__dirname + "/views/signup.html")
 });
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, function(err){
+  console.log("Application successfully running on port: " + process.env.PORT)
+});
 
