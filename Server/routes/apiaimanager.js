@@ -8,7 +8,7 @@ var sendTextRequest = function(text, callback){
     });
 
     request.on('response', function(response) {
-        callback(response, null)
+            callback(response, null)
     });
 
     request.on('error', function(error) {
