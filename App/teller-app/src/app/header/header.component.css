@@ -1,0 +1,9 @@
+#signup-nav-button{
+  background-color: white;
+  color: gray;
+  border-color: darkgray;
+  border-width: 2px;
+  height:45px;
+  width:120px;
+  margin-left:50px;
+}
