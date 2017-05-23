@@ -1,50 +1,131 @@
 
+.header-text{
+  height:600px;
+  position: relative;
+}
+.header-text h1{
+  margin: 0;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Adobe Gothic Std";
+  color: white;
+  font-size: 75px;
+}
+
+.image-center {
+  height:600px;
+  position: relative;
+
+}
+
+.image-center img{
+  margin: 0;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height:95%;
+}
+
+.jumbotron{
+  padding:0px 0 0px 0;
+}
+
+
+@keyframes appear {
+  from {  opacity:0;}
+  to {opacity: 1;}
+}
+
+
+
+#phone-mockup{
+  animation-name: appear;
+  -webkit-animation-duration: 1.5s;
+  -moz-animation-duration: 1.5s;
+  -o-animation-duration: 1.5s;
+  animation-duration: 1.5s;
+}
+
+
+
 /* Large desktops and laptops */
 
-
-
-
 @media (min-width: 1200px) {
-  #header-jumbotron
-  {
-    height: 450px;
+
+  .header-text{
+    height:550px;
+    position: relative;
+  }
+  .header-text h1{
+    font-size: 75px;
+  }
+  .image-center {
+    height:550px;
+    position: relative;
+
   }
 
 }
 
+
 /* Landscape tablets and medium desktops */
 @media (min-width: 992px) and (max-width: 1199px) {
-  #header-jumbotron
-  {
-    height: 400px;
+
+  .header-text{
+    height:500px;
+    position: relative;
+  }
+  .header-text h1{
+    font-size: 60px;
+  }
+  .image-center {
+    height:500px;
+    position: relative;
+
   }
 
 }
 
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) and (max-width: 991px) {
-  #header-jumbotron
-  {
-    height: 300px;
+  .header-text{
+    height:300px;
+    position: relative;
+  }
+  .header-text h1{
+    font-size: 60px;
+  }
+
+  .image-center {
+    height:300px;
+    position: relative;
+
   }
 
 }
 
 /* Landscape phones and portrait tablets */
 @media (max-width: 767px) {
-  #header-jumbotron
-  {
-    height: 300px;
+  .header-text{
+    height:300px;
+    position: relative;
+  }
+  .header-text h1{
+    font-size: 60px;
+  }
+  .image-center {
+    height:300px;
+    position: relative;
+
   }
 
 }
 
 /* Portrait phones and smaller */
 @media (max-width: 480px) {
-  #header-jumbotron
-  {
-    height: 200px;
-  }
 
 }
 

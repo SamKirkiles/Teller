@@ -7,3 +7,48 @@
   width:120px;
   margin-left:50px;
 }
+
+.navbar-toggler-icon{
+  fill: red;
+}
+
+
+@media (min-width: 1200px) {
+  #signup-nav-button{
+    margin-left: 50px;
+  }
+
+}
+
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+  #signup-nav-button{
+    margin-left: 50px;
+  }
+
+
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+  #signup-nav-button{
+    margin-left: 50px;
+  }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+
+  #signup-nav-button{
+    margin-left: 0px;
+  }
+
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+  #signup-nav-button{
+    margin-left: 0px;
+  }
+}
