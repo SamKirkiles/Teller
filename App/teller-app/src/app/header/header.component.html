@@ -1,6 +1,6 @@
 
 
-<nav class="navbar navbar-toggleable-sm navbar-light justify-content-end sticky-top" style="background-color: white; border-bottom-style: solid; border-bottom-color: gray; border-bottom-width: 1px;">
+<nav class="navbar navbar-toggleable-sm navbar-light  sticky-top" style="background-color: white; border-bottom-style: solid; border-bottom-color: gray; border-bottom-width: 1px;">
 
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navcollapse">
       <span class="navbar-toggler-icon"></span>
@@ -16,9 +16,9 @@
     <div class="collapse navbar-collapse mr-auto" id="navcollapse">
 
       <div class="nav navbar-nav ml-auto" style="">
-        <a href="#" class="nav-item nav-link ">Home</a>
-        <a href="#" class="nav-item nav-link">About</a>
-        <button type="button" class="btn btn-primary nav-item nav-link" id="signup-nav-button">Sign Up</button>
+        <a href="#" routerLink="" class="nav-item nav-link ">Home</a>
+        <a href="#"  class="nav-item nav-link">About</a>
+        <button type="button" routerLink="signup" class="btn btn-primary nav-item nav-link" id="signup-nav-button">Sign Up</button>
       </div>
 
     </div>
@@ -27,4 +27,4 @@
 
 </nav>
 
-<app-home-component></app-home-component>
+<router-outlet></router-outlet>

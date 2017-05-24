@@ -1,0 +1,48 @@
+body{
+  background-color: ghostwhite;
+}
+
+input{
+  margin-bottom:15px;
+}
+
+.image-center {
+  height:500px;
+  position: relative;
+
+}
+
+
+.image-center img{
+  margin: 0;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 500px;
+}
+
+
+#formGroup{
+  margin-top: 50px;
+  background-color: ghostwhite;
+  border-radius: 5px;
+}
+
+#sign-up-h1{
+  margin-bottom: 25px;
+  margin-top: 25px;
+  color: dimgray;
+
+}
+
+
+#submit-button{
+}
+
+
+#sign-up-message{
+  color: gray;
+  margin-bottom: 13px;
+
+}
