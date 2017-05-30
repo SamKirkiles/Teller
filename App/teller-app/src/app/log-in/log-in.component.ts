@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogInComponent implements OnInit {
 
+  signInError = false;
+
   constructor() { }
+
+  signin(){
+    this.signInError = !this.signInError;
+  }
 
   ngOnInit() {
   }

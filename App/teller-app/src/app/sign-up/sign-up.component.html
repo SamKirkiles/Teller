@@ -6,19 +6,32 @@
       <div class="col-6 image-center hidden-xs-down">
         <img class="img-fluid" src="https://s3.amazonaws.com/tellerbots3bucket/iphone-6GREY.png">
       </div>
+
       <div class="col-sm-6">
-        <div class="form-group  " id="formGroup">
-          <h2 id="sign-up-h1" style="font-weight: 300">Get started with Teller bot.</h2>
-          <input class="form-control form-control-lg" placeholder="Name">
-          <input class="form-control form-control-lg" placeholder="Email">
-          <input class="form-control form-control-lg" placeholder="Password" type="password">
-          <input class="form-control form-control-lg" placeholder="Confirm Password" type="password">
-          <button type="submit" class="col-12 btn btn-primary" id="submit-button">Get Started</button>
-        </div>
+        <form  id="formGroup" [formGroup]="signUpForm">
+          <h2 id="sign-up-h1" style="font-weight: 300" >Get smart budgeting advice with Teller.</h2>
+
+          <div class="form-group" [ngClass]="{'has-success': !signUpForm.controls.name.invalid, 'has-danger': (signUpForm.controls.name.invalid && signUpForm.controls.name.touched)}" >
+            <input class="form-control form-control-lg" placeholder="Name" formControlName="name" [ngClass]="{'form-control-success': !signUpForm.controls.name.invalid, 'form-control-danger': signUpForm.controls.name.invalid && signUpForm.controls.name.touched}">
+          </div>
+
+          <div class="form-group" [ngClass]="{'has-success': !signUpForm.controls.email.invalid, 'has-danger': (signUpForm.controls.email.invalid && signUpForm.controls.email.touched)}">
+            <input class="form-control form-control-lg" placeholder="Email" formControlName="email" [ngClass]="{'form-control-success': !signUpForm.controls.email.invalid, 'form-control-danger': signUpForm.controls.email.invalid && signUpForm.controls.email.touched}">
+          </div>
+
+          <div class="form-group" [ngClass]="{'has-success': !signUpForm.controls.pass.invalid, 'has-danger': (signUpForm.controls.pass.invalid && signUpForm.controls.pass.touched)}">
+            <input class="form-control form-control-lg" placeholder="Password" type="password" formControlName="pass" [ngClass]="{'form-control-success': !signUpForm.controls.pass.invalid, 'form-control-danger': signUpForm.controls.pass.invalid && signUpForm.controls.pass.touched}">
+          </div>
+
+          <div class="form-group" [ngClass]="{'has-success': !signUpForm.controls.passcheck.invalid, 'has-danger': (signUpForm.controls.passcheck.invalid && signUpForm.controls.passcheck.touched)}">
+            <input class="form-control form-control-lg" placeholder="Confirm Password" type="password" formControlName="passcheck" [ngClass]="{'form-control-success': !signUpForm.controls.passcheck.invalid, 'form-control-danger': signUpForm.controls.passcheck.invalid && signUpForm.controls.passcheck.touched}">
+          </div>
+
+          <button type="submit" class="col-12 btn btn-primary" id="submit-button" (click)="formSubmit()">Get Started</button>
           <p id="sign-up-message">By clicking "Get Started" you agree to the terms and conditions.</p>
+        </form>
       </div>
     </div>
 
   </div>
 </body>
-

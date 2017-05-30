@@ -1,3 +1,13 @@
-<p>
-  log-in works!
-</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-10 col-md-8">
+      <div class="form-group  " id="formGroup">
+        <h2 id="sign-up-h1" style="font-weight: 300">Teller Sign In</h2>
+        <input class="form-control form-control-lg" placeholder="Email">
+        <input class="form-control form-control-lg" placeholder="Password" type="password">
+        <p *ngIf="signInError" id="sign-in-error">There was an issue signing in. Please try a different email or password combination. </p>
+        <button type="submit" class="col-12 btn btn-primary" id="submit-button" (click)="signin()" >Sign In</button>
+      </div>
+    </div>
+  </div>
+</div>
