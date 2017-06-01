@@ -14,6 +14,16 @@
   font-size: 75px;
 }
 
+#spending{
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+
+}
+
 .image-center {
   height:600px;
   position: relative;
@@ -31,6 +41,27 @@
 
 .jumbotron{
   padding:0px 0 0px 0;
+}
+
+.panel{
+  margin-bottom: 20px;
+}
+
+.type{
+  color: gray;
+  font-weight: 100;
+  letter-spacing: 1px;
+  font-size: small;
+}
+#circle{
+  background-color: #66b3ff;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  position: relative;
+  left: 50%; transform:
+  translate(-60%,0%);
+  margin: 20px;
 }
 
 
@@ -112,6 +143,4 @@
 @media (max-width: 480px) {
 
 }
-
-
 
