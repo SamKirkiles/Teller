@@ -1,4 +1,4 @@
 !#/bin/bash
-cd ../Server
+cd ../
 npm install
 exit 0
