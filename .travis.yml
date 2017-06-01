@@ -6,8 +6,8 @@ env:
 script: cd $TEST_DIR && npm install && npm test
 deploy:
   provider: codedeploy
-  access_key_id: "AKIAI32WP6KIKQZHT36A"
-  secret_access_key: "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"
+  access_key_id: $AWSAccessKeyId
+  secret_access_key: $AWSSecretKey
   revision_type: github
   application: teller-production-application
   deployment_group: teller-production-deployment
