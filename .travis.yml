@@ -4,3 +4,12 @@ node_js:
 env:
   - TEST_DIR=Server
 script: cd $TEST_DIR && npm install && npm test
+deploy:
+  provider: codedeploy
+  access_key_id: AWSAccessKeyId
+  secret_access_key: AWSSecretKey
+  revision_type: github
+  application: teller-production-application
+  deployment_group: teller-production-deployment
+  on:
+    all_branches: true
