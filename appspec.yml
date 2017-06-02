@@ -5,7 +5,7 @@ files:
     destination: /home/ubuntu/teller-install
 hooks:
   AfterInstall:
-    - location: scripts/beforeinstall.sh
+    - location: scripts/afterinstall.sh
       timeout: 300
       runas: root
   ApplicationStart:

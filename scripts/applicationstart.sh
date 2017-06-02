@@ -7,6 +7,6 @@ msg() {
 
 msg "This is called at applicatoin start"
 
-pm2 start /home/ubuntu/teller-install/Server/app.js
-
+cd /home/ubuntu/teller-install/Server/ && pm2 start app.js
+pm2 ls
 exit 0
