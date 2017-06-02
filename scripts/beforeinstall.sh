@@ -1,3 +1,3 @@
 !#/bin/bash
-cd /home/ubuntu/teller-install/Server && npm install && pm2 start app.js
+cd /home/ubuntu/teller-install/Server && npm install
 exit 0
