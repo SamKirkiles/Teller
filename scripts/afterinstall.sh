@@ -17,7 +17,7 @@ echo export FB_VERIFY_TOKEN="tellerverifytoken" >> /etc/profile
 echo export PORT="3000" >> /etc/profile
 
 
-cd /home/ubuntu/teller-install/Server && npm install
-cd /home/ubuntu/teller-install/App/teller-app && npm install && sudo ng build
+cd /home/ubuntu/teller-install/Server && sudo npm install
+cd /home/ubuntu/teller-install/App/teller-app && sudo npm install && sudo ng build
 
 exit 0
