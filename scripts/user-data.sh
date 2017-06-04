@@ -12,6 +12,7 @@ wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
 chmod +x ./install
 ./install auto
 npm install pm2 --global
+npm install @angular/cli --global
 
 echo export PLAID_CLIENT_ID="58b19b60bdc6a44288ea2050" >> /etc/profile
 echo export PLAID_PUBLIC_KEY="e839335cc584216e29feff916f1d77" >> /etc/profile

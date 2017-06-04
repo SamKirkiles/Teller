@@ -13,15 +13,13 @@ app.use(bodyParser.urlencoded({
 
 app.use(messenger.router);
 app.use(accountManager.router);
-
+app.use(express.static(path.join(__dirname, '../App/teller-app/dist')))
 
 app.set('views', __dirname + '/views');
-app.use("/static", express.static(path.join(__dirname, 'public')))
+
 
 app.get("/",function(req,res){
-  res.sendFile(__dirname + "/views/index.html")
-
-  console.log("Hello world")
+  res.sendFile(  path.resolve(__dirname + "/../App/teller-app/dist/index.html"))
 })
 
 
