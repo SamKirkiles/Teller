@@ -26,7 +26,7 @@ echo export DATABASE_PORT="3306" >> /etc/profile
 echo export FB_MESSENGER_TOKEN="EAAFhcDC2C1IBANSBiWBoZAZBCic6nTAbQZCeZB2NeK5waC6MiKSYkRSgdc02823OtOMRJZC5dfCTPSPdCdVa0hEZB4CJasmYZAADbgBmVMa80EWZAaUc9UIlV6hFPLZBmGHFdgaWSZAknSkZA13t247A4R6iFZBxtw8oQ62u01Cz5yZBYgQZDZD" >> /etc/profile
 echo export FB_VERIFY_TOKEN="tellerverifytoken" >> /etc/profile
 
-echo export PORT="3000"
+echo export PORT="3000" >> /etc/profile
 
 
 echo END
