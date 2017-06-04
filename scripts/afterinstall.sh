@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "running hook: after install.sh"
+echo "Running hook: after install.sh"
 
 echo export PLAID_CLIENT_ID="58b19b60bdc6a44288ea2050" >> /etc/profile
 echo export PLAID_PUBLIC_KEY="e839335cc584216e29feff916f1d77" >> /etc/profile
@@ -19,5 +19,8 @@ echo export PORT="3000" >> /etc/profile
 
 cd /home/ubuntu/teller-install/Server && sudo npm install
 cd /home/ubuntu/teller-install/App/teller-app && sudo npm install && sudo ng build
+
+echo "Finished running hook: after install.sh"
+
 
 exit 0
