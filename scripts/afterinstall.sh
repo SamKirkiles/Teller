@@ -18,7 +18,9 @@ echo export PORT="3000" >> /etc/profile
 
 
 cd /home/ubuntu/teller-install/Server && sudo npm install
-cd /home/ubuntu/teller-install/App/teller-app && sudo npm install && sudo ng build
+cd /home/ubuntu/teller-install/App/teller-app
+sudo npm install
+sudo ng build
 
 echo "Finished running hook: after install.sh"
 
