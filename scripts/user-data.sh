@@ -27,6 +27,7 @@ echo export FB_MESSENGER_TOKEN="EAAFhcDC2C1IBANSBiWBoZAZBCic6nTAbQZCeZB2NeK5waC6
 echo export FB_VERIFY_TOKEN="tellerverifytoken" >> /etc/profile
 
 echo export PORT="3000" >> /etc/profile
+echo export NODE_ENV="production" >> /etc/profile
 
 
 echo END

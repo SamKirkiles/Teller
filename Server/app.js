@@ -18,16 +18,12 @@ app.use(express.static(path.join(__dirname, '../App/teller-app/dist')))
 app.set('views', __dirname + '/views');
 
 
-app.get("/",function(req,res){
-  res.sendFile(  path.resolve(__dirname + "/../App/teller-app/dist/index.html"))
-})
-
-
-app.get("/signup",function(req,res){
-  res.sendFile(__dirname + "/views/signup.html")
+app.get("*",function(req,res){
+  res.sendFile(  path.resolve(__dirname + "/../App/teller-app/dist/index.html"));
 });
 
+
 app.listen(process.env.PORT, function(err){
-  console.log("Application successfully running on port: " + process.env.PORT)
+    console.log("Application successfully running on port: " + process.env.PORT)
 });
 
