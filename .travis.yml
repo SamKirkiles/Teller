@@ -12,4 +12,4 @@ deploy:
   application: teller-production-application
   deployment_group: teller-production-deployment
   on:
-    all_branches: true
+    branch: master
