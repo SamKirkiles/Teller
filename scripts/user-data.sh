@@ -9,8 +9,8 @@ apt-get install -y nodejs
 apt-get -y install npm
 cd /home/ubuntu
 wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
-chmod +x ./installd
-./install auto
+sudo chmod +x ./install
+sudo ./install auto
 npm install pm2 --global
 npm install @angular/cli --global
 
