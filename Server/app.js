@@ -19,6 +19,7 @@ app.set('views', __dirname + '/views');
 
 
 app.get("*",function(req,res){
+  //this is a dummy line and it shouldnt deploy
   res.sendFile(  path.resolve(__dirname + "/../App/teller-app/dist/index.html"));
 });
 
