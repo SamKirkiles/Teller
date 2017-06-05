@@ -9,5 +9,4 @@ sudo ng build
 
 echo "Finished running hook: after install.sh"
 
-
 exit 0
