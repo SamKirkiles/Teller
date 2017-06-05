@@ -6,7 +6,7 @@ files:
 hooks:
   AfterInstall:
     - location: scripts/afterinstall.sh
-      timeout: 300
+      timeout: 400
       runas: root
   ApplicationStart:
     - location: scripts/applicationstart.sh
