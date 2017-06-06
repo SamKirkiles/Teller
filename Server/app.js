@@ -17,12 +17,14 @@ app.use(express.static(path.join(__dirname, '../App/teller-app/dist')))
 
 app.set('views', __dirname + '/views');
 
+app.get("/api/*", function(req,res){
+  res.send("Hello World")
+})
 
-app.get("*",function(req,res){
-  //this is a dummy line and it shouldnt deploy
+
+app.get("/",function(req,res){
   res.sendFile(  path.resolve(__dirname + "/../App/teller-app/dist/index.html"));
 });
-
 
 app.listen(process.env.PORT, function(err){
     console.log("Application successfully running on port: " + process.env.PORT)

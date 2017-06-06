@@ -17,7 +17,7 @@ let plaid = require(__dirname + "/accountManager.js")
 
 let jsonParser = bodyParser.json();
 
-router.get('/webhook', function (req, res) {
+router.get('/api/webhook', function (req, res) {
     if (req.query['hub.verify_token'] === process.env.FB_VERIFY_TOKEN) {
         res.send(req.query['hub.challenge']);
     } else {
@@ -25,7 +25,7 @@ router.get('/webhook', function (req, res) {
     }
 });
 
-router.post('/webhook', jsonParser, function(req,res){
+router.post('/api/webhook', jsonParser, function(req,res){
 
     let messaging_events = req.body.entry[0].messaging
 
@@ -42,6 +42,7 @@ router.post('/webhook', jsonParser, function(req,res){
 
 //called when the user sends a message
 function receivedMessage(event){
+
 
     apiaimanager.textRequest(event.message.text,function(response, error){
 
