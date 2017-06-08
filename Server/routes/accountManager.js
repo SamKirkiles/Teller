@@ -55,7 +55,6 @@ function getTransactions(start_date, end_date, access_token, callback){
 }
 
 function generateInsitutionsCSV(){
-
         //create writable stream
         //add to stream every get insititutions call and keep looping to filesystem
         //pipe to file system
