@@ -9,9 +9,9 @@
   top:50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: "Adobe Gothic Std";
   color: white;
   font-size: 75px;
+  font-weight: 600;
 }
 
 #spending{
