@@ -1,13 +1,15 @@
 
 
 <nav class="navbar navbar-toggleable-sm navbar-light  sticky-top" style="background-color: white; border-bottom-style: solid; border-bottom-color: gray; border-bottom-width: 1px;">
-
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navcollapse">
-      <span class="navbar-toggler-icon"></span>
-  </button>
+  <!--this is the button with the issue-->
 
 
   <div class="container ">
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navcollapse" (click)="click()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
 
     <div class="navbar-brand mr-auto ">
       <h1 class="display-4 logo"> teller</h1>

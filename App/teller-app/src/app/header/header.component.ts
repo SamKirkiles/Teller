@@ -9,6 +9,10 @@ export class HeaderComponent implements OnInit {
 
   constructor() { }
 
+  click(){
+    alert("This worked")
+  }
+
   ngOnInit() {
   }
 
