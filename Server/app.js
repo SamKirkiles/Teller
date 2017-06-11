@@ -4,20 +4,26 @@ require('dotenv').config()
 var bodyParser = require('body-parser');
 var messenger = require(__dirname + "/routes/messenger.js");
 var accountManager = require(__dirname + "/routes/accountManager.js");
+let apiRouter = require(__dirname + "/routes/api.js").router
 
 var app = express()
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+
+app.use(function(req,res,next){
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers','Content-Type');
+    next()
+});
 
 app.use(messenger.router);
+app.use(apiRouter)
 app.use(accountManager.router);
 app.use(express.static(path.join(__dirname, '../App/teller-app/dist')))
 
 app.set('views', __dirname + '/views');
 
-app.get("/api/*", function(req,res){
+
+app.get("/api", function(req,res){
   res.send("Hello World")
 })
 

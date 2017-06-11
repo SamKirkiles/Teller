@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {passwordMatchValidator} from "../shared/inputMatch.validator";
+import {passwordMatchValidator} from "../../shared/inputMatch.validator";
 
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.css'],
+  providers: []
 })
 
 

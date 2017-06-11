@@ -1,13 +1,13 @@
-var envPath = __dirname + "/../.env"
-require('dotenv').config({path:envPath})
+let envPath = __dirname + "/../.env";
+require('dotenv').config({path:envPath});
 
-var express = require("express")
-var router = express.Router();
+let express = require("express");
+let router = express.Router();
 
-var plaid = require('plaid');
-var mysql = require('mysql');
+let plaid = require('plaid');
+let mysql = require('mysql');
 
-var fs = require("fs");
+let fs = require("fs");
 
 
 const plaidClient = new plaid.Client(
@@ -17,7 +17,7 @@ const plaidClient = new plaid.Client(
     plaid.environments.sandbox);
 
 router.post("/authenticate", function(request,response){
-    var publicToken = request.body.public_token
+    let publicToken = request.body.public_token;
     
     plaidClient.exchangePublicToken(publicToken, function(err, res){
         if (err != null){
@@ -44,7 +44,7 @@ function getBalance(access_token, callback){
 /** Wrapper for plaid get Transactions
  * @param {string} start_date - Start Date: The date to start fetching at
  * @param {string} end_date - End Date: THe date to end fetching the transactios
- * @param {string} access-token - Access Token: The access token to use to fetch the accounts
+ * @param {string} access_token - Access Token: The access token to use to fetch the accounts
  * @param {string} callback - Callback Function: The function to use to obtain a response
  * */
 
@@ -72,12 +72,12 @@ function generateInsitutionsCSV(){
         //retrieve all institutions starting at counter = 0
         plaidClient.getInstitutions(500,counter,function(err,response){
 
-            console.log(err)
-            console.log(response.institutions)
+            console.log(err);
+            console.log(response.institutions);
             for (let bank in response.institutions){
                  
-                let responseString = response.institutions[bank].name.replace('(',"")
-                responseString = responseString.replace(')',"")
+                let responseString = response.institutions[bank].name.replace('(',"");
+                responseString = responseString.replace(')',"");
                 
                 stream.write("\""+responseString+"\",\n")
             }
