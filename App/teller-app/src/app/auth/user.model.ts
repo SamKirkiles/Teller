@@ -1,9 +1,12 @@
 export class User{
-  public fullname:String;
-  public email:String;
+  public fullname:string;
+  public email:string;
+  public userID:string;
 
-  constructor(_fullname: string, _email:string){
-    this.fullname = _fullname;
-    this.email = _email;
+  constructor(fullname: string, email:string, userid:string){
+    this.fullname = fullname;
+    this.email = email;
+    this.userID = userid;
   }
+
 }

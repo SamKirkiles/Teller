@@ -8,12 +8,14 @@ import { HeaderComponent } from './header/header.component';
 import {RouterModule, Routes} from "@angular/router";
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { LogInComponent } from './auth/log-in/log-in.component';
-import {AccountManagerService} from './account-manager.service';
+import {AccountManagerService} from './auth/account-manager.service';
+import { AccountComponent } from './account/account.component';
 
 const appRoutes: Routes = [
   {path:'', component:HomeComponentComponent},
   {path:'signup', component:SignUpComponent},
-  {path: 'login', component:LogInComponent}
+  {path: 'login', component:LogInComponent},
+  {path: 'account', component:AccountComponent}
 ];
 
 @NgModule({
@@ -22,6 +24,7 @@ const appRoutes: Routes = [
     HeaderComponent,
     SignUpComponent,
     LogInComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,

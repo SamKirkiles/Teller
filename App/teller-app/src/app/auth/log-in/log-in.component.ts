@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountManagerService} from "../../account-manager.service";
+import {AccountManagerService} from "../account-manager.service";
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import 'rxjs';
+import {Router, RouterModule} from "@angular/router";
 
 @Component({
   selector: 'app-log-in',
@@ -22,7 +23,7 @@ export class LogInComponent implements OnInit {
     password: new FormControl('',Validators.minLength(8))
   });
 
-  constructor(private accountManager: AccountManagerService) { }
+  constructor(private accountManager: AccountManagerService, private router: Router) { }
 
   signin(){
     this.signInError = false;
@@ -30,7 +31,15 @@ export class LogInComponent implements OnInit {
 
     if (this.loginForm.valid === true){
       this.accountManager.signIn(this.email,this.password)
-        .then(response => console.log(response))
+        .then(response =>{
+          let body = JSON.parse(response._body)
+
+          if (body.payload.success === true){
+            this.router.navigate(['/']);
+          }else{
+            this.signInError = true;
+          }
+      })
         .catch(error=>{
           this.signInError = true;
         })
