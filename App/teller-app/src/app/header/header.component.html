@@ -20,7 +20,13 @@
       <div class="nav navbar-nav ml-auto" style="">
         <a href="#" routerLink="" class="nav-item nav-link ">Home</a>
         <a href="#"  class="nav-item nav-link">Legal</a>
-        <a href="#" routerLink="account" class="nav-item nav-link">Account</a>
+
+        <a href="#" class="nav-item nav-link">Press Kit</a>
+
+        <div *ngIf="accountManagerLoggedIn();">
+          <a href="#" routerLink="account" class="nav-item nav-link">Account</a>
+        </div>
+
         <div *ngIf="!accountManagerLoggedIn(); else logOutButton">
           <a href="#" routerLink="login" class="nav-item nav-link">Log In</a>
         </div>

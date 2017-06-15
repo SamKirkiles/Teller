@@ -3,6 +3,10 @@ body{
   background-color: ghostwhite;
 }
 
+body h1{
+  color: gray;
+}
+
 @font-face{
   font-family:"Logo";
   src: url('assets/fonts/arial-black.ttf');
