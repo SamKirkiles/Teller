@@ -36,6 +36,7 @@ export class LogInComponent implements OnInit {
 
           if (body.payload.success === true){
             this.router.navigate(['/']);
+            document.cookie = "username=samkirkiles;"
           }else{
             this.signInError = true;
           }
