@@ -4,9 +4,9 @@ require('dotenv').config()
 var bodyParser = require('body-parser');
 var messenger = require(__dirname + "/routes/messenger.js");
 var accountManager = require(__dirname + "/routes/accountManager.js");
-let apiRouter = require(__dirname + "/routes/api.js").router
+let apiRouter = require(__dirname + "/routes/api.js").router;
 
-var app = express()
+var app = express();
 
 
 app.use(function(req,res,next){

@@ -6,7 +6,9 @@ let express = require('express');
 let apiRouter = express.Router();
 let bodyParser = require('body-parser');
 let mysql = require('mysql');
-let bcrypt = require('bcrypt')
+let bcrypt = require('bcrypt');
+
+let aws = require('aws-sdk');
 
 
 let jsonParser = bodyParser.json();
@@ -24,6 +26,18 @@ connection.connect(function(err) {
     } else {
 
     }
+});
+
+
+/*
+Body: {email:""}
+ */
+apiRouter.put('/api/requestPasswordReset',jsonParser, function(req,res){
+    console.log(req.body.email);
+
+    // we have the email so we should send a request with the link to reset the password
+
+    res.send("Success");
 });
 
 apiRouter.post('/api/signin', jsonParser, function(req,res){
@@ -49,7 +63,6 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
                         email: results[0].email,
                         userID: results[0].userID
                     };
-
                     res.status(200).send({"payload":{"success":true,"user":JSON.stringify(user)},"error":{"errorCode":null, "message":null}});
                 }else{
                     res.status(200).send({"payload":{"success":false,"user":null},"error":{"errorCode":null, "message":null}});

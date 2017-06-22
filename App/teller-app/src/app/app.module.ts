@@ -12,12 +12,14 @@ import {AccountManagerService} from './auth/account-manager.service';
 import { AccountComponent } from './account/account.component';
 import { AccountFormComponent } from './account/account-form/account-form.component';
 import { AccountViewComponent } from './account/account-view/account-view.component';
+import { AccountPasswordResetComponent } from './account/account-password-reset/account-password-reset.component';
 
 const appRoutes: Routes = [
   {path:'', component:HomeComponentComponent},
   {path:'signup', component:SignUpComponent},
   {path: 'login', component:LogInComponent},
-  {path: 'account', component:AccountComponent}
+  {path: 'account', component:AccountComponent},
+  {path: 'restpassword', component:AccountPasswordResetComponent}
 ];
 
 @NgModule({
@@ -29,6 +31,7 @@ const appRoutes: Routes = [
     AccountComponent,
     AccountFormComponent,
     AccountViewComponent,
+    AccountPasswordResetComponent,
   ],
   imports: [
     BrowserModule,
