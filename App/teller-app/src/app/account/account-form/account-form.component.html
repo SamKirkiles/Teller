@@ -8,14 +8,8 @@
     <input class="form-control form-control-lg" id="fullnameinput" placeholder="Name" formControlName="fullname" value="{{getUser()?.fullname}}">
   </div>
 
-  <div class="form-group" style="margin-top: 10px;">
-    <label for="originalpasswordinput">Current password</label>
-    <input class="form-control form-control-lg" placeholder="Current Password" formControlName="currentpass" id="originalpasswordinput" type="password">
-    <label for="newpasswordinput">New Password</label>
-    <input class="form-control form-control-lg" placeholder="New Password" formControlName="newpass" id="newpasswordinput" style="margin-bottom: 5px;" type="password">
-    <label for="originalpasswordinput">Retype Password</label>
-    <input class="form-control form-control-lg" placeholder="Retype New Password" formControlName="confirmpass" id="confirmpasswordinput" type="password">
-  </div>
+  <p style="text-decoration: underline; cursor: pointer;">Change password</p>
+
 
 
   <button class="btn btn-sm btn-outline-success " (click)="savePressed()">Save</button>

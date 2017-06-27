@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup, Validators, FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-account-password-reset',
@@ -7,7 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountPasswordResetComponent implements OnInit {
 
+  resetPasswordForm = new FormGroup({
+    email: new FormControl('', Validators.email),
+  });
+
+  sent = false;
+
+
   constructor() { }
+
+  submitPressed(){
+    if (this.resetPasswordForm.valid){
+      //send api request to send verification email to user
+      this.sent = !this.sent;
+      console.log("true");
+    }else{
+      console.log("false");
+    }
+  }
 
   ngOnInit() {
   }

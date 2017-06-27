@@ -13,13 +13,14 @@ import { AccountComponent } from './account/account.component';
 import { AccountFormComponent } from './account/account-form/account-form.component';
 import { AccountViewComponent } from './account/account-view/account-view.component';
 import { AccountPasswordResetComponent } from './account/account-password-reset/account-password-reset.component';
+import {AuthGuard} from './auth/auth-guard';
 
 const appRoutes: Routes = [
   {path:'', component:HomeComponentComponent},
   {path:'signup', component:SignUpComponent},
   {path: 'login', component:LogInComponent},
-  {path: 'account', component:AccountComponent},
-  {path: 'restpassword', component:AccountPasswordResetComponent}
+  {path: 'account', component:AccountComponent, canActivate:[AuthGuard]},
+  {path: 'resetpassword', component:AccountPasswordResetComponent}
 ];
 
 @NgModule({
@@ -40,7 +41,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule
   ],
-  providers: [AccountManagerService],
+  providers: [AuthGuard, AccountManagerService],
   bootstrap: [HeaderComponent]
 })
 export class AppModule { }

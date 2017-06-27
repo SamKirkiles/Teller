@@ -30,13 +30,16 @@ export class LogInComponent implements OnInit {
 
 
     if (this.loginForm.valid === true){
+
+
       this.accountManager.signIn(this.email,this.password)
         .then(response =>{
-          let body = JSON.parse(response._body)
+
+          let body = JSON.parse(response._body);
 
           if (body.payload.success === true){
             this.router.navigate(['/']);
-            document.cookie = "username=samkirkiles;"
+            document.cookie = 'userToken= ' + body.payload.token;
           }else{
             this.signInError = true;
           }
@@ -45,6 +48,8 @@ export class LogInComponent implements OnInit {
           this.signInError = true;
         })
     }else{
+      console.error("Error signing in");
+
       this.signInError = true;
     }
   }

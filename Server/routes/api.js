@@ -8,7 +8,14 @@ let bodyParser = require('body-parser');
 let mysql = require('mysql');
 let bcrypt = require('bcrypt');
 
+let jwt = require('jsonwebtoken');
+
 let aws = require('aws-sdk');
+let ses = new aws.SES({
+    region:"us-east-1",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY
+});
 
 
 let jsonParser = bodyParser.json();
@@ -33,11 +40,59 @@ connection.connect(function(err) {
 Body: {email:""}
  */
 apiRouter.put('/api/requestPasswordReset',jsonParser, function(req,res){
-    console.log(req.body.email);
 
     // we have the email so we should send a request with the link to reset the password
 
-    res.send("Success");
+    if (req.body.email === undefined){
+        res.status(400);
+        return;
+    }
+
+    let messageBody = "Here is your requested email reset link";
+
+    let params = {
+        Destination:{
+            ToAddresses:[
+                req.body.email
+            ]
+        },
+        Message: {
+            Body: { /* required */
+                Html: {
+                    Data: messageBody, /* required */
+                    Charset: 'UTF-8'
+                },
+                Text: {
+                    Data: messageBody, /* required */
+                    Charset: 'UTF-8'
+                }
+            },
+            Subject: { /* required */
+                Data: 'Teller Requested Email Reset', /* required */
+                Charset: 'UTF-8'
+            }
+
+        },
+        Source: 'teller@tellerchatbot.com', /* required */
+        ReplyToAddresses: [
+        ],
+        ReturnPathArn: 'arn:aws:ses:us-east-1:010702067800:identity/tellerchatbot.com',
+        SourceArn: 'arn:aws:ses:us-east-1:010702067800:identity/tellerchatbot.com',
+
+    };
+
+    ses.sendEmail(params, function(err,data){
+        if (err) {
+            res.status(200).send({"payload":{"success":false},"error":{"errorCode":err.code, "message":err.message}});
+            console.log(err);
+        }
+        else {
+            console.log("Sending success");
+            res.status(200).send({"payload":{"success":true,"data":data},"error":{"errorCode":null, "message":null}});
+        }
+
+    });
+
 });
 
 apiRouter.post('/api/signin', jsonParser, function(req,res){
@@ -48,6 +103,7 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
     testConnection(query);
 
     function query() {
+
         connection.query('SELECT * FROM user WHERE email=?',[email],function(error, results, fields){
 
         if (results[0] !== undefined){
@@ -57,24 +113,67 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
                 console.log(err);
 
                 if (bcryptResponse === true){
+
                     let user = {
                         date_created: results[0].date_created,
                         fullname: results[0].fullname,
                         email: results[0].email,
                         userID: results[0].userID
                     };
-                    res.status(200).send({"payload":{"success":true,"user":JSON.stringify(user)},"error":{"errorCode":null, "message":null}});
+
+                    //the login was successful and we have a user that we have now turned into a stirng
+
+                    jwt.sign({ userID: results[0].userID }, 'secret', { algorithm: 'HS256' }, function(err, token) {
+                        
+                        if (err === undefined){
+                            console.log("there was an error" + err.message);
+                        }else{
+                            console.log()
+                        }
+
+                        res.status(200).send({"payload":{"success":true, "token":token},"error":{"errorCode":null, "message":null}});
+                    });
+
                 }else{
-                    res.status(200).send({"payload":{"success":false,"user":null},"error":{"errorCode":null, "message":null}});
+                    res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":null, "message":null}});
                 }
             });
-
-
         }else{
-            res.status(200).send({"payload":{"success":false,"user":null},"error":{"errorCode":null, "message":null}});
+            res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":null, "message":null}});
         }
+
     });
     }
+});
+
+apiRouter.post('/api/currentuser', jsonParser, function(req,res){
+    jwt.verify(req.body.token, 'secret', { algorithm: 'HS256'}, function (err, decoded){
+        if (err !== null){
+            res.status(200).send({'payload':{'success':true, 'result':err}});
+        }else{
+
+            //make sure database is connected and run the function to retrieve current user
+            testConnection(currentUser);
+
+            function currentUser(){
+                userID = decoded.userID;
+
+                //get the current user from the database and send it
+                connection.query('SELECT * FROM user WHERE userID = ?',[userID],function(err, results, fields){
+
+                    if (err !== null){
+                        res.status(200).send({'payload':{'success':false, 'result':null}});
+                    }else {
+                        if (results[0] !== undefined){
+                            res.status(200).send({'payload':{'success':true, 'result':results[0]}});
+                        }else {
+                            res.status(200).send({'payload':{'success':false, 'result':null}});
+                        }
+                    }
+                });
+            }
+        }
+    });
 });
 
 apiRouter.post('/api/signup', jsonParser, function(req,res){
