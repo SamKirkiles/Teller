@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4231350d-4702-4215-a16c-027935e10f25" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/afterinstall.sh" afterPath="$PROJECT_DIR$/scripts/afterinstall.sh" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -54,11 +55,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".env" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="14" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="14" />
+            <state relative-caret-position="315">
+              <caret line="21" column="9" lean-forward="true" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="afterinstall.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/afterinstall.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="31" lean-forward="false" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -174,7 +185,6 @@
         <option value="$PROJECT_DIR$/scripts/beforeinstall.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/App/teller-app/.gitignore" />
-        <option value="$PROJECT_DIR$/scripts/afterinstall.sh" />
         <option value="$PROJECT_DIR$/scripts/applicationstart.sh" />
         <option value="$PROJECT_DIR$/scripts/user-data.sh" />
         <option value="$PROJECT_DIR$/.travis.yml" />
@@ -201,7 +211,6 @@
         <option value="$PROJECT_DIR$/App/teller-app/src/styles.css" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/account/account-form/account-form.component.ts" />
         <option value="$PROJECT_DIR$/Server/app.js" />
-        <option value="$PROJECT_DIR$/Server/.env" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/account/account-form/account-form.component.html" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/account/account-password-reset/account-password-reset.component.ts" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/account/account-password-reset/account-password-reset.component.html" />
@@ -213,6 +222,8 @@
         <option value="$PROJECT_DIR$/App/teller-app/src/environments/environment.ts" />
         <option value="$PROJECT_DIR$/App/teller-app/src/environments/environment.prod.ts" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts" />
+        <option value="$PROJECT_DIR$/Server/.env" />
+        <option value="$PROJECT_DIR$/scripts/afterinstall.sh" />
       </list>
     </option>
   </component>
@@ -311,6 +322,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Teller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Teller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -897,12 +922,12 @@
       <workItem from="1497830922988" duration="2418000" />
       <workItem from="1498086345031" duration="26104000" />
       <workItem from="1498593180688" duration="4718000" />
-      <workItem from="1498654976857" duration="3252000" />
+      <workItem from="1498654976857" duration="3521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="271080000" />
+    <option name="totallyTimeSpent" value="271349000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -989,13 +1014,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="38" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/afterinstall.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="11" lean-forward="true" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -1349,8 +1367,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="14" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="14" />
+        <state relative-caret-position="315">
+          <caret line="21" column="9" lean-forward="true" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/afterinstall.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="31" lean-forward="false" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
           <folding />
         </state>
       </provider>
