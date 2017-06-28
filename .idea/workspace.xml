@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4231350d-4702-4215-a16c-027935e10f25" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/teller-app/src/app/app.module.ts" afterPath="$PROJECT_DIR$/App/teller-app/src/app/app.module.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts" afterPath="$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/teller-app/src/app/auth/auth-guard.ts" afterPath="$PROJECT_DIR$/App/teller-app/src/app/auth/auth-guard.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/teller-app/src/environments/environment.prod.ts" afterPath="$PROJECT_DIR$/App/teller-app/src/environments/environment.prod.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/teller-app/src/environments/environment.ts" afterPath="$PROJECT_DIR$/App/teller-app/src/environments/environment.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,7 +26,7 @@
       <file leaf-file-name="account.component.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/account/account.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
+            <state relative-caret-position="225">
               <caret line="18" column="20" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
@@ -38,7 +38,7 @@
       <file leaf-file-name="log-in.component.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/auth/log-in/log-in.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
+            <state relative-caret-position="480">
               <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding />
             </state>
@@ -48,9 +48,33 @@
       <file leaf-file-name="account-manager.service.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="102" column="12" lean-forward="true" selection-start-line="102" selection-start-column="12" selection-end-line="102" selection-end-column="12" />
+            <state relative-caret-position="175">
+              <caret line="86" column="46" lean-forward="false" selection-start-line="86" selection-start-column="46" selection-end-line="86" selection-end-column="46" />
+              <folding>
+                <element signature="e#0#60#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="environment.prod.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/teller-app/src/environments/environment.prod.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="environment.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/teller-app/src/environments/environment.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -58,8 +82,8 @@
       <file leaf-file-name="auth-guard.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/auth/auth-guard.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="10" lean-forward="true" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+            <state relative-caret-position="210">
+              <caret line="17" column="10" lean-forward="false" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
               </folding>
@@ -70,7 +94,7 @@
       <file leaf-file-name="app.module.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/app.module.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
+            <state relative-caret-position="495">
               <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
               <folding />
             </state>
@@ -88,12 +112,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>email</find>
-      <find>formcontrol</find>
-      <find>acc</find>
-      <find>http</find>
-      <find>app.pu</find>
-      <find>aws-s</find>
       <find>success</find>
       <find>aws</find>
       <find>ses.sen</find>
@@ -118,6 +136,12 @@
       <find>out</find>
       <find>outlet</find>
       <find>authguard</find>
+      <find>login</find>
+      <find>a</find>
+      <find>location</find>
+      <find>localhost</find>
+      <find>baseurl</find>
+      <find>window.</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -131,8 +155,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/App/teller-app/src/app/app.component.html" />
-        <option value="$PROJECT_DIR$/App/teller-app/src/app/test/test.component.html" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/sign-up/sign-up.component.css" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/shared/input-match-validator.directive.ts" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/shared/shared.module.ts" />
@@ -181,6 +203,8 @@
         <option value="$PROJECT_DIR$/App/teller-app/src/app/account/auth-guard.ts" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/auth/auth-guard.ts" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/app.module.ts" />
+        <option value="$PROJECT_DIR$/App/teller-app/src/environments/environment.ts" />
+        <option value="$PROJECT_DIR$/App/teller-app/src/environments/environment.prod.ts" />
         <option value="$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts" />
       </list>
     </option>
@@ -221,34 +245,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Teller">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Teller">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="tests">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -348,6 +344,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Teller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Teller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="App" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="teller-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="environments" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -627,6 +649,34 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Teller">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Teller">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="tests">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -840,11 +890,12 @@
       <workItem from="1497830922988" duration="2418000" />
       <workItem from="1498086345031" duration="26104000" />
       <workItem from="1498593180688" duration="4718000" />
+      <workItem from="1498654976857" duration="3163000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="267828000" />
+    <option name="totallyTimeSpent" value="270991000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -857,17 +908,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23515625" sideWeight="0.4959514" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3001328" sideWeight="0.12578125" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962587" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30870447" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962587" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3173971" sideWeight="0.87421876" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24583334" sideWeight="0.5040486" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3233301" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24583334" sideWeight="0.5040486" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -926,20 +978,6 @@
     </PATH>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/App/teller-app/src/main.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="18" lean-forward="true" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/applicationstart.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1075,7 +1113,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="211" column="22" lean-forward="true" selection-start-line="211" selection-start-column="22" selection-end-line="211" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1083,7 +1120,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="26" column="17" lean-forward="false" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1162,9 +1198,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1172,7 +1205,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="7" column="43" lean-forward="false" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1180,7 +1212,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1226,7 +1257,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1255,7 +1285,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/auth/log-in/log-in.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
+        <state relative-caret-position="480">
           <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding />
         </state>
@@ -1263,7 +1293,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/account/account.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
+        <state relative-caret-position="225">
           <caret line="18" column="20" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
@@ -1273,7 +1303,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/app.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
+        <state relative-caret-position="495">
           <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
           <folding />
         </state>
@@ -1281,19 +1311,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/auth/auth-guard.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="10" lean-forward="true" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+        <state relative-caret-position="210">
+          <caret line="17" column="10" lean-forward="false" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
           <folding>
             <element signature="e#0#97#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/App/teller-app/src/environments/environment.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/teller-app/src/environments/environment.prod.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="102" column="12" lean-forward="true" selection-start-line="102" selection-start-column="12" selection-end-line="102" selection-end-column="12" />
-          <folding />
+        <state relative-caret-position="175">
+          <caret line="86" column="46" lean-forward="false" selection-start-line="86" selection-start-column="46" selection-end-line="86" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

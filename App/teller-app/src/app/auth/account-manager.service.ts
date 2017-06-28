@@ -1,9 +1,10 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable, isDevMode, OnInit} from '@angular/core';
 import {Headers, Http} from "@angular/http";
 import 'rxjs';
 import {User} from "./user.model";
 import {Router} from "@angular/router";
 import {isNullOrUndefined} from "util";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class AccountManagerService{
@@ -13,10 +14,14 @@ export class AccountManagerService{
   public token:string;
 
 
+
   private headers = new Headers({'Content-Type': 'application/json'});
 
 
   constructor(private http:Http, private router: Router) {
+
+
+
     let token = localStorage.getItem('session');
     if (!isNullOrUndefined(token)){
 
@@ -42,7 +47,7 @@ export class AccountManagerService{
 
   signIn(email:String,password:String):Promise<any>{
 
-    return this.http.post('http://localhost:3000/api/signin',JSON.stringify({
+    return this.http.post(environment.apiUrl + '/api/signin',JSON.stringify({
       "email": email,
       "password": password
     }),{headers: this.headers}).toPromise().then(res => {
@@ -79,7 +84,7 @@ export class AccountManagerService{
   }
 
   signUp(fullname:String,password:String,email:String):Promise<any>{
-    return this.http.post('http://localhost:3000/api/signup',JSON.stringify({
+      return this.http.post(environment.apiUrl + '/api/signup',JSON.stringify({
       "fullname":fullname,
       "password":password,
       "email":email
@@ -88,7 +93,9 @@ export class AccountManagerService{
   }
 
   getCurrentUser(token:String):Promise<any>{
-    return this.http.post('http://localhost:3000/api/currentuser' , JSON.stringify({
+
+
+    return this.http.post(environment.apiUrl + '/api/currentuser' , JSON.stringify({
       "token":token
     }), {headers: this.headers}).toPromise()
   }
