@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4231350d-4702-4215-a16c-027935e10f25" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts" afterPath="$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/teller-app/src/environments/environment.prod.ts" afterPath="$PROJECT_DIR$/App/teller-app/src/environments/environment.prod.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/teller-app/src/environments/environment.ts" afterPath="$PROJECT_DIR$/App/teller-app/src/environments/environment.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -45,7 +42,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="account-manager.service.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="account-manager.service.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/auth/account-manager.service.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="175">
@@ -53,6 +50,16 @@
               <folding>
                 <element signature="e#0#60#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".env" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Server/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="14" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="14" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -890,12 +897,12 @@
       <workItem from="1497830922988" duration="2418000" />
       <workItem from="1498086345031" duration="26104000" />
       <workItem from="1498593180688" duration="4718000" />
-      <workItem from="1498654976857" duration="3163000" />
+      <workItem from="1498654976857" duration="3252000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="270991000" />
+    <option name="totallyTimeSpent" value="271080000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1123,13 +1130,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="14" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/teller-app/src/app/account/account-form/account-form.component.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1344,6 +1344,14 @@
           <folding>
             <element signature="e#0#60#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="14" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
