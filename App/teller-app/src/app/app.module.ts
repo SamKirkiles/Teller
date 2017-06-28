@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
 import { HomeComponentComponent } from './home-component/home-component.component';
 import { HeaderComponent } from './header/header.component';
 import {RouterModule, Routes} from "@angular/router";
@@ -44,4 +43,7 @@ const appRoutes: Routes = [
   providers: [AuthGuard, AccountManagerService],
   bootstrap: [HeaderComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+
+}

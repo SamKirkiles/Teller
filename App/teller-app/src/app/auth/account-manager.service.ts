@@ -3,18 +3,41 @@ import {Headers, Http} from "@angular/http";
 import 'rxjs';
 import {User} from "./user.model";
 import {Router} from "@angular/router";
+import {isNullOrUndefined} from "util";
 
 @Injectable()
 export class AccountManagerService{
 
   public loggedIn = false;
   public currentUser:User;
-  public token:String;
+  public token:string;
 
 
   private headers = new Headers({'Content-Type': 'application/json'});
 
+
   constructor(private http:Http, private router: Router) {
+    let token = localStorage.getItem('session');
+    if (!isNullOrUndefined(token)){
+
+      this.getCurrentUser(token).then(res =>{
+
+        let body = JSON.parse(res['_body']);
+          if (body.payload.success){
+            this.loggedIn = true;
+          }
+        });
+    }
+  }
+
+  isLoggedIn():Boolean{
+    var loggedInCopy =  this.loggedIn;
+
+    if (!isNullOrUndefined(this.token) && loggedInCopy){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   signIn(email:String,password:String):Promise<any>{
@@ -24,7 +47,6 @@ export class AccountManagerService{
       "password": password
     }),{headers: this.headers}).toPromise().then(res => {
 
-      console.log('THis should be called');
 
       let body = JSON.parse(res["_body"]);
 
@@ -33,9 +55,7 @@ export class AccountManagerService{
           this.loggedIn = true;
           this.token = body.payload.token;
 
-          console.log("cookie should be set here");
-
-          document.cookie = "session="+this.token;
+          localStorage.setItem("session",this.token);
 
           this.getCurrentUser(this.token).then(userResult => {
             let userBody = JSON.parse(userResult["_body"]);
@@ -78,12 +98,13 @@ export class AccountManagerService{
     if (confirm('Are you sure you want to log out?')) {
       // Save it!
       this.loggedIn = false;
+      localStorage.clear();
 
     } else {
       // Do nothing!
     }
     console.log(this.loggedIn)
-    
+
   }
 
 }
