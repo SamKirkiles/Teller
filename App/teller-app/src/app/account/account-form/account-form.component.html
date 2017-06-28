@@ -1,0 +1,19 @@
+<h4>Edit account information</h4>
+
+
+<form [formGroup]="accountForm" id="formGroup"  style="margin-top: 25px;">
+
+  <div class="form-group">
+    <label for="fullnameinput">Change your full name</label>
+    <input class="form-control form-control-lg" id="fullnameinput" placeholder="Name" formControlName="fullname" value="{{getUser()?.fullname}}">
+  </div>
+
+  <p style="text-decoration: underline; cursor: pointer;">Change password</p>
+
+
+
+  <button class="btn btn-sm btn-outline-success " (click)="savePressed()">Save</button>
+  <hr>
+
+
+</form>

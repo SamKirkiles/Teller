@@ -1,0 +1,24 @@
+<div class="container">
+  <h1 style="margin-top: 50px">My Account - {{getUser()?.fullname}}</h1>
+  <hr>
+
+  <div *ngIf="edit; else othercontent">
+    <app-account-form></app-account-form>
+  </div>
+
+  <ng-template #othercontent><app-account-view></app-account-view> </ng-template>
+
+  <div *ngIf="!edit; else doneButton">
+    <button class="btn btn-primary btn-lg" (click)="editPressed()">Edit</button>
+  </div>
+  <ng-template #doneButton>
+    <button class="btn btn-primary btn-lg" (click)="editPressed()">Done</button>
+  </ng-template>
+
+
+  <hr>
+  <button class="btn btn-primary btn-lg btn-danger" >Delete Account</button>
+
+</div>
+
+

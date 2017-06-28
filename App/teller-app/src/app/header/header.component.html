@@ -20,10 +20,25 @@
       <div class="nav navbar-nav ml-auto" style="">
         <a href="#" routerLink="" class="nav-item nav-link ">Home</a>
         <a href="#"  class="nav-item nav-link">Legal</a>
-        <a href="#"  class="nav-item nav-link">Account</a>
-        <a href="#" routerLink="login" class="nav-item nav-link">Log In</a>
 
-        <button type="button" routerLink="signup" class="btn btn-primary nav-item nav-link" id="signup-nav-button">Sign Up</button>
+        <a href="#" class="nav-item nav-link">Press Kit</a>
+
+        <div *ngIf="accountManagerLoggedIn();">
+          <a href="#" routerLink="account" class="nav-item nav-link">Account</a>
+        </div>
+
+        <div *ngIf="!accountManagerLoggedIn(); else logOutButton">
+          <a href="#" routerLink="login" class="nav-item nav-link">Log In</a>
+        </div>
+        <ng-template #logOutButton>
+          <a href="#" (click)="signOut()" class="nav-item nav-link">Log Out</a>
+        </ng-template>
+
+        <div *ngIf="!accountManagerLoggedIn();">
+          <button type="button" routerLink="signup" class="btn btn-primary nav-item nav-link" id="signup-nav-button">Sign Up</button>
+        </div>
+
+
       </div>
 
     </div>
