@@ -17,24 +17,24 @@
   },
   "homepage": "https://github.com/SamKirkiles/Teller-API#readme",
   "devDependencies": {
-    "mocha": "^3.3.0"
+    "mocha": "^3.4.2"
   },
   "dependencies": {
-    "@types/jquery": "^2.0.41",
-    "apiai": "^4.0.1",
-    "aws-sdk": "^2.75.0",
-    "bcrypt": "^1.0.2",
-    "body-parser": "^1.17.0",
+    "@types/jquery": "^2.0.48",
+    "apiai": "^4.0.2",
+    "aws-sdk": "^2.79.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
     "dotenv": "^4.0.0",
-    "express": "^4.15.0",
+    "express": "^4.15.3",
     "express-http-to-https": "^1.0.2",
     "jsonwebtoken": "^7.4.1",
     "mysql": "^2.13.0",
     "node-gyp": "^3.6.2",
     "nodemailer": "^4.0.1",
     "path": "^0.12.7",
-    "plaid": "^2.0.0",
-    "request": "^2.80.0",
+    "plaid": "^2.0.4",
+    "request": "^2.81.0",
     "shortid": "^2.2.8"
   }
 }

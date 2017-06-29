@@ -97,7 +97,7 @@ function sendMessage(recipient, message, callback){
                 id: recipient
             },
             message:{
-                text: message
+                text: message``
             }
         }
     }
