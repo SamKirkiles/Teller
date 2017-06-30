@@ -6,7 +6,7 @@ let express = require('express');
 let apiRouter = express.Router();
 let bodyParser = require('body-parser');
 let mysql = require('mysql');
-let bcrypt = require('bcrypt');
+let bcrypt = require('bcryptjs');
 
 let jwt = require('jsonwebtoken');
 

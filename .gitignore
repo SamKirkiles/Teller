@@ -1,5 +1,6 @@
 reated by https://www.gitignore.io/api/node
 
+
 .idea
 .vscode
 .DS_Store
@@ -63,7 +64,6 @@ typings/
 
 # dotenv environment variables file
 .env
-user-data.sh
 
 
 # End of https://www.gitignore.io/api/node
