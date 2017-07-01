@@ -1,19 +1,19 @@
 
-require('dotenv').config()
+require('dotenv').config();
 
-let express = require('express')
+let express = require('express');
 let router = express.Router();
 let bodyParser = require('body-parser');
-let apiaimanager = require(__dirname + "/apiaimanager.js")
+let apiaimanager = require(__dirname + "/apiaimanager.js");
 let request = require("request");
 
-let balance = require(__dirname + "/../balance.js")
+let balance = require(__dirname + "/../balance.js");
 
-let path = require("path")
+let path = require("path");
 
-    let assert = require("assert")
+let assert = require("assert");
 
-let plaid = require(__dirname + "/accountManager.js")
+let plaid = require(__dirname + "/accountManager.js");
 
 let jsonParser = bodyParser.json();
 
@@ -27,18 +27,18 @@ router.get('/api/webhook', function (req, res) {
 
 router.post('/api/webhook', jsonParser, function(req,res){
 
-    let messaging_events = req.body.entry[0].messaging
+    let messaging_events = req.body.entry[0].messaging;
 
     messaging_events.forEach(function(event) {
         if (event.message && event.message.text){
-            let text = event.message.text
+            let text = event.message.text;
             receivedMessage(event)
         }
     });
 
     res.sendStatus(200);
     
-})
+});
 
 //called when the user sends a message
 function receivedMessage(event){
@@ -83,11 +83,9 @@ function receivedMessage(event){
             console.log("ERROR: Response was nil on receivedMessage")
         }
     });
-
-
 }
 
-function sendMessage(recipient, message, callback){
+function sendMessage(recipient, recipientmessage, callback){
     var options = {
         url: 'https://graph.facebook.com/v2.6/me/messages',
         method: "POST",
@@ -97,7 +95,7 @@ function sendMessage(recipient, message, callback){
                 id: recipient
             },
             message:{
-                text: message``
+                text: recipientmessage
             }
         }
     }

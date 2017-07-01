@@ -9,16 +9,22 @@ import {User} from "../../auth/user.model";
 })
 export class AccountViewComponent implements OnInit {
 
-  constructor(private accountManager: AccountManagerService) { }
+  currentUser: User;
+
+  constructor(private accountManager: AccountManagerService) {
+    this.getUser();
+  }
 
   ngOnInit() {
   }
 
-  getUser():User {
-    if (this.accountManager.loggedIn) {
-      return this.accountManager.currentUser;
-    } else {
-      return null;
+  getUser() {
+    if (this.accountManager.isLoggedIn()) {
+      this.accountManager.getCurrentUser(this.accountManager.token).then( user => {
+        this.currentUser = user;
+      });
+    }else {
+      this.currentUser = null;
     }
   }
 

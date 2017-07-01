@@ -10,7 +10,9 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 })
 export class AccountFormComponent implements OnInit {
 
+  currentUser: User;
   constructor(private accountManager: AccountManagerService) {
+    this.getUser();
   }
 
   accountForm = new FormGroup({
@@ -23,12 +25,13 @@ export class AccountFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  getUser():User {
-
-    if (this.accountManager.loggedIn) {
-      return this.accountManager.currentUser;
-    } else {
-      return null;
+  getUser() {
+    if (this.accountManager.isLoggedIn()) {
+      this.accountManager.getCurrentUser(this.accountManager.token).then( user => {
+        this.currentUser = user;
+      });
+    }else {
+      this.currentUser = null;
     }
   }
 

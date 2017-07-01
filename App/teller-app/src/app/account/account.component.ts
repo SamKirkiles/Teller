@@ -10,21 +10,29 @@ import {Router, RouterModule} from "@angular/router";
 })
 export class AccountComponent implements OnInit {
 
-  constructor(private accountManager: AccountManagerService, private router: Router) { }
-
   edit = false;
 
+  currentUser: User;
+
+  constructor(private accountManager: AccountManagerService, private router: Router) {
+    this.getUser();
+  }
+
+
   ngOnInit() {
-    if (!this.accountManager.loggedIn){
+    if (!this.accountManager.isLoggedIn()){
+      console.log('We are not logged in');
       this.router.navigate(['/login']);
     }
   }
 
-  getUser():User{
-    if (this.accountManager.loggedIn){
-      return this.accountManager.currentUser;
-    }else{
-      return null;
+  getUser() {
+    if (this.accountManager.isLoggedIn()) {
+      this.accountManager.getCurrentUser(this.accountManager.token).then( user => {
+        this.currentUser = user;
+      });
+    }else {
+      this.currentUser = null;
     }
 
   }
