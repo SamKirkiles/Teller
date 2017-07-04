@@ -106,11 +106,9 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
 
         connection.query('SELECT * FROM user WHERE email=?',[email],function(error, results, fields){
 
-        if (results[0] !== undefined){
+        if (results[0] !== undefined  && error !== undefined){
 
             bcrypt.compare(password, results[0].password.toString(), function(err, bcryptResponse) {
-                console.log(bcryptResponse);
-                console.log(err);
 
                 if (bcryptResponse === true){
 
@@ -123,15 +121,15 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
 
                     //the login was successful and we have a user that we have now turned into a stirng
 
-                    jwt.sign({ userID: results[0].userID }, 'secret', { algorithm: 'HS256' }, function(err, token) {
+                    jwt.sign({ userID: results[0].userID }, 'secret', { algorithm: 'HS256' }, function(jwtErr, token) {
                         
                         if (err === undefined){
-                            console.log("there was an error" + err.message);
+                            res.status(200).send({"payload":{"success":true, "token":token},"error":{"errorCode":null, "message":null}});
+
                         }else{
-                            console.log()
+                            res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":jwtErr.code, "message":jwtErr.message}});
                         }
 
-                        res.status(200).send({"payload":{"success":true, "token":token},"error":{"errorCode":null, "message":null}});
                     });
 
                 }else{
@@ -140,6 +138,7 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
             });
         }else{
             res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":null, "message":null}});
+
         }
 
     });
@@ -188,14 +187,14 @@ apiRouter.post('/api/signup', jsonParser, function(req,res){
         bcrypt.hash(plaintextpass, 10, function(err, hash) {
         if (err !== undefined){
             res.status(200).send({"payload":{"userID":null},"error":{"errorCode":"HASH_ERROR'", "message":"Could not hash password"}});
-            return;
+
         }else{
             connection.query('INSERT INTO user (`fullname`, `email`, `password`, `userID`, `date_created`) VALUES (?,?,?,?,current_timestamp());',
                 [req.body.fullname,req.body.email,hash,id], function(error,results,fields){
                     if (error === null){
                         res.status(200).send({"payload":{"userID":id},"error":{"errorCode":null, "message":null}});
                     }else{
-                        console.log(error)
+                        console.log(error);
                         res.status(200).send({"payload":{"userID":null},"error":{"errorCode":error.code, "message":error.message}});
                     }
                 })
@@ -235,4 +234,4 @@ function testConnection(action){
 
 module.exports = {
     router: apiRouter
-}
+};

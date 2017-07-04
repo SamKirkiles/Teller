@@ -33,21 +33,20 @@ export class LogInComponent implements OnInit {
 
 
       this.accountManager.signIn(this.email,this.password)
-        .then(response =>{
+        .then(response => {
 
-          let body = JSON.parse(response._body);
+          const body = JSON.parse(response._body);
 
           if (body.payload.success === true){
             this.router.navigate(['/']);
-            document.cookie = 'userToken= ' + body.payload.token;
-          }else{
+          }else {
             this.signInError = true;
           }
       })
-        .catch(error=>{
+        .catch(error => {
           this.signInError = true;
-        })
-    }else{
+        });
+    }else {
       console.error("Error signing in");
 
       this.signInError = true;

@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut(){
-    console.log(this.accountManager.loggedIn)
+    console.log(this.accountManager.loggedIn);
     this.accountManager.signOut();
   }
 

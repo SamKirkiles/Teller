@@ -10,7 +10,7 @@ import {environment} from '../../environments/environment';
 export class AccountManagerService {
 
   public loggedIn = false;
-  public currentUser: User;
+  public currentUser: User = null;
   public token: string;
 
 
@@ -20,13 +20,15 @@ export class AccountManagerService {
 
   constructor(private http: Http, private router: Router) {
 
+
     const resultToken = localStorage.getItem('session');
     if (!isNullOrUndefined(resultToken)) {
-
-      this.getCurrentUser(this.token).then(userResult => {
+      this.getCurrentUser(resultToken).then(userResult => {
         if (!isNullOrUndefined(userResult)) {
+          console.log('this should happen first');
           this.loggedIn = true;
           this.token = resultToken;
+          this.currentUser = userResult;
         }else {
           this.loggedIn = false;
           this.token = null;
@@ -35,20 +37,22 @@ export class AccountManagerService {
     }
   }
 
+
+
   isLoggedIn(): Boolean {
     const loggedInCopy =  this.loggedIn;
+    const resultToken = localStorage.getItem('session');
 
-    if (!isNullOrUndefined(this.token) && loggedInCopy) {
+    if (!isNullOrUndefined(resultToken) && loggedInCopy) {
       return true;
     }else {
-      console.log('we are not logged in');
       return false;
     }
   }
 
   signIn(email: String, password: String): Promise<any>{
 
-    //return a new promise from an http post to signin that then gets the current user with the token that is returned
+    // return a new promise from an http post to signin that then gets the current user with the token that is returned
 
     return this.http.post(environment.apiUrl + '/api/signin', JSON.stringify({
       'email' : email,
@@ -63,16 +67,18 @@ export class AccountManagerService {
 
           localStorage.setItem('session', this.token);
 
-          //call our getCurrentUser method which returns a promise and use the user created from that
+          // call our getCurrentUser method which returns a promise and use the user created from that
 
           this.getCurrentUser(this.token).then(userResult => {
             if (!isNullOrUndefined(userResult)) {
               this.loggedIn = true;
+              this.currentUser = userResult;
             }else {
               this.loggedIn = false;
+              this.currentUser = null;
             }
           });
-          //there was a problem signing in and we didnt even get the user
+          // there was a problem signing in and we didnt even get the user
         }else {
           this.loggedIn = false;
           this.token = null;
@@ -86,21 +92,33 @@ export class AccountManagerService {
       'fullname': fullname,
       'password': password,
       'email': email
-    }),{headers: this.headers})
+    }), {headers: this.headers})
       .toPromise();
   }
 
   getCurrentUser(token: String): Promise<User> {
-    return this.http.post(environment.apiUrl + '/api/currentuser' , JSON.stringify({
-      'token': token
-    }), {headers: this.headers}).toPromise().then(res => {
-      const body = JSON.parse(res['_body']);
-      if (body.payload.success !== false) {
-        return new User(body.payload.result.fullname, body.payload.result.email, body.payload.result.userID);
-      }else {
-        return null;
-      }
-    });
+
+    // if we already have a user, return it else we need to fetch
+
+    if (!isNullOrUndefined(this.currentUser)) {
+      return new Promise<User>((resolve, reject) => {
+        resolve(this.currentUser);
+      });
+    }else {
+      return this.http.post(environment.apiUrl + '/api/currentuser' , JSON.stringify({
+        'token': token
+      }), {headers: this.headers}).toPromise().then(res => {
+        const body = JSON.parse(res['_body']);
+        if (body.payload.success !== false) {
+          this.currentUser = new User(body.payload.result.fullname, body.payload.result.email, body.payload.result.userID);
+          return this.currentUser;
+        }else {
+          this.currentUser = null;
+          return null;
+        }
+      });
+    }
+
   }
 
   signOut() {
@@ -113,7 +131,6 @@ export class AccountManagerService {
     } else {
       // Do nothing!
     }
-    console.log(this.loggedIn);
 
   }
 

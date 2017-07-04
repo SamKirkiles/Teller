@@ -47,7 +47,7 @@ function receivedMessage(event){
     apiaimanager.textRequest(event.message.text,function(response, error){
 
         if (response){
-            console.log(response.result.action)
+            console.log(response.result.action);
             //CHECK BALANCE
             if (response.result.action === 'check-balance'){
                 balance.checkBalance(
@@ -70,7 +70,7 @@ function receivedMessage(event){
                     })
                 });
             }else if (response.result.action === 'view-transactions'){
-                response.result.parameters
+                response.result.parameters;
                 balance.viewTransactions(response.result.parameters.date,response.result.parameters["date-period"],response.result.actionIncomplete, 'access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0', function(result){
                     sendMessage(event.sender.id, result)
                 })
@@ -98,7 +98,7 @@ function sendMessage(recipient, recipientmessage, callback){
                 text: recipientmessage
             }
         }
-    }
+    };
 
     request(options,function(error,incomingMessage,response){
         if (!error){

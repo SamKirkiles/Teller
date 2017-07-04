@@ -13,7 +13,7 @@ import {AccountManagerService} from "../account-manager.service";
 
 
 
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit {s;
 
   signUpForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -30,9 +30,9 @@ export class SignUpComponent implements OnInit {
     if (this.signUpForm.valid === true){
       this.accountManager.signUp(this.signUpForm.value.name,this.signUpForm.value.passcheck,this.signUpForm.value.email)
         .then(response => {
-          console.log(response)
+          console.log(response);
 
-          let responseBody = JSON.parse(response._body)
+          let responseBody = JSON.parse(response._body);
 
           if (responseBody.error.errorCode === null){
             console.log("Successful signup.!");

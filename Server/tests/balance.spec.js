@@ -1,8 +1,8 @@
-var assert = require("assert")
-var balance = require(__dirname + "/../balance.js")
+var assert = require("assert");
+var balance = require(__dirname + "/../balance.js");
 
 describe('Get Balance', function(){
-    this.timeout(15000)
+    this.timeout(15000);
     
     //First test case
 
@@ -15,13 +15,13 @@ describe('Get Balance', function(){
             false,
             'access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0',
             function (response){
-                assert(typeof response === "string", "Response gave unexpected value")
+                assert(typeof response === "string", "Response gave unexpected value");
                 done()
             }
         )
     })
 
-})
+});
 
 
 

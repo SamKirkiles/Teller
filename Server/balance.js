@@ -1,5 +1,5 @@
 
-var accountManager = require(__dirname + "/routes/accountManager.js")
+var accountManager = require(__dirname + "/routes/accountManager.js");
 
 /** This function returns a string response in a callback to a given query for a set of banks  
  * @param {string} accountType - Account Type: The type of account to check the balance of
@@ -15,7 +15,7 @@ function checkBalance(accountType, bank, fulfillment, actionIncomlpete, plaidUse
     }else{
         //we need to continue with what we were doing
         accountManager.balance(plaidUserID,function(accounts){
-            var returnedAccounts = []
+            var returnedAccounts = [];
 
 
             accounts.forEach(function(account) {
@@ -28,10 +28,10 @@ function checkBalance(accountType, bank, fulfillment, actionIncomlpete, plaidUse
 
             }, this);
 
-            var responseString = "Heres your balance rundown: \n \n"
+            var responseString = "Heres your balance rundown: \n \n";
 
             returnedAccounts.forEach(function(account) {
-               var entry = account.name+": $"+ account.balances.current + "\n"
+               var entry = account.name+": $"+ account.balances.current + "\n";
                 responseString+=entry
             }, this);
 
@@ -64,11 +64,11 @@ function viewTransactions(date, dateperiod, actionIncomplete, plaidUserID, compl
             if (response.total_transactions === 0){
                 completion("You don't have any purchases from this date")
             }else{
-                var responseString = "Here are your purchases: \n \n"
-                var transactions = response.transactions
+                var responseString = "Here are your purchases: \n \n";
+                var transactions = response.transactions;
                 transactions.forEach(function(transaction){
                     responseString += (transaction.name + " $" + transaction.amount + "\n")
-                })
+                });
                 completion(responseString)
             }
         })
@@ -80,4 +80,4 @@ function viewTransactions(date, dateperiod, actionIncomplete, plaidUserID, compl
 module.exports = {
     checkBalance:checkBalance,
     viewTransactions: viewTransactions
-}
+};

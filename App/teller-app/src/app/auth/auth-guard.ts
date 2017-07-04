@@ -11,11 +11,14 @@ export class AuthGuard implements CanActivate{
 
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):Observable<boolean> | boolean{
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):Promise<boolean> | boolean{
 
-    if (this.accountManager.isLoggedIn()){
+
+    // we need to use async canActivate here
+
+    if (this.accountManager.isLoggedIn()) {
       return true;
-    }else{
+    }else {
       this.router.navigate(['/login']);
       return false;
     }

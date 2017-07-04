@@ -2,6 +2,6 @@ import {ValidatorFn, AbstractControl, FormControl, FormGroup} from "@angular/for
 
 
 export function passwordMatchValidator(g: FormGroup){
-  console.log()
+  console.log();
   return g.get('pass').value === g.get('passcheck').value ? null : {'mismatch': true};
 }

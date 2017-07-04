@@ -59,13 +59,13 @@ function generateInsitutionsCSV(){
         //add to stream every get insititutions call and keep looping to filesystem
         //pipe to file system
 
-        fs.unlinkSync('file.csv')
+        fs.unlinkSync('file.csv');
 
         var stream = fs.createWriteStream('file.csv',{
              autoClose: true,
              'mode': "0666",
              flags:'a'
-        })
+        });
 
         var counter = 0;
 
@@ -93,4 +93,4 @@ module.exports = {
     transactions: getTransactions,
     router: router,
     generateInsitutionsCSV: generateInsitutionsCSV
-}
+};
