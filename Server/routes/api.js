@@ -123,7 +123,7 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
 
                     jwt.sign({ userID: results[0].userID }, 'secret', { algorithm: 'HS256' }, function(jwtErr, token) {
                         
-                        if (err === undefined){
+                        if (jwtErr === null){
                             res.status(200).send({"payload":{"success":true, "token":token},"error":{"errorCode":null, "message":null}});
 
                         }else{

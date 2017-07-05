@@ -25,17 +25,19 @@ export class LogInComponent implements OnInit {
 
   constructor(private accountManager: AccountManagerService, private router: Router) { }
 
-  signin(){
-    this.signInError = false;
+  signin() {
+
+      this.signInError = false;
 
 
     if (this.loginForm.valid === true){
 
-
-      this.accountManager.signIn(this.email,this.password)
+      this.accountManager.signIn(this.email, this.password)
         .then(response => {
+            console.log('We are signing in');
 
-          const body = JSON.parse(response._body);
+
+            const body = JSON.parse(response._body);
 
           if (body.payload.success === true){
             this.router.navigate(['/']);
@@ -47,7 +49,7 @@ export class LogInComponent implements OnInit {
           this.signInError = true;
         });
     }else {
-      console.error("Error signing in");
+      console.error('Error signing in');
 
       this.signInError = true;
     }

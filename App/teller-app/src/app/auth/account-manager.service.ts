@@ -50,15 +50,19 @@ export class AccountManagerService {
     }
   }
 
-  signIn(email: String, password: String): Promise<any>{
+  signIn(email: String, password: String): Promise<any> {
 
     // return a new promise from an http post to signin that then gets the current user with the token that is returned
 
-    return this.http.post(environment.apiUrl + '/api/signin', JSON.stringify({
+      console.log(environment.apiUrl);
+      return this.http.post(environment.apiUrl + '/api/signin', JSON.stringify({
       'email' : email,
       'password': password
     }), {headers: this.headers}).toPromise().then(res => {
-      const body = JSON.parse(res['_body']);
+
+          console.log(res);
+
+          const body = JSON.parse(res['_body']);
 
         if (body.payload.success === true){
 
@@ -80,7 +84,8 @@ export class AccountManagerService {
           });
           // there was a problem signing in and we didnt even get the user
         }else {
-          this.loggedIn = false;
+            console.log('There was a problem signing in');
+            this.loggedIn = false;
           this.token = null;
         }
       return res;
