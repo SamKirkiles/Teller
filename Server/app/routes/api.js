@@ -1,7 +1,6 @@
 let envPath = __dirname + "/../.env";
 require('dotenv').config({path:envPath});
 let shortid = require('shortid');
-
 let express = require('express');
 let apiRouter = express.Router();
 let bodyParser = require('body-parser');
@@ -228,8 +227,6 @@ function testConnection(action){
     });
 
 }
-
-
 
 
 module.exports = {

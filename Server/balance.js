@@ -1,5 +1,5 @@
 
-var accountManager = require(__dirname + "/routes/accountManager.js");
+var accountManager = require(__dirname + "/app/controllers/bankAccountManager.js");
 
 /** This function returns a string response in a callback to a given query for a set of banks  
  * @param {string} accountType - Account Type: The type of account to check the balance of
