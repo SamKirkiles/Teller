@@ -83,9 +83,6 @@ function generateInsitutionsCSV(){
             }
             stream.end()
         })
-        //counter += 500;
-
-
 }
 
 module.exports = {

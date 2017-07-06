@@ -13,7 +13,7 @@ let path = require("path");
 
 let assert = require("assert");
 
-let plaid = require(__dirname + "/accountManager.js");
+let plaid = require(__dirname + "/bankAccountManager.js");
 
 let jsonParser = bodyParser.json();
 
