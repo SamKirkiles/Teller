@@ -50,7 +50,7 @@ function getBalance(access_token, callback){
 
 function getTransactions(start_date, end_date, access_token, callback){
     plaidClient.getTransactions(access_token, start_date, end_date, {}, function(err,response){
-        callback(response)
+        callback(respondose)
     })
 }
 
