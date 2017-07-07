@@ -49,30 +49,41 @@ function checkBalance(accountType, bank, fulfillment, actionIncomlpete, plaidUse
  * @param {function} completion - Completion Block: the completion function called with one arg of string when the query is finished
  * */
 function viewTransactions(date, dateperiod, actionIncomplete, plaidUserID, completion){
+    console.log("Checking transactions... working...");
+
     if (date !== ""){
         //we have the date and we can get the transactions
-        accountManager.transactions(date, date, plaidUserID, function(response){
-            if (response.total_transactions === 0){
+        accountManager.transactions(date, date, plaidUserID, function(err, response){
+            if (!response.total_transactions){
+                console.log("Couldn't get any transactions")
                 completion("You don't have any purchases from this date")
             }else{
+                console.log(response.total_transactions);
                 completion(response.total_transactions)
             }
         })
     }else if (dateperiod !== ""){
         //we have some transactions here
-        accountManager.transactions(dateperiod.substr(0,10),dateperiod.substr(-10),plaidUserID,function(response){
-            if (response.total_transactions === 0){
-                completion("You don't have any purchases from this date")
-            }else{
+        accountManager.transactions(dateperiod.substr(0,10),dateperiod.substr(-10),plaidUserID,function(err, response){
+            console.log(err);
+            if (response !== undefined){
+                console.log(response.total_transactions);
+                completion(response.total_transactions)
+
                 var responseString = "Here are your purchases: \n \n";
                 var transactions = response.transactions;
                 transactions.forEach(function(transaction){
                     responseString += (transaction.name + " $" + transaction.amount + "\n")
                 });
                 completion(responseString)
+
+            }else{
+                completion("You don't have any purchases from this date")
             }
         })
     }
+
+    console.log('finished')
 
 }
 

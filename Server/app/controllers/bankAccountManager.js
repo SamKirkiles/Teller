@@ -14,7 +14,7 @@ const plaidClient = new plaid.Client(
     process.env.PLAID_CLIENT_ID,
     process.env.PLAID_SECRET,
     process.env.PLAID_PUBLIC_KEY,
-    plaid.environments.sandbox);
+    plaid.environments.development);
 
 router.post("/authenticate", function(request,response){
     let publicToken = request.body.public_token;
@@ -50,7 +50,7 @@ function getBalance(access_token, callback){
 
 function getTransactions(start_date, end_date, access_token, callback){
     plaidClient.getTransactions(access_token, start_date, end_date, {}, function(err,response){
-        callback(respondose)
+        callback(response)
     })
 }
 

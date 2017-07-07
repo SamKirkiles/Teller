@@ -1,18 +1,12 @@
-
 require('dotenv').config();
-
 let express = require('express');
 let router = express.Router();
 let bodyParser = require('body-parser');
 let apiaimanager = require(__dirname + "/apiaimanager.js");
 let request = require("request");
-
 let balance = require(__dirname + "/../../balance.js");
-
 let path = require("path");
-
 let assert = require("assert");
-
 let plaid = require(__dirname + "/../controllers/bankAccountManager.js");
 
 let jsonParser = bodyParser.json();

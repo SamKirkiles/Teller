@@ -4,7 +4,7 @@ require('dotenv').config();
 var bodyParser = require('body-parser');
 var messenger = require(__dirname + "/app/routes/messenger.js");
 var accountManager = require(__dirname + "/app/controllers/bankAccountManager.js");
-let apiRouter = require(__dirname + "/app/routes/api.js").router;
+let apiRouter = require(__dirname + "/app/routes/api.router.js").router;
 
 var app = express();
 
