@@ -1,20 +1,22 @@
 let envPath = __dirname + "/../.env";
 require('dotenv').config({path:envPath});
 
+
 let express = require("express");
 let router = express.Router();
 
 let plaid = require('plaid');
+
 let mysql = require('mysql');
 
 let fs = require("fs");
-
 
 const plaidClient = new plaid.Client(
     process.env.PLAID_CLIENT_ID,
     process.env.PLAID_SECRET,
     process.env.PLAID_PUBLIC_KEY,
-    plaid.environments.development);
+    plaid.environments.sandbox
+);
 
 router.post("/authenticate", function(request,response){
     let publicToken = request.body.public_token;

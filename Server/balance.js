@@ -1,4 +1,4 @@
-
+console.log('THE PROBLEM IS HERE');
 var accountManager = require(__dirname + "/app/controllers/bankAccountManager.js");
 
 /** This function returns a string response in a callback to a given query for a set of banks  
@@ -9,6 +9,7 @@ var accountManager = require(__dirname + "/app/controllers/bankAccountManager.js
  * @param {function} completion - Completion Block: the completion function called with one arg of string when the query is finished
 */
 function checkBalance(accountType, bank, fulfillment, actionIncomlpete, plaidUserID, completion){
+
 
     if (actionIncomlpete === true){
         completion(fulfillment)

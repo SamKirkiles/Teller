@@ -1,5 +1,11 @@
+let envPath = __dirname + "/../.env";
+require('dotenv').config({path:envPath});
+
+
 var assert = require("assert");
+
 var balance = require(__dirname + "/../balance.js");
+
 
 describe('Get Balance', function(){
     this.timeout(15000);
