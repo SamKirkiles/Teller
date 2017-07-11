@@ -7,6 +7,10 @@ body h1{
   color: gray;
 }
 
+body h2{
+    color: dimgray;
+}
+
 body h4{
   color: darkgray;
 }

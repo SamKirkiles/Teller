@@ -20,12 +20,10 @@ export class AccountManagerService {
 
   constructor(private http: Http, private router: Router) {
 
-
     const resultToken = localStorage.getItem('session');
     if (!isNullOrUndefined(resultToken)) {
       this.getCurrentUser(resultToken).then(userResult => {
         if (!isNullOrUndefined(userResult)) {
-          console.log('this should happen first');
           this.loggedIn = true;
           this.token = resultToken;
           this.currentUser = userResult;
