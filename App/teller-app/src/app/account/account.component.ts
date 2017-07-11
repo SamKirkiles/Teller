@@ -18,7 +18,6 @@ export class AccountComponent implements OnInit {
     this.getUser();
   }
 
-
   ngOnInit() {
     if (!this.accountManager.isLoggedIn()){
       console.log('We are not logged in');
@@ -37,7 +36,7 @@ export class AccountComponent implements OnInit {
 
   }
 
-  editPressed(){
+  editPressed() {
     this.edit = !this.edit;
   }
 

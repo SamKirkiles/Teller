@@ -13,13 +13,15 @@ import { AccountFormComponent } from './account/account-form/account-form.compon
 import { AccountViewComponent } from './account/account-view/account-view.component';
 import { AccountPasswordResetComponent } from './account/account-password-reset/account-password-reset.component';
 import {AuthGuard} from './auth/auth-guard';
+import { LinkAccountComponent } from './account/link-account/link-account.component';
 
 const appRoutes: Routes = [
-  {path:'', component:HomeComponentComponent},
-  {path:'signup', component:SignUpComponent},
-  {path: 'login', component:LogInComponent},
-  {path: 'account', component:AccountComponent, canActivate:[AuthGuard]},
-  {path: 'resetpassword', component:AccountPasswordResetComponent}
+  {path: '', component: HomeComponentComponent},
+  {path: 'signup', component: SignUpComponent},
+  {path: 'login', component: LogInComponent},
+  {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
+  {path: 'resetpassword', component: AccountPasswordResetComponent},
+  {path: 'linkaccount', component: LinkAccountComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
@@ -32,6 +34,7 @@ const appRoutes: Routes = [
     AccountFormComponent,
     AccountViewComponent,
     AccountPasswordResetComponent,
+    LinkAccountComponent,
   ],
   imports: [
     BrowserModule,

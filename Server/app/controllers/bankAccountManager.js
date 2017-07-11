@@ -26,6 +26,7 @@ router.post("/authenticate", function(request,response){
             console.log(err.error_message + err.error_code);
             return
         }
+        console.log("successfully authenticated account")
         access_token = res.access_token;
     });
 });
