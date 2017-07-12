@@ -174,6 +174,9 @@ apiRouter.post('/api/currentuser', jsonParser, function(req,res){
     });
 });
 
+apiRouter.post('/api/plaidID', function(req,res){
+    
+});
 apiRouter.post('/api/signup', jsonParser, function(req,res){
     let id = shortid.generate();
 
