@@ -8,7 +8,7 @@ var balance = require(__dirname + "/../balance.js");
 
 
 describe('Get Balance', function(){
-    this.timeout(15000);
+    this.timeout(30000);
     
     //First test case
 

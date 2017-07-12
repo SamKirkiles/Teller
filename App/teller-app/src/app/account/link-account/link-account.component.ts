@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {AccountManagerService} from "../../auth/account-manager.service";
 
 
 declare var Plaid: any;
@@ -13,7 +14,7 @@ declare var Plaid: any;
 
 export class LinkAccountComponent implements OnInit {
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private accountManager: AccountManagerService) {
 
     }
 
@@ -22,7 +23,6 @@ export class LinkAccountComponent implements OnInit {
   }
 
     openHandler() {
-
 
         const linkhandler = Plaid.create({
             env: 'sandbox',
@@ -35,8 +35,17 @@ export class LinkAccountComponent implements OnInit {
                 // The metadata object contains info about the
                 // institution the user selected and the
                 // account_id, if selectAccount is enabled.
-                console.log(public_token)
-                this.router.navigate(['/account']);
+
+                const token = localStorage.getItem('session');
+
+                this.accountManager.getCurrentUser(token).then(user => {
+                    console.log(user.userID);
+                    console.log(public_token)
+                    this.router.navigate(['/account']);
+
+                    //make an http call to add the new plaid token to the user to signify that we have linked a bank account
+                    //we will also have to link an account with facebook so we can identify the user from the frontend
+                });
 
 
             },
