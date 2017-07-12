@@ -14,9 +14,13 @@ declare var Plaid: any;
 
 export class LinkAccountComponent implements OnInit {
 
+    linked: Boolean = false;
+
     constructor(private router: Router, private accountManager: AccountManagerService) {
 
     }
+
+
 
   ngOnInit() {
 
@@ -41,7 +45,7 @@ export class LinkAccountComponent implements OnInit {
                 this.accountManager.getCurrentUser(token).then(user => {
                     console.log(user.userID);
                     console.log(public_token)
-                    this.router.navigate(['/account']);
+                    this.linked = true;
 
                     //make an http call to add the new plaid token to the user to signify that we have linked a bank account
                     //we will also have to link an account with facebook so we can identify the user from the frontend
@@ -67,5 +71,7 @@ export class LinkAccountComponent implements OnInit {
         console.log('clicked');
     }
 
-
+    backToAccount(){
+        this.router.navigate(['/account']);
+    }
 }

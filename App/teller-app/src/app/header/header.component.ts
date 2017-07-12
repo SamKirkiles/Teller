@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  signOut(){
+  signOut() {
     console.log(this.accountManager.loggedIn);
     this.accountManager.signOut();
   }

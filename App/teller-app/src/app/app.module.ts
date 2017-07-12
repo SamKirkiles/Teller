@@ -14,6 +14,7 @@ import { AccountViewComponent } from './account/account-view/account-view.compon
 import { AccountPasswordResetComponent } from './account/account-password-reset/account-password-reset.component';
 import {AuthGuard} from './auth/auth-guard';
 import { LinkAccountComponent } from './account/link-account/link-account.component';
+import { FooterComponent } from './footer/footer/footer.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponentComponent},
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     AccountViewComponent,
     AccountPasswordResetComponent,
     LinkAccountComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<div class="container text-center col-md-5 align-content-center" style="margin-top: 50px;">
+<div *ngIf="linked === false; else linkSuccess" class="container text-center col-md-5 align-content-center" style="margin-top: 50px;">
 
     <h2>Link your bank to start using Teller</h2>
     <p>Link your bank account through our partner Plaid. Teller does not have access to any bank login or private information.
@@ -7,4 +7,15 @@
 
 
 </div>
+
+<ng-template #linkSuccess>
+    <div class="container text-center col-md-5 align-content-center" style="margin-top: 50px;">
+        <h2>Congratulations! You have successfully linked your account to Teller.</h2>
+        <!--Check mark graphic-->
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+
+        <button class="btn-primary btn" style="margin-bottom: 10px;" (click)="backToAccount()">Back to Account page</button>
+
+    </div>
+</ng-template>
 
