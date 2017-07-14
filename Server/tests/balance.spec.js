@@ -19,7 +19,7 @@ describe('Get Balance', function(){
             "Bank of America",
             "This is the fullfillment",
             false,
-            'access-sandbox-10553f44-184a-4ef0-8219-053dc6',
+            'access-sandbox-c4d2b9ff-a609-4753-878e-4ef6f1583594',
             function (response){
                 assert(typeof response === "string", "Response gave unexpected value");
                 done()

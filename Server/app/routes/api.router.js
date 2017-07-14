@@ -101,6 +101,8 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
     let email = req.body.email;
     let password = req.body.password;
 
+    console.log('signin pressed');
+
     testConnection(query);
 
     function query() {
