@@ -9,6 +9,8 @@ let bcrypt = require('bcryptjs');
 
 let jwt = require('jsonwebtoken');
 
+let bankAccountManager = require(__dirname + "/../controllers/bankAccountManager.js");
+
 let aws = require('aws-sdk');
 let ses = new aws.SES({
     region:"us-east-1",
@@ -103,9 +105,11 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
 
     function query() {
 
+        //find all results
         connection.query('SELECT * FROM user WHERE email=?',[email],function(error, results, fields){
 
-        if (results[0] !== undefined  && error !== undefined){
+            //there should be no error here
+        if (results[0] !== undefined  && error === null){
 
             bcrypt.compare(password, results[0].password.toString(), function(err, bcryptResponse) {
 
@@ -136,7 +140,7 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
                 }
             });
         }else{
-            res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":null, "message":null}});
+            res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":error.errorCode, "message":error.message}});
 
         }
 
@@ -174,9 +178,40 @@ apiRouter.post('/api/currentuser', jsonParser, function(req,res){
     });
 });
 
-apiRouter.post('/api/plaidID', function(req,res){
-    
+apiRouter.post('/api/plaidID', jsonParser, function(req,res){
+
+    const plaidID = req.body.plaid_ID;
+    const userID = req.body.user;
+
+    //send to server
+
+    testConnection(updatePlaidID);
+
+    function updatePlaidID(){
+
+        bankAccountManager.exchangeToken(plaidID, function(bankAccountError, plaidResult) {
+            if (bankAccountError === null){
+                //we have successfully exchanged token
+                const privateToken = plaidResult;
+                connection.query('UPDATE user SET plaid_private_ID = ? WHERE userID = ?', [privateToken, userID], function(sqlError, results, fields){
+                    if (sqlError === null){
+                        //we have retrieved the key and are now sending a callback and have successfully added the users bank
+                        res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
+                    }else{
+                        //there is a sql error and we need to return an error
+                        res.status(200).send({"payload":{'success':false},"error":{"errorCode":sqlError.code, "message":sqlError.message}});
+                    }
+                });
+            }else{
+                //there is a invalid token and we need to return an error
+                res.status(200).send({"payload":{'success':false},"error":{"errorCode":bankAccountError.error_code, "message":bankAccountError.error_message}});
+            }
+        });
+
+    }
 });
+
+
 apiRouter.post('/api/signup', jsonParser, function(req,res){
     let id = shortid.generate();
 

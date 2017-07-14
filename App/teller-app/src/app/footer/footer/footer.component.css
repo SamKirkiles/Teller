@@ -1,7 +1,9 @@
 .background{
-    background-color: #5f6a7d;
+    background-color: lightslategray;
     width: 100%;
-    bottom: 0;
+    padding: 0px;
+    bottom: 0px;
+    margin-bottom: 0px;
 }
 
 #copyright{

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AccountManagerService} from "../../auth/account-manager.service";
-
+import {Http, Headers} from '@angular/http';
+import {environment} from '../../../environments/environment';
 
 declare var Plaid: any;
 
@@ -16,7 +17,10 @@ export class LinkAccountComponent implements OnInit {
 
     linked: Boolean = false;
 
-    constructor(private router: Router, private accountManager: AccountManagerService) {
+    private headers = new Headers({'Content-Type': 'application/json'});
+
+
+    constructor(private router: Router, private accountManager: AccountManagerService, private http: Http) {
 
     }
 
@@ -44,11 +48,19 @@ export class LinkAccountComponent implements OnInit {
 
                 this.accountManager.getCurrentUser(token).then(user => {
                     console.log(user.userID);
-                    console.log(public_token)
-                    this.linked = true;
+                    let publicToken = public_token
+                    // make an http call to add the new plaid token to the user to signify that we have linked a bank account
+                    // we will also have to link an account with facebook so we can identify the user from the frontend
 
-                    //make an http call to add the new plaid token to the user to signify that we have linked a bank account
-                    //we will also have to link an account with facebook so we can identify the user from the frontend
+                    this.http.post(environment.apiUrl + '/api/plaidID', JSON.stringify({
+                        'plaid_ID' : publicToken,
+                        'user': user.userID
+                    }), {headers: this.headers}).toPromise().then(res => {
+                        // we have sent request to Teller api to update the user and now have the response
+                        const body = JSON.parse(res['_body']);
+                        console.log(body);
+                        this.linked = true;
+                    });
                 });
 
 

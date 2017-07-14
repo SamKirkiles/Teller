@@ -18,18 +18,22 @@ const plaidClient = new plaid.Client(
     plaid.environments.sandbox
 );
 
-router.post("/authenticate", function(request,response){
-    let publicToken = request.body.public_token;
-    
-    plaidClient.exchangePublicToken(publicToken, function(err, res){
-        if (err != null){
-            console.log(err.error_message + err.error_code);
-            return
+
+/** Exchange public token for private token
+ * @param {string} token
+ * @param {function(error, private_token)} callback
+ */
+function exchangeToken(token, callback){
+    plaidClient.exchangePublicToken(token, function(err, res){
+        if (err === null){
+            console.log("successfully authenticated account")
+            const access_token = res.access_token;
+            callback(null, access_token);
+        }else{
+            callback(err, null);
         }
-        console.log("successfully authenticated account")
-        access_token = res.access_token;
-    });
-});
+    })
+}
 
 
 
@@ -92,5 +96,6 @@ module.exports = {
     balance: getBalance,
     transactions: getTransactions,
     router: router,
-    generateInsitutionsCSV: generateInsitutionsCSV
+    generateInsitutionsCSV: generateInsitutionsCSV,
+    exchangeToken: exchangeToken
 };

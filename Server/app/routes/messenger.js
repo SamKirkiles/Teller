@@ -49,14 +49,14 @@ function receivedMessage(event){
                     response.result.parameters.bank, 
                     response.result.fulfillment.speech, 
                     response.result.actionIncomplete, 
-                    'access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0', 
+                    'access-sandbox-10553f44-184a-4ef0-8219-053dc6',
                     function(result){
                         sendMessage(event.sender.id, result)
                     }
                 )
             }else if (response.result.action === 'view-accounts'){ //VIEW ACCOUNTS
 
-                plaid.balance('access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0',function(accounts){
+                plaid.balance('access-sandbox-10553f44-184a-4ef0-8219-053dc6',function(accounts){
                     sendMessage(event.sender.id, response.result.fulfillment.speech, function(){
                         accounts.forEach(function(account) {
                             sendMessage(event.sender.id, account.name)
@@ -65,7 +65,7 @@ function receivedMessage(event){
                 });
             }else if (response.result.action === 'view-transactions'){
                 response.result.parameters;
-                balance.viewTransactions(response.result.parameters.date,response.result.parameters["date-period"],response.result.actionIncomplete, 'access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0', function(result){
+                balance.viewTransactions(response.result.parameters.date,response.result.parameters["date-period"],response.result.actionIncomplete, 'access-sandbox-10553f44-184a-4ef0-8219-053dc6', function(result){
                     sendMessage(event.sender.id, result)
                 })
             }else if (response.result.action.substr(0,9) === "smalltalk"){
