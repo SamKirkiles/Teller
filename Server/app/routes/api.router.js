@@ -49,7 +49,21 @@ apiRouter.put('/api/requestPasswordReset',jsonParser, function(req,res){
         return;
     }
 
+    // require('fs').readFile(, 'utf8', function(err,html){
+    //     console.log(__dirname + '/../../views/emailHeader.html');
+    //     console.log(html);
+    //     console.log(err);
+    // });
+
+    let headerURL = __dirname + '/../../views/emailHeader.html';
+
+    var html = require('fs').readFileSync(headerURL, 'utf8');
+    console.log(html);
+
+
     let messageBody = "Here is your requested email reset link";
+
+
 
     let params = {
         Destination:{
@@ -58,23 +72,23 @@ apiRouter.put('/api/requestPasswordReset',jsonParser, function(req,res){
             ]
         },
         Message: {
+            Subject: { /* required */
+                Data: 'Verify Account With Teller', /* required */
+                Charset: 'UTF-8'
+            },
             Body: { /* required */
                 Html: {
-                    Data: messageBody, /* required */
+                    Data: html,
                     Charset: 'UTF-8'
                 },
                 Text: {
                     Data: messageBody, /* required */
                     Charset: 'UTF-8'
                 }
-            },
-            Subject: { /* required */
-                Data: 'Teller Requested Email Reset', /* required */
-                Charset: 'UTF-8'
             }
 
         },
-        Source: 'teller@tellerchatbot.com', /* required */
+        Source: 'admin@tellerchatbot.com', /* required */
         ReplyToAddresses: [
         ],
         ReturnPathArn: 'arn:aws:ses:us-east-1:010702067800:identity/tellerchatbot.com',
@@ -110,8 +124,9 @@ apiRouter.post('/api/signin', jsonParser, function(req,res){
         //find all results
         connection.query('SELECT * FROM user WHERE email=?',[email],function(error, results, fields){
 
-            //there should be no error here
-        if (results[0] !== undefined  && error === null){
+
+        //there should be no error here
+        if (results[0] !== null  && error === null){
 
             bcrypt.compare(password, results[0].password.toString(), function(err, bcryptResponse) {
 
@@ -213,9 +228,56 @@ apiRouter.post('/api/plaidID', jsonParser, function(req,res){
     }
 });
 
+apiRouter.post('/api/verifyaccount',jsonParser, function(req,res){
+
+    //get the token from the json body
+    let token = req.body.token;
+
+    testConnection(verifyAccount)
+
+    function verifyAccount(){
+
+        //query from database to find a verification that matches the one we were given when we went to the site
+        //if we don't find one we return that we could not find specified verification
+        connection.query('SELECT * FROM verification WHERE token = ?', [token], function(error, results,fields){
+            //there is no error
+            if (error === null){
+                //make sure we have a verification result from the server
+                if (results.length === 0) {
+                    console.log('bad token');
+
+                    res.status(200).send({"payload":{'success':false},"error":{"errorCode":'INVALID_TOKEN', "message":'this url is invalid'}});
+                }else {
+                    //we have found the verification object and should now verify the user's account
+                    if (results[0].type === 'confirm_account') {
+                        // now we need to connect and set the confirmed to equal 1
+                        connection.query('UPDATE verification SET confirmed = 1 WHERE token = ?', [token], function(updateError,updateResults,fields){
+                            if (error === null){
+                                console.log('success');
+                                res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
+                            }else{
+                                //there was an issue with the second confirm and we need to return an error
+                                res.status(200).send({"payload":{'success':false},"error":{"errorCode":updateError.errorCode, "message":updateError.message}})
+                            }
+
+                        });
+
+                    }else {
+                        res.status(200).send({"payload":{'success':false},"error":{"errorCode":'TOKEN_ERROR', "message":'token type was not confirm_account'}})
+                    }
+                }
+            }else{
+                //there was a mysql error and we will return it
+                res.status(200).send({"payload":{'success':false},"error":{"errorCode":error.errorCode, "message":error.message}})
+            }
+        });
+    }
+});
+
 
 apiRouter.post('/api/signup', jsonParser, function(req,res){
     let id = shortid.generate();
+
 
     let plaintextpass = req.body.password;
 
@@ -224,8 +286,8 @@ apiRouter.post('/api/signup', jsonParser, function(req,res){
 
     function signup(){
         bcrypt.hash(plaintextpass, 10, function(err, hash) {
-        if (err !== undefined){
-            res.status(200).send({"payload":{"userID":null},"error":{"errorCode":"HASH_ERROR'", "message":"Could not hash password"}});
+        if (err !== null){
+            res.status(200).send({"payload":{"userID":null},"error":{"errorCode":err.code, "message":err.message}});
 
         }else{
             connection.query('INSERT INTO user (`fullname`, `email`, `password`, `userID`, `date_created`) VALUES (?,?,?,?,current_timestamp());',

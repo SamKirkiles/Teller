@@ -15,14 +15,17 @@ import { AccountPasswordResetComponent } from './account/account-password-reset/
 import {AuthGuard} from './auth/auth-guard';
 import { LinkAccountComponent } from './account/link-account/link-account.component';
 import { FooterComponent } from './footer/footer/footer.component';
+import { SignupConfirmComponent } from './auth/signup-confirm/signup-confirm.component';
+import { VerifyAccountComponent } from './auth/verify-account/verify-account.component';
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponentComponent},
-  {path: 'signup', component: SignUpComponent},
-  {path: 'login', component: LogInComponent},
-  {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
-  {path: 'resetpassword', component: AccountPasswordResetComponent},
-  {path: 'linkaccount', component: LinkAccountComponent, canActivate: [AuthGuard]}
+    {path: '', component: HomeComponentComponent},
+    {path: 'signup', component: SignUpComponent},
+    {path: 'login', component: LogInComponent},
+    {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
+    {path: 'resetpassword', component: AccountPasswordResetComponent},
+    {path: 'linkaccount', component: LinkAccountComponent, canActivate: [AuthGuard]},
+    {path: 'verifyaccount/:token', component: VerifyAccountComponent}
 ];
 
 @NgModule({
@@ -37,6 +40,8 @@ const appRoutes: Routes = [
     AccountPasswordResetComponent,
     LinkAccountComponent,
     FooterComponent,
+    SignupConfirmComponent,
+    VerifyAccountComponent,
   ],
   imports: [
     BrowserModule,

@@ -99,6 +99,12 @@ export class AccountManagerService {
       .toPromise();
   }
 
+  verifyAccount(token: String): Promise<any> {
+      return this.http.post(environment.apiUrl + '/api/verifyaccount', JSON.stringify({
+          'token': token
+      }), {headers: this.headers}).toPromise();
+  }
+
   getCurrentUser(token: String): Promise<User> {
 
     // if we already have a user, return it else we need to fetch
