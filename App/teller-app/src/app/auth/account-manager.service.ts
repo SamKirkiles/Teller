@@ -105,6 +105,12 @@ export class AccountManagerService {
       }), {headers: this.headers}).toPromise();
   }
 
+  resendAccountVerification(email: String): Promise<any>{
+    return this.http.post(environment.apiUrl + '/api/resendVerification', JSON.stringify({
+        'email': email
+    }), {headers: this.headers}).toPromise();
+  }
+
   getCurrentUser(token: String): Promise<User> {
 
     // if we already have a user, return it else we need to fetch

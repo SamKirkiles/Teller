@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row text-center justify-content-center">
+        <div class="col-6">
+            <form [formGroup]="emailForm" id="group">
+                <h5>Enter your email to resend account verification email.</h5>
+                <input class="form-control" formControlName="emailControl">
+                <p *ngIf="emailSent" >Confirmation email sent. Check your inbox for the link.</p>
+                <p *ngIf="emailError" style="color: red;">Please enter a valid email address.</p>
+
+
+                <button (click)="submitForm()" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -61,7 +61,7 @@ export class LogInComponent implements OnInit {
   }
 
   resendVerification(){
-      console.log('resend Verificatoin GERE we need tow ork on this');
+      this.router.navigate(['/resendconfirmation']);
   }
 
   ngOnInit() {

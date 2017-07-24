@@ -141,6 +141,44 @@ router.post('/api/signup', jsonParser, function(req,res){
 
 });
 
+/*
+    email
+ */
+router.post('/api/resendverification', jsonParser, function(req,res){
+    let email = req.body.email;
+
+    connection.query("SELECT user.email, user.userID, verification.token FROM user LEFT JOIN verification ON verification.type='confirm_account' AND verification.user=user.userID WHERE user.email=?",
+    [email],
+    function(error,results,fields){
+        if (error !== null){
+            res.status(200).send({"payload":{"success":false},"error":{"errorCode":error.errorCode,"errorMessage":error.errorMessage}});
+        }else{
+            console.log(results);
+            if(results.length === 0){
+                let errorCode = 'INVALID_EMAIL';
+                let errorMessage = 'There were no confirmation records attached to this email';
+                res.status(200).send({"payload":{"success":false},"error":{"errorCode":errorCode,"errorMessage":errorMessage}});
+            }else{
+
+                let sendUrl;
+                if (process.env.NODE_ENV === 'Dev'){
+                    sendUrl = 'http://' + 'localhost:4200' + '/verifyaccount/' + results[0].token;
+                }else{
+                    sendUrl = 'https://' + req.get('host') + '/verifyaccount/' + results[0].token;
+                }
+                emailManager.sendConfirmationEmail(results[0].email, sendUrl, function(err,response){
+                    if(err === undefined){
+                        res.status(200).send({"payload":{"success":false},"error":{"errorCode":err.errorCode,"errorMessage":err.errorMessage}});
+                    }else{
+                        console.log("Why isnt this being called");
+                        res.status(200).send({"payload":{"success":true},"error":{"errorCode":null,"errorMessage":null}});
+                    }
+                });
+            }
+        }
+    })
+});
+
 
 module.exports = {
     router: router
