@@ -16,6 +16,7 @@ app.use(function(req,res,next){
 
 app.use(messenger.router);
 app.use(apiRouter);
+
 app.use(accountManager.router);
 app.use(express.static(path.join(__dirname, '../App/teller-app/dist')));
 

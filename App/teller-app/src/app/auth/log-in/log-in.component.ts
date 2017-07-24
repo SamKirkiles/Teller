@@ -15,6 +15,8 @@ export class LogInComponent implements OnInit {
   signInError = false;
   signInErrorMessage = 'Invalid account. Please check your email/password combo.';
 
+  verifyError = false;
+
   email:String = '';
   password:String = '';
 
@@ -41,8 +43,11 @@ export class LogInComponent implements OnInit {
 
           if (body.payload.success === true){
             this.router.navigate(['/']);
-          }else {
-            this.signInError = true;
+          }else if (body.payload.success === false && body.error.errorCode === 'NOT_VERIFIED') {
+              this.signInError = false;
+              this.verifyError = true;
+          }else{
+              this.signInError = true;
           }
       })
         .catch(error => {
@@ -53,6 +58,10 @@ export class LogInComponent implements OnInit {
 
       this.signInError = true;
     }
+  }
+
+  resendVerification(){
+      console.log('resend Verificatoin GERE we need tow ork on this');
   }
 
   ngOnInit() {

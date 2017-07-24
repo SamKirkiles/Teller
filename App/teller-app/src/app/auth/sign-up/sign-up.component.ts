@@ -14,7 +14,9 @@ import {Router} from "@angular/router";
 
 
 
-export class SignUpComponent implements OnInit {s;
+export class SignUpComponent implements OnInit {
+
+    signInError = false;
 
   signUpForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -37,10 +39,11 @@ export class SignUpComponent implements OnInit {s;
 
           if (responseBody.error.errorCode === null){
             console.log('Successful signup.!');
-            this.router.navigate(['/']);
+            this.router.navigate(['/signup/confirm']);
             // now we need to email the user with a confirmation code
           }else if (responseBody.error.errorCode === 'ER_DUP_ENTRY') {
             console.log('We have a duplicate account!');
+            this.signInError = true;
           }
         })
     }

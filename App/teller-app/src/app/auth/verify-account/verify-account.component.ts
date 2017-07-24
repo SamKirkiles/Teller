@@ -11,7 +11,7 @@ import {AccountManagerService} from "../account-manager.service";
 export class VerifyAccountComponent implements OnInit {
 
     id: String = null;
-    verified:Boolean = false;
+    verified: Boolean = false;
 
     constructor(private route: ActivatedRoute, private accountManager: AccountManagerService) {
   }

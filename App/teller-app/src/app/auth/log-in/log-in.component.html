@@ -4,9 +4,11 @@
       <form [formGroup]="loginForm" id="formGroup">
         <h2 id="sign-up-h1" style="font-weight: 300">Teller Sign In</h2>
 
-        <input class="form-control form-control-lg" placeholder="Email" [(ngModel)]="email" formControlName="email">
-        <input class="form-control form-control-lg" placeholder="Password" [(ngModel)]="password" type="password" formControlName="password">
-        <p *ngIf="signInError" id="sign-in-error">{{signInErrorMessage}} </p>
+
+          <input class="form-control form-control-lg" placeholder="Email" [(ngModel)]="email" formControlName="email">
+          <input class="form-control form-control-lg" placeholder="Password" [(ngModel)]="password" type="password" formControlName="password">
+          <p *ngIf="signInError" id="sign-in-error">{{signInErrorMessage}} </p>
+          <p *ngIf="verifyError">Your account is not yet verified. Please check your email for the confirmation code. <a style="text-decoration: underline; cursor: pointer;" (click)="resendVerification()">Resend Verification Link</a>.</p>
         <button type="submit" class="col-12 btn btn-primary" id="submit-button" (click)="signin()" >Sign In</button>
 
       </form>

@@ -21,6 +21,7 @@ import { VerifyAccountComponent } from './auth/verify-account/verify-account.com
 const appRoutes: Routes = [
     {path: '', component: HomeComponentComponent},
     {path: 'signup', component: SignUpComponent},
+    {path: 'signup/confirm', component: SignupConfirmComponent},
     {path: 'login', component: LogInComponent},
     {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
     {path: 'resetpassword', component: AccountPasswordResetComponent},

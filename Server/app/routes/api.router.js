@@ -6,18 +6,17 @@ let apiRouter = express.Router();
 let bodyParser = require('body-parser');
 let mysql = require('mysql');
 let bcrypt = require('bcryptjs');
-
 let jwt = require('jsonwebtoken');
+let email = require(__dirname + "/../controllers/emailManager.js");
+let accountVerification = require(__dirname + "/../controllers/account/accountVerification.js");
+
+//Requires for other routers so we dont have to cluster the app.js
+let credsRouter = require(__dirname + "/credentials-api.router.js").router;
+apiRouter.use(credsRouter);
+
+
 
 let bankAccountManager = require(__dirname + "/../controllers/bankAccountManager.js");
-
-let aws = require('aws-sdk');
-let ses = new aws.SES({
-    region:"us-east-1",
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_KEY
-});
-
 
 let jsonParser = bodyParser.json();
 
@@ -44,126 +43,55 @@ apiRouter.put('/api/requestPasswordReset',jsonParser, function(req,res){
 
     // we have the email so we should send a request with the link to reset the password
 
-    if (req.body.email === undefined){
-        res.status(400);
-        return;
-    }
-
-    // require('fs').readFile(, 'utf8', function(err,html){
-    //     console.log(__dirname + '/../../views/emailHeader.html');
-    //     console.log(html);
+    // email.sendConfirmationEmail('sam.kirkiles@gmail.com', 'http://localhost:4200/verifyaccount/thisisthetesttoken', (err, res) => {
+    //     console.log(res);
     //     console.log(err);
     // });
 
-    let headerURL = __dirname + '/../../views/emailHeader.html';
+    sendAccountVerificationLink('rJeTN3LS-', (err, res) => {
+        console.log(res);
+        console.log(err);
+    });
+});
 
-    var html = require('fs').readFileSync(headerURL, 'utf8');
-    console.log(html);
+function sendAccountVerificationLink(user){
+    testConnection(accountVerify)
 
+    function  accountVerify() {
+        //query all of the verification tokens that match the user
+        connection.query("SELECT user.userID, user.email, verification.token, verification.type, verification.confirmed FROM user LEFT JOIN verification ON verification.user = user.userID AND verification.type = 'confirm_account' WHERE user.userID = ?",
+        [user],
+        function(error, results, fields){
+           //here we should have the results
+            if (error === null){
+                console.log(results[0].userID);
+                createVerification(results[0].userID);
 
-    let messageBody = "Here is your requested email reset link";
+                if (results.length === 0){
+                    //there are no verifications for this account so we should probably generate one
+                    console.log(results);
+                }else if(results[0].token === null){
+                    console.log(results[0].token);
+                    let user = results[0].userID;
 
+                    // connection.query('',[],function(err,values,cb){
+                    //
+                    // });
 
-
-    let params = {
-        Destination:{
-            ToAddresses:[
-                req.body.email
-            ]
-        },
-        Message: {
-            Subject: { /* required */
-                Data: 'Verify Account With Teller', /* required */
-                Charset: 'UTF-8'
-            },
-            Body: { /* required */
-                Html: {
-                    Data: html,
-                    Charset: 'UTF-8'
-                },
-                Text: {
-                    Data: messageBody, /* required */
-                    Charset: 'UTF-8'
+                } else{
+                    //we have a verification for this account and we can fetch the token
+                    console.log("why is this happeneing");
+                    console.log(results[0].token);
+                    console.log(results[0]);
                 }
+            }else{
+                console.log(error);
+                //we have an error and we NEED TO HANDLE IT
             }
-
-        },
-        Source: 'admin@tellerchatbot.com', /* required */
-        ReplyToAddresses: [
-        ],
-        ReturnPathArn: 'arn:aws:ses:us-east-1:010702067800:identity/tellerchatbot.com',
-        SourceArn: 'arn:aws:ses:us-east-1:010702067800:identity/tellerchatbot.com',
-
-    };
-
-    ses.sendEmail(params, function(err,data){
-        if (err) {
-            res.status(200).send({"payload":{"success":false},"error":{"errorCode":err.code, "message":err.message}});
-            console.log(err);
-        }
-        else {
-            console.log("Sending success");
-            res.status(200).send({"payload":{"success":true,"data":data},"error":{"errorCode":null, "message":null}});
-        }
-
-    });
-
-});
-
-apiRouter.post('/api/signin', jsonParser, function(req,res){
-
-    let email = req.body.email;
-    let password = req.body.password;
-
-    console.log('signin pressed');
-
-    testConnection(query);
-
-    function query() {
-
-        //find all results
-        connection.query('SELECT * FROM user WHERE email=?',[email],function(error, results, fields){
-
-
-        //there should be no error here
-        if (results[0] !== null  && error === null){
-
-            bcrypt.compare(password, results[0].password.toString(), function(err, bcryptResponse) {
-
-                if (bcryptResponse === true){
-
-                    let user = {
-                        date_created: results[0].date_created,
-                        fullname: results[0].fullname,
-                        email: results[0].email,
-                        userID: results[0].userID
-                    };
-
-                    //the login was successful and we have a user that we have now turned into a stirng
-
-                    jwt.sign({ userID: results[0].userID }, 'secret', { algorithm: 'HS256' }, function(jwtErr, token) {
-                        
-                        if (jwtErr === null){
-                            res.status(200).send({"payload":{"success":true, "token":token},"error":{"errorCode":null, "message":null}});
-
-                        }else{
-                            res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":jwtErr.code, "message":jwtErr.message}});
-                        }
-
-                    });
-
-                }else{
-                    res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":null, "message":null}});
-                }
-            });
-        }else{
-            res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":error.errorCode, "message":error.message}});
-
-        }
-
-    });
+        });
     }
-});
+}
+
 
 apiRouter.post('/api/currentuser', jsonParser, function(req,res){
     jwt.verify(req.body.token, 'secret', { algorithm: 'HS256'}, function (err, decoded){
@@ -228,9 +156,15 @@ apiRouter.post('/api/plaidID', jsonParser, function(req,res){
     }
 });
 
+/*
+{
+    token: (token)
+}
+ */
+
 apiRouter.post('/api/verifyaccount',jsonParser, function(req,res){
 
-    //get the token from the json body
+    //get the verification token from the json body
     let token = req.body.token;
 
     testConnection(verifyAccount)
@@ -259,7 +193,6 @@ apiRouter.post('/api/verifyaccount',jsonParser, function(req,res){
                                 //there was an issue with the second confirm and we need to return an error
                                 res.status(200).send({"payload":{'success':false},"error":{"errorCode":updateError.errorCode, "message":updateError.message}})
                             }
-
                         });
 
                     }else {
@@ -274,36 +207,6 @@ apiRouter.post('/api/verifyaccount',jsonParser, function(req,res){
     }
 });
 
-
-apiRouter.post('/api/signup', jsonParser, function(req,res){
-    let id = shortid.generate();
-
-
-    let plaintextpass = req.body.password;
-
-
-    testConnection(signup);
-
-    function signup(){
-        bcrypt.hash(plaintextpass, 10, function(err, hash) {
-        if (err !== null){
-            res.status(200).send({"payload":{"userID":null},"error":{"errorCode":err.code, "message":err.message}});
-
-        }else{
-            connection.query('INSERT INTO user (`fullname`, `email`, `password`, `userID`, `date_created`) VALUES (?,?,?,?,current_timestamp());',
-                [req.body.fullname,req.body.email,hash,id], function(error,results,fields){
-                    if (error === null){
-                        res.status(200).send({"payload":{"userID":id},"error":{"errorCode":null, "message":null}});
-                    }else{
-                        console.log(error);
-                        res.status(200).send({"payload":{"userID":null},"error":{"errorCode":error.code, "message":error.message}});
-                    }
-                })
-         }
-        });
-    }
-
-});
 
 //this function tests the connection with the database and reconnects if we have been disconnected
 function testConnection(action){

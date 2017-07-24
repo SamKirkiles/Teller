@@ -27,6 +27,8 @@
             <input class="form-control form-control-lg" placeholder="Confirm Password" type="password" formControlName="passcheck" [ngClass]="{'form-control-success': !signUpForm.controls.passcheck.invalid, 'form-control-danger': signUpForm.controls.passcheck.invalid && signUpForm.controls.passcheck.touched}">
           </div>
 
+
+            <p *ngIf="signInError" style="color: red;">An account with this email already exists</p>
           <button type="submit" class="col-12 btn btn-primary" id="submit-button" (click)="formSubmit()">Get Started</button>
           <p id="sign-up-message">By clicking "Get Started" you agree to the terms and conditions.</p>
         </form>
