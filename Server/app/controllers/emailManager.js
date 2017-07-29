@@ -13,6 +13,47 @@ Sends a confirmation email to the specified email with the url. Users the emailH
 callback: function(err, data){}
  */
 
+function sendPasswordResetEmail(email, url, callback){
+    let headerURL = __dirname + '/../../views/emailHeader.html';
+
+    let html = require('fs').readFileSync(headerURL, 'utf8');
+    let redirectUrl = '<a href="' + url + '">Reset Password</a>'
+
+    let params = {
+        Destination:{
+            ToAddresses:[
+                email
+            ]
+        },
+        Message: {
+            Subject: { /* required */
+                Data: 'Change Teller Account Password', /* required */
+                Charset: 'UTF-8'
+            },
+            Body: { /* required */
+                Html: {
+                    Data: html + redirectUrl,
+                    Charset: 'UTF-8'
+                },
+                Text: {
+                    Data: messageBody, /* required */
+                    Charset: 'UTF-8'
+                }
+            }
+
+        },
+        Source: 'admin@tellerchatbot.com', /* required */
+        ReplyToAddresses: [
+        ],
+        ReturnPathArn: 'arn:aws:ses:us-east-1:010702067800:identity/tellerchatbot.com',
+        SourceArn: 'arn:aws:ses:us-east-1:010702067800:identity/tellerchatbot.com',
+
+    };
+
+    ses.sendEmail(params, callback);
+
+}
+
 
 function sendConfirmationEmail(email, url, callback){
 
@@ -22,7 +63,6 @@ function sendConfirmationEmail(email, url, callback){
     var redirectUrl = '<a href="' + url + '">Confirm Account</a>'
 
     let messageBody = "Here is your requested email reset link";
-
 
 
     let params = {

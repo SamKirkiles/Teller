@@ -19,11 +19,9 @@ export class AccountPasswordResetComponent implements OnInit {
 
   submitPressed(){
     if (this.resetPasswordForm.valid){
-      //send api request to send verification email to user
+      // send api request to send verification email to user
       this.sent = !this.sent;
-      console.log("true");
-    }else{
-      console.log("false");
+    }else {
     }
   }
 

@@ -180,6 +180,8 @@ router.post('/api/resendverification', jsonParser, function(req,res){
 });
 
 
+
+
 module.exports = {
     router: router
 };

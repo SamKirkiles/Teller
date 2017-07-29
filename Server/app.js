@@ -2,7 +2,7 @@ var express = require("express");
 var path = require("path");
 require('dotenv').config();
 var bodyParser = require('body-parser');
-var messenger = require(__dirname + "/app/routes/messenger.js");
+var messenger = require(__dirname + "/app/routes/messenger.router.js");
 var accountManager = require(__dirname + "/app/controllers/bankAccountManager.js");
 let apiRouter = require(__dirname + "/app/routes/api.router.js").router;
 
@@ -13,6 +13,7 @@ app.use(function(req,res,next){
     res.header('Access-Control-Allow-Headers','Content-Type');
     next()
 });
+
 
 app.use(messenger.router);
 app.use(apiRouter);

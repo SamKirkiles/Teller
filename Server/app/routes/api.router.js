@@ -35,7 +35,6 @@ connection.connect(function(err) {
     }
 });
 
-
 /*
 Body: {email:""}
  */

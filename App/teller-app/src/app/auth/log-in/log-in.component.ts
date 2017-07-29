@@ -64,6 +64,10 @@ export class LogInComponent implements OnInit {
       this.router.navigate(['/resendconfirmation']);
   }
 
+  resetPassword(){
+      this.router.navigate(['/resetpassword']);
+  }
+
   ngOnInit() {
   }
 
