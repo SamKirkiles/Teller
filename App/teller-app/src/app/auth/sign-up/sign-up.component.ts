@@ -30,6 +30,8 @@ export class SignUpComponent implements OnInit {
 
 
   formSubmit() {
+      console.log("We are trying to signup")
+
     if (this.signUpForm.valid === true) {
       this.accountManager.signUp(this.signUpForm.value.name, this.signUpForm.value.passcheck,this.signUpForm.value.email)
         .then(response => {

@@ -9,7 +9,7 @@ let path = require("path");
 let assert = require("assert");
 let plaid = require(__dirname + "/../controllers/bankAccountManager.js");
 let botManager = require(__dirname + "/../../bot/botManager.js");
-
+var messenger = require(path.resolve("./app/controllers/messenger-controller.js"));
 let Intent = require(__dirname + "/../../bot/intent-model.js");
 
 let jsonParser = bodyParser.json();
@@ -28,8 +28,14 @@ router.post('/api/webhook', jsonParser, function(req,res){
 
     messaging_events.forEach(function(event) {
         if (event.message && event.message.text){
+
             let text = event.message.text;
-            receivedMessage(event)
+
+            try{
+              receivedMessage(event)
+            }catch(error){
+                console.log(error)
+            }
         }
     });
 
@@ -42,21 +48,26 @@ function receivedMessage(event){
 
 
     apiaimanager.textRequest(event.message.text,function(response, error){
+        messenger.verifyMessengerUser(event.sender.id, function(credsResponse) {
+            if (!response){
+                //we have an error
+                throw error
+            }else{
+                //we are good to continue
 
-        if (!response){
-            //we have an error
-            console.error("The response was nil in function receivedMessage");
-        }else{
-            //we are good to continue
-            let messageIntent = new Intent(event.sender.id, response.result.action);
+                let messageIntent = new Intent(event.sender.id, response, credsResponse.succeeded);
 
-            try {
-                botManager.handleIntent(messageIntent);
-            }catch(e){
-                console.error(e);
+                try {
+                    botManager.handleIntent(messageIntent);
+                }catch(e){
+                    console.error(e);
+                }
+
             }
+        });
 
-        }
+
+
 
         // if (response){
         //     console.log(response.result.action);

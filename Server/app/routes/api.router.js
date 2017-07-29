@@ -20,19 +20,12 @@ let bankAccountManager = require(__dirname + "/../controllers/bankAccountManager
 
 let jsonParser = bodyParser.json();
 
-let connection = mysql.createConnection({
+let pool = mysql.createPool({
+    connectionLimit : 10,
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     database: 'teller_production_rds'
-});
-
-connection.connect(function(err) {
-    if (err !== null) {
-        console.error('Error connecting to database: ' + err.message);
-    } else {
-
-    }
 });
 
 /*
@@ -54,41 +47,37 @@ apiRouter.put('/api/requestPasswordReset',jsonParser, function(req,res){
 });
 
 function sendAccountVerificationLink(user){
-    testConnection(accountVerify)
+    //query all of the verification tokens that match the user
+    pool.query("SELECT user.userID, user.email, verification.token, verification.type, verification.confirmed FROM user LEFT JOIN verification ON verification.user = user.userID AND verification.type = 'confirm_account' WHERE user.userID = ?",
+    [user],
+    function(error, results, fields){
+       //here we should have the results
+        if (error === null){
+            console.log(results[0].userID);
+            createVerification(results[0].userID);
 
-    function  accountVerify() {
-        //query all of the verification tokens that match the user
-        connection.query("SELECT user.userID, user.email, verification.token, verification.type, verification.confirmed FROM user LEFT JOIN verification ON verification.user = user.userID AND verification.type = 'confirm_account' WHERE user.userID = ?",
-        [user],
-        function(error, results, fields){
-           //here we should have the results
-            if (error === null){
-                console.log(results[0].userID);
-                createVerification(results[0].userID);
+            if (results.length === 0){
+                //there are no verifications for this account so we should probably generate one
+                console.log(results);
+            }else if(results[0].token === null){
+                console.log(results[0].token);
+                let user = results[0].userID;
 
-                if (results.length === 0){
-                    //there are no verifications for this account so we should probably generate one
-                    console.log(results);
-                }else if(results[0].token === null){
-                    console.log(results[0].token);
-                    let user = results[0].userID;
+                // connection.query('',[],function(err,values,cb){
+                //
+                // });
 
-                    // connection.query('',[],function(err,values,cb){
-                    //
-                    // });
-
-                } else{
-                    //we have a verification for this account and we can fetch the token
-                    console.log("why is this happeneing");
-                    console.log(results[0].token);
-                    console.log(results[0]);
-                }
-            }else{
-                console.log(error);
-                //we have an error and we NEED TO HANDLE IT
+            } else{
+                //we have a verification for this account and we can fetch the token
+                console.log("why is this happeneing");
+                console.log(results[0].token);
+                console.log(results[0]);
             }
-        });
-    }
+        }else{
+            console.log(error);
+            //we have an error and we NEED TO HANDLE IT
+        }
+    });
 }
 
 
@@ -98,26 +87,22 @@ apiRouter.post('/api/currentuser', jsonParser, function(req,res){
             res.status(200).send({'payload':{'success':true, 'result':err}});
         }else{
 
-            //make sure database is connected and run the function to retrieve current user
-            testConnection(currentUser);
+        //make sure database is connected and run the function to retrieve current user
+            userID = decoded.userID;
 
-            function currentUser(){
-                userID = decoded.userID;
+            //get the current user from the database and send it
+            pool.query('SELECT * FROM user WHERE userID = ?',[userID],function(err, results, fields){
 
-                //get the current user from the database and send it
-                connection.query('SELECT * FROM user WHERE userID = ?',[userID],function(err, results, fields){
-
-                    if (err !== null){
-                        res.status(200).send({'payload':{'success':false, 'result':null}});
+                if (err !== null){
+                    res.status(200).send({'payload':{'success':false, 'result':null}});
+                }else {
+                    if (results[0] !== undefined){
+                        res.status(200).send({'payload':{'success':true, 'result':results[0]}});
                     }else {
-                        if (results[0] !== undefined){
-                            res.status(200).send({'payload':{'success':true, 'result':results[0]}});
-                        }else {
-                            res.status(200).send({'payload':{'success':false, 'result':null}});
-                        }
+                        res.status(200).send({'payload':{'success':false, 'result':null}});
                     }
-                });
-            }
+                }
+            });
         }
     });
 });
@@ -137,7 +122,7 @@ apiRouter.post('/api/plaidID', jsonParser, function(req,res){
             if (bankAccountError === null){
                 //we have successfully exchanged token
                 const privateToken = plaidResult;
-                connection.query('UPDATE user SET plaid_private_ID = ? WHERE userID = ?', [privateToken, userID], function(sqlError, results, fields){
+                pool.query('UPDATE user SET plaid_private_ID = ? WHERE userID = ?', [privateToken, userID], function(sqlError, results, fields){
                     if (sqlError === null){
                         //we have retrieved the key and are now sending a callback and have successfully added the users bank
                         res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
@@ -166,44 +151,40 @@ apiRouter.post('/api/verifyaccount',jsonParser, function(req,res){
     //get the verification token from the json body
     let token = req.body.token;
 
-    testConnection(verifyAccount)
 
-    function verifyAccount(){
+    //query from database to find a verification that matches the one we were given when we went to the site
+    //if we don't find one we return that we could not find specified verification
+    connection.query('SELECT * FROM verification WHERE token = ?', [token], function(error, results,fields){
+        //there is no error
+        if (error === null){
+            //make sure we have a verification result from the server
+            if (results.length === 0) {
+                console.log('bad token');
 
-        //query from database to find a verification that matches the one we were given when we went to the site
-        //if we don't find one we return that we could not find specified verification
-        connection.query('SELECT * FROM verification WHERE token = ?', [token], function(error, results,fields){
-            //there is no error
-            if (error === null){
-                //make sure we have a verification result from the server
-                if (results.length === 0) {
-                    console.log('bad token');
+                res.status(200).send({"payload":{'success':false},"error":{"errorCode":'INVALID_TOKEN', "message":'this url is invalid'}});
+            }else {
+                //we have found the verification object and should now verify the user's account
+                if (results[0].type === 'confirm_account') {
+                    // now we need to connect and set the confirmed to equal 1
+                    connection.query('UPDATE verification SET confirmed = 1 WHERE token = ?', [token], function(updateError,updateResults,fields){
+                        if (error === null){
+                            console.log('success');
+                            res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
+                        }else{
+                            //there was an issue with the second confirm and we need to return an error
+                            res.status(200).send({"payload":{'success':false},"error":{"errorCode":updateError.errorCode, "message":updateError.message}})
+                        }
+                    });
 
-                    res.status(200).send({"payload":{'success':false},"error":{"errorCode":'INVALID_TOKEN', "message":'this url is invalid'}});
                 }else {
-                    //we have found the verification object and should now verify the user's account
-                    if (results[0].type === 'confirm_account') {
-                        // now we need to connect and set the confirmed to equal 1
-                        connection.query('UPDATE verification SET confirmed = 1 WHERE token = ?', [token], function(updateError,updateResults,fields){
-                            if (error === null){
-                                console.log('success');
-                                res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
-                            }else{
-                                //there was an issue with the second confirm and we need to return an error
-                                res.status(200).send({"payload":{'success':false},"error":{"errorCode":updateError.errorCode, "message":updateError.message}})
-                            }
-                        });
-
-                    }else {
-                        res.status(200).send({"payload":{'success':false},"error":{"errorCode":'TOKEN_ERROR', "message":'token type was not confirm_account'}})
-                    }
+                    res.status(200).send({"payload":{'success':false},"error":{"errorCode":'TOKEN_ERROR', "message":'token type was not confirm_account'}})
                 }
-            }else{
-                //there was a mysql error and we will return it
-                res.status(200).send({"payload":{'success':false},"error":{"errorCode":error.errorCode, "message":error.message}})
             }
-        });
-    }
+        }else{
+            //there was a mysql error and we will return it
+            res.status(200).send({"payload":{'success':false},"error":{"errorCode":error.errorCode, "message":error.message}})
+        }
+    });
 });
 
 

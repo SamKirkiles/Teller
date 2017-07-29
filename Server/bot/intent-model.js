@@ -8,9 +8,10 @@ the object directly from api.ai or create some sort of wrapper for the data.
  */
 
 class Intent {
-    constructor(accountID, action){
+    constructor(accountID, messageData, registered){
         this.accountID = accountID;
-        this.action = action;
+        this.messageData = messageData;
+        this.registered = registered;
     }
 }
 

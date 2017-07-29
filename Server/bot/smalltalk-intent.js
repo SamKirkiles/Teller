@@ -4,14 +4,11 @@ var messenger = require(path.resolve("./app/controllers/messenger-controller.js"
 
 function smalltalk(intent){
 
-    console.log(typeof messenger);
-
-
-    messenger.sendMessage(intent.accountID, "Hey how are you", function(callback){
-
+    messenger.sendMessage(intent.accountID, intent.messageData.result.fulfillment.speech, function(callback){
+        console.log("Intent Completed: " + intent.messageData.result.action + " User: " + intent.accountID + " Registered: " + intent.registered);
     });
-
 }
+
 
 module.exports = {
     smalltalk: smalltalk

@@ -9,20 +9,15 @@ let accountVerification = require(__dirname + "/../controllers/account/accountVe
 let emailManager = require(__dirname + "/../controllers/emailManager.js");
 let jwt = require('jsonwebtoken');
 
-let connection = mysql.createConnection({
+
+let pool = mysql.createPool({
+    connectionLimit : 10,
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     database: 'teller_production_rds'
 });
 
-connection.connect(function(err) {
-    if (err !== null) {
-        console.error('Error connecting to database: ' + err.message);
-    } else {
-
-    }
-});
 
 /*
  JSON body - POST -
@@ -41,7 +36,7 @@ router.post('/api/signin', jsonParser, function(req,res){
     console.log('signin pressed');
 
     //find all results
-    connection.query('SELECT user.*, verification.confirmed FROM user LEFT JOIN verification ON verification.user=user.userID WHERE user.email=?;',[email],function(error, results, fields){
+    pool.query('SELECT user.*, verification.confirmed FROM user LEFT JOIN verification ON verification.user=user.userID WHERE user.email=?;',[email],function(error, results, fields){
 
         if (results[0].confirmed === 0){
             console.log("Good we didn't let them continue");
@@ -96,6 +91,8 @@ router.post('/api/signin', jsonParser, function(req,res){
 
 
 router.post('/api/signup', jsonParser, function(req,res){
+
+    console.log("We have hit the signup");
     let id = shortid.generate();
 
 
@@ -108,7 +105,7 @@ router.post('/api/signup', jsonParser, function(req,res){
             res.status(200).send({"payload":{"userID":null},"error":{"errorCode":err.code, "message":err.message}});
 
         }else{
-            connection.query('INSERT INTO user (`fullname`, `email`, `password`, `userID`, `date_created`) VALUES (?,?,?,?,current_timestamp());',
+            pool.query('INSERT INTO user (`fullname`, `email`, `password`, `userID`, `date_created`) VALUES (?,?,?,?,current_timestamp());',
                 [fullname,email,hash,id], function(error,results,fields){
                     if (error === null){
                         //here we want to create a verification if there isnt one for the user and email them the link
@@ -147,7 +144,7 @@ router.post('/api/signup', jsonParser, function(req,res){
 router.post('/api/resendverification', jsonParser, function(req,res){
     let email = req.body.email;
 
-    connection.query("SELECT user.email, user.userID, verification.token FROM user LEFT JOIN verification ON verification.type='confirm_account' AND verification.user=user.userID WHERE user.email=?",
+    pool.query("SELECT user.email, user.userID, verification.token FROM user LEFT JOIN verification ON verification.type='confirm_account' AND verification.user=user.userID WHERE user.email=?",
     [email],
     function(error,results,fields){
         if (error !== null){
