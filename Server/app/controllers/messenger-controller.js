@@ -39,6 +39,79 @@ function handleUnregisteredUser(userID){
     });
 }
 
+function sendLogOut(recipient, callback){
+    var options = {
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        method: "POST",
+        qs: {access_token:process.env.FB_MESSENGER_TOKEN},
+        json:{
+            recipient: {
+                id: recipient
+            },
+            message:{
+                attachment:{
+                    type: "template",
+                    payload: {
+                        template_type: "button",
+                        text: "You need to login to access teller",
+                        buttons:[
+                            {
+                                type: "account_unlink"
+                                // "url": "https://www.tellerchatbot.com/authorize"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    };
+
+    request(options,function(error,incomingMessage,response){
+        if (!error){
+            if (callback){
+                callback()
+            }
+        }
+    });
+}
+
+function sendLogin(recipient, callback){
+    var options = {
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        method: "POST",
+        qs: {access_token:process.env.FB_MESSENGER_TOKEN},
+        json:{
+            recipient: {
+                id: recipient
+            },
+            message:{
+                attachment:{
+                    type: "template",
+                    payload: {
+                        template_type: "button",
+                        text: "You need to login to access teller",
+                        buttons:[
+                            {
+                                type: "account_link",
+                                url: "https://1a9ed7dc.ngrok.io/api/authorize"
+                                // "url": "https://www.tellerchatbot.com/authorize"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    };
+
+    request(options,function(error,incomingMessage,response){
+        if (!error){
+            if (callback){
+                callback()
+            }
+        }
+    });
+}
+
 function sendMessage(recipient, recipientmessage, callback){
     var options = {
         url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -68,5 +141,7 @@ function sendMessage(recipient, recipientmessage, callback){
 module.exports = {
     sendMessage: sendMessage,
     verifyMessengerUser: verifyMessengerUser,
-    handleUnregisteredUser: handleUnregisteredUser
+    handleUnregisteredUser: handleUnregisteredUser,
+    sendLogin: sendLogin,
+    sendLogOut: sendLogOut
 };

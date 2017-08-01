@@ -15,17 +15,13 @@ app.use(function(req,res,next){
 });
 
 
-app.use(messenger.router);
+app.use("/", messenger.router);
 app.use(apiRouter);
 
 app.use(accountManager.router);
 app.use(express.static(path.join(__dirname, '../App/teller-app/dist')));
 
 app.set('views', __dirname + '/views');
-
-app.get('/test', function(req,res){
-   // accountManager.getTransactions('access-sandbox-69f55d88-526c-48a1-a872-27f5b505d7a0, '')
-});
 
 app.get("/*",function(req,res){
   res.sendFile(  path.resolve(__dirname + "/../App/teller-app/dist/index.html"));

@@ -1,13 +1,16 @@
 
 let balance = require(__dirname + "/balance-intent.js");
 let Intent = require(__dirname + "/intent-model.js");
+let creds = require(__dirname + "/credentials-intent.js");
 
 let smalltalk = require(__dirname + "/smalltalk-intent.js");
 
 
 let intents = {
     "check-balance": balance.checkBalance,
-    "smalltalk": smalltalk.smalltalk
+    "smalltalk": smalltalk.smalltalk,
+    "logout": creds.logOut,
+    "login": creds.logIn
 };
 
 function handleIntent(intent){

@@ -107,6 +107,20 @@ apiRouter.post('/api/currentuser', jsonParser, function(req,res){
     });
 });
 
+apiRouter.post('/api/facebookID', jsonParser, function(req,res){
+    const facebookID = req.body.facebookID;
+    const userID = req.body.userID;
+
+    pool.query('UPDATE user SET facebookID=? WHERE userID=?', [facebookID, userID], function(err, results, fields){
+        if (err === null){
+            console.log(results);
+            res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
+        }else{
+            res.status(200).send({"payload":{'success':false},"error":{"errorCode":err.code, "message":err.message}});
+        }
+    })
+});
+
 apiRouter.post('/api/plaidID', jsonParser, function(req,res){
 
     const plaidID = req.body.plaid_ID;
@@ -114,30 +128,26 @@ apiRouter.post('/api/plaidID', jsonParser, function(req,res){
 
     //send to server
 
-    testConnection(updatePlaidID);
 
-    function updatePlaidID(){
+    bankAccountManager.exchangeToken(plaidID, function(bankAccountError, plaidResult) {
+        if (bankAccountError === null){
+            //we have successfully exchanged token
+            const privateToken = plaidResult;
+            pool.query('UPDATE user SET plaid_private_ID = ? WHERE userID = ?', [privateToken, userID], function(sqlError, results, fields){
+                if (sqlError === null){
+                    //we have retrieved the key and are now sending a callback and have successfully added the users bank
+                    res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
+                }else{
+                    //there is a sql error and we need to return an error
+                    res.status(200).send({"payload":{'success':false},"error":{"errorCode":sqlError.code, "message":sqlError.message}});
+                }
+            });
+        }else{
+            //there is a invalid token and we need to return an error
+            res.status(200).send({"payload":{'success':false},"error":{"errorCode":bankAccountError.error_code, "message":bankAccountError.error_message}});
+        }
+    });
 
-        bankAccountManager.exchangeToken(plaidID, function(bankAccountError, plaidResult) {
-            if (bankAccountError === null){
-                //we have successfully exchanged token
-                const privateToken = plaidResult;
-                pool.query('UPDATE user SET plaid_private_ID = ? WHERE userID = ?', [privateToken, userID], function(sqlError, results, fields){
-                    if (sqlError === null){
-                        //we have retrieved the key and are now sending a callback and have successfully added the users bank
-                        res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
-                    }else{
-                        //there is a sql error and we need to return an error
-                        res.status(200).send({"payload":{'success':false},"error":{"errorCode":sqlError.code, "message":sqlError.message}});
-                    }
-                });
-            }else{
-                //there is a invalid token and we need to return an error
-                res.status(200).send({"payload":{'success':false},"error":{"errorCode":bankAccountError.error_code, "message":bankAccountError.error_message}});
-            }
-        });
-
-    }
 });
 
 /*

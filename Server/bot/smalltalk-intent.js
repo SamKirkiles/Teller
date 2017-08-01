@@ -9,7 +9,6 @@ function smalltalk(intent){
     });
 }
 
-
 module.exports = {
     smalltalk: smalltalk
 };

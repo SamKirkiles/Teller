@@ -1,6 +1,6 @@
 <div class="container">
-  <h1 style="margin-top: 50px">My Account - {{currentUser?.fullname}}</h1>
-  <hr>
+  <h1 style="margin-top: 50px">Account Summary - {{currentUser?.fullname}}</h1>
+  <!--<hr>-->
 
   <div *ngIf="edit; else othercontent">
     <app-account-form></app-account-form>
@@ -8,12 +8,12 @@
 
   <ng-template #othercontent><app-account-view></app-account-view> </ng-template>
 
-  <div *ngIf="!edit; else doneButton">
-    <button class="btn btn-primary" (click)="editPressed()">Edit</button>
-  </div>
-  <ng-template #doneButton>
-    <button class="btn btn-primary" (click)="editPressed()">Done</button>
-  </ng-template>
+  <!--<div *ngIf="!edit; else doneButton">-->
+    <!--<button class="btn btn-primary" (click)="editPressed()">Edit</button>-->
+  <!--</div>-->
+  <!--<ng-template #doneButton>-->
+    <!--<button class="btn btn-primary" (click)="editPressed()">Done</button>-->
+  <!--</ng-template>-->
 
 
   <hr>

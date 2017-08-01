@@ -24,28 +24,55 @@ router.get('/api/webhook', function (req, res) {
 
 router.post('/api/webhook', jsonParser, function(req,res){
 
-    let messaging_events = req.body.entry[0].messaging;
+    console.log(req.body);
+
+    let messaging_events = req.body.entry;
+
 
     messaging_events.forEach(function(event) {
-        if (event.message && event.message.text){
-
-            let text = event.message.text;
-
+        if (event.messaging && event.messaging[0].message){
             try{
-              receivedMessage(event)
+              receivedMessage(event.messaging[0])
             }catch(error){
                 console.log(error)
             }
+        }else if (event.messaging[0].account_linking){
+
+            let authorizationCode = event.messaging[0].account_linking.authorization_code;
+            let status= event.messaging[0].account_linking.status;
+            console.log(authorizationCode + "\n" + status);
+
+            if (status === 'linked'){
+                //linked
+            } else{
+                //unlinked
+            }
+
+        }else{
+            console.error("ERROR: unidentified Webhook")
         }
     });
-
     res.sendStatus(200);
-    
 });
+
+router.get('/api/authorize',jsonParser, function(req,res){
+   let linkingToken = req.query.account_linking_token;
+   let redirectURL = req.query.redirect_uri;
+
+   console.log(req.query);
+   console.log(linkingToken);
+   console.log(redirectURL);
+
+   //we need to reidrect the suer then to the response link here
+    //after that we need to use the facebook graph api to link the account with the linking token
+
+   console.log("What a time to be alive");
+    res.redirect(redirectURL + "&authorization_code=thisisatesttoken");
+});
+
 
 //called when the user sends a message
 function receivedMessage(event){
-
 
     apiaimanager.textRequest(event.message.text,function(response, error){
         messenger.verifyMessengerUser(event.sender.id, function(credsResponse) {
@@ -66,45 +93,6 @@ function receivedMessage(event){
             }
         });
 
-
-
-
-        // if (response){
-        //     console.log(response.result.action);
-        //     //CHECK BALANCE
-        //     if (response.result.action === 'check-balance'){
-        //         balance.checkBalance(
-        //             response.result.parameters.account,
-        //             response.result.parameters.bank,
-        //             response.result.fulfillment.speech,
-        //             response.result.actionIncomplete,
-        //             'access-sandbox-c4d2b9ff-a609-4753-878e-4ef6f1583594',
-        //             function(result){
-        //                 sendMessage(event.sender.id, result)
-        //             }
-        //         )
-        //     }else if (response.result.action === 'view-accounts'){ //VIEW ACCOUNTS
-        //
-        //         plaid.balance('access-sandbox-c4d2b9ff-a609-4753-878e-4ef6f1583594',function(accounts){
-        //             sendMessage(event.sender.id, response.result.fulfillment.speech, function(){
-        //                 accounts.forEach(function(account) {
-        //                     sendMessage(event.sender.id, account.name)
-        //                 }, this);
-        //             })
-        //         });
-        //     }else if (response.result.action === 'view-transactions'){
-        //         response.result.parameters;
-        //         balance.viewTransactions(response.result.parameters.date,response.result.parameters["date-period"],response.result.actionIncomplete, 'access-sandbox-c4d2b9ff-a609-4753-878e-4ef6f1583594', function(result){
-        //             sendMessage(event.sender.id, result)
-        //         })
-        //     }else if (response.result.action.substr(0,9) === "smalltalk"){
-        //         sendMessage(event.sender.id, response.result.fulfillment.speech, function(){
-        //
-        //         })
-        //     }
-        // } else{
-        //     console.log("ERROR: Response was nil on receivedMessage")
-        // }
     });
 }
 
