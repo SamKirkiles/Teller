@@ -1,24 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AccountManagerService} from "../account-manager.service";
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import 'rxjs';
 import {Router, RouterModule} from "@angular/router";
 
+
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css'],
-  providers: []
+    selector: 'app-log-in',
+    templateUrl: './log-in.component.html',
+    styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent implements OnInit {
 
-  signInError = false;
+    @Input() authorize:boolean = false;
+
+    signInError = false;
   signInErrorMessage = 'Invalid account. Please check your email/password combo.';
 
   verifyError = false;
 
-  email:String = '';
-  password:String = '';
+  email: string = '';
+  password: string = '';
 
   loginForm = new FormGroup({
     email: new FormControl('',Validators.email),
@@ -60,15 +62,16 @@ export class LogInComponent implements OnInit {
     }
   }
 
-  resendVerification(){
+  resendVerification() {
       this.router.navigate(['/resendconfirmation']);
   }
 
-  resetPassword(){
+  resetPassword() {
       this.router.navigate(['/resetpassword']);
   }
 
   ngOnInit() {
+      console.log(this.authorize);
   }
 
 }

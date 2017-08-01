@@ -9,24 +9,27 @@ var pool  = mysql.createPool({
     database: 'teller_production_rds'
 });
 
-//should check the plaid database to make sure the user has an account
 function verifyMessengerUser(userID, callback){
-    pool.query('SELECT fullname, userID, facebookID FROM user WHERE facebookID=?', [userID], function(error, result, fields){
-        if (error) throw error;
-        else {
-            if (result.length === 0){
-                //this user has not yet registered with teller
-                callback({
-                    succeeded: false
-                });
-            }else{
-                //there is a user here so we can let them continue.
-                callback({
-                    succeeded: true
-                });
-            }
-        }
-    });
+
+    callback({
+        suceeded: true
+    })
+    // pool.query('SELECT fullname, userID, facebookID FROM user WHERE facebookID=?', [userID], function(error, result, fields){
+    //     if (error) throw error;
+    //     else {
+    //         if (result.length === 0){
+    //             //this user has not yet registered with teller
+    //             callback({
+    //                 succeeded: false
+    //             });
+    //         }else{
+    //             //there is a user here so we can let them continue.
+    //             callback({
+    //                 succeeded: true
+    //             });
+    //         }
+    //     }
+    // });
 }
 
 function handleUnregisteredUser(userID){
@@ -134,7 +137,6 @@ function sendMessage(recipient, recipientmessage, callback){
             }
         }
     });
-
 }
 
 

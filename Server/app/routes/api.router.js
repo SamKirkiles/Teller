@@ -106,20 +106,20 @@ apiRouter.post('/api/currentuser', jsonParser, function(req,res){
         }
     });
 });
-
-apiRouter.post('/api/facebookID', jsonParser, function(req,res){
-    const facebookID = req.body.facebookID;
-    const userID = req.body.userID;
-
-    pool.query('UPDATE user SET facebookID=? WHERE userID=?', [facebookID, userID], function(err, results, fields){
-        if (err === null){
-            console.log(results);
-            res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
-        }else{
-            res.status(200).send({"payload":{'success':false},"error":{"errorCode":err.code, "message":err.message}});
-        }
-    })
-});
+//
+// apiRouter.post('/api/facebookID', jsonParser, function(req,res){
+//     const facebookID = req.body.facebookID;
+//     const userID = req.body.userID;
+//
+//     pool.query('UPDATE user SET facebookID=? WHERE userID=?', [facebookID, userID], function(err, results, fields){
+//         if (err === null){
+//             console.log(results);
+//             res.status(200).send({"payload":{'success':true},"error":{"errorCode":null, "message":null}});
+//         }else{
+//             res.status(200).send({"payload":{'success':false},"error":{"errorCode":err.code, "message":err.message}});
+//         }
+//     })
+// });
 
 apiRouter.post('/api/plaidID', jsonParser, function(req,res){
 

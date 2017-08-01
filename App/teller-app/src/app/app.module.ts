@@ -18,6 +18,7 @@ import { FooterComponent } from './footer/footer/footer.component';
 import { SignupConfirmComponent } from './auth/signup-confirm/signup-confirm.component';
 import { VerifyAccountComponent } from './auth/verify-account/verify-account.component';
 import { ResendConfirmationComponent } from './auth/resend-confirmation/resend-confirmation.component';
+import { AuthorizeMessengerComponent } from './auth/authorize-messenger/authorize-messenger.component';
 
 const appRoutes: Routes = [
     {path: '', component: HomeComponentComponent},
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
     {path: 'resetpassword', component: AccountPasswordResetComponent},
     {path: 'linkaccount', component: LinkAccountComponent, canActivate: [AuthGuard]},
     {path: 'verifyaccount/:token', component: VerifyAccountComponent},
+    {path: 'authorize', component: AuthorizeMessengerComponent},
     {path: 'resendconfirmation', component: ResendConfirmationComponent}
 ];
 
@@ -46,6 +48,7 @@ const appRoutes: Routes = [
     SignupConfirmComponent,
     VerifyAccountComponent,
     ResendConfirmationComponent,
+    AuthorizeMessengerComponent,
   ],
   imports: [
     BrowserModule,

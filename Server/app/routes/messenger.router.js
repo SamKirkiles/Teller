@@ -11,6 +11,7 @@ let plaid = require(__dirname + "/../controllers/bankAccountManager.js");
 let botManager = require(__dirname + "/../../bot/botManager.js");
 var messenger = require(path.resolve("./app/controllers/messenger-controller.js"));
 let Intent = require(__dirname + "/../../bot/intent-model.js");
+let shortid = require('shortid');
 
 let jsonParser = bodyParser.json();
 
@@ -23,8 +24,6 @@ router.get('/api/webhook', function (req, res) {
 });
 
 router.post('/api/webhook', jsonParser, function(req,res){
-
-    console.log(req.body);
 
     let messaging_events = req.body.entry;
 
@@ -40,7 +39,8 @@ router.post('/api/webhook', jsonParser, function(req,res){
 
             let authorizationCode = event.messaging[0].account_linking.authorization_code;
             let status= event.messaging[0].account_linking.status;
-            console.log(authorizationCode + "\n" + status);
+
+            console.log(authorizationCode);
 
             if (status === 'linked'){
                 //linked
@@ -48,7 +48,7 @@ router.post('/api/webhook', jsonParser, function(req,res){
                 //unlinked
             }
 
-        }else{
+        } else{
             console.error("ERROR: unidentified Webhook")
         }
     });
@@ -59,15 +59,27 @@ router.get('/api/authorize',jsonParser, function(req,res){
    let linkingToken = req.query.account_linking_token;
    let redirectURL = req.query.redirect_uri;
 
-   console.log(req.query);
-   console.log(linkingToken);
-   console.log(redirectURL);
+    var options = {
+        url: 'https://graph.facebook.com/v2.6/me/',
+        method: "GET",
+        qs: {
+            access_token: process.env.FB_MESSENGER_TOKEN,
+            fields:"recipient",
+            account_linking_token:linkingToken}
+    };
 
-   //we need to reidrect the suer then to the response link here
-    //after that we need to use the facebook graph api to link the account with the linking token
+    request(options, function(error,incomingMessage,response){
+        let recipient = JSON.parse(response).recipient;
+        //now save the user id in the database
+        let authToken = shortid.generate();
+        console.log(recipient);
+        console.log(authToken);
 
-   console.log("What a time to be alive");
-    res.redirect(redirectURL + "&authorization_code=thisisatesttoken");
+        res.redirect(redirectURL + "&authorization_code="+ authToken);
+
+    });
+
+
 });
 
 

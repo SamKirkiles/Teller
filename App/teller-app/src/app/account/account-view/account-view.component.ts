@@ -109,16 +109,7 @@ constructor(private accountManager: AccountManagerService, private router: Route
     }
   }
 
-  unlinkBankAccount() {
-    //this should call an api request to remove the facebook id
-  }
-
-  unlinkFacebookAccount() {
-    //this should call an api request to remove the user id
-  }
-
   linkAccountPressed() {
-
       this.router.navigate(['/linkaccount']);
   }
 
