@@ -26,16 +26,12 @@ export class AccountFormComponent implements OnInit {
   }
 
   getUser() {
-    if (this.accountManager.isLoggedIn()) {
-      this.accountManager.getCurrentUser(this.accountManager.token).then( user => {
+      this.accountManager.getCurrentUser().then( user => {
         this.currentUser = user;
       });
-    }else {
-      this.currentUser = null;
-    }
   }
 
-  savePressed(){
+  savePressed() {
     console.log('save new user');
   }
 

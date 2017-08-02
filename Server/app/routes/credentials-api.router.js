@@ -28,6 +28,34 @@ let pool = mysql.createPool({
  }
  */
 
+router.post('/api/verifylogin', jsonParser, function(req,res){
+
+    jwt.verify(req.body.token, 'secret', { algorithm: 'HS256'}, function (tokenErr, decoded){
+        if (tokenErr !== null){
+            res.status(200).send({'payload':{'success':false},'error':{'errorCode':tokenErr.code, 'errorMessage':tokenErr.message}});
+        }else{
+
+            //make sure database is connected and run the function to retrieve current user
+            userID = decoded.userID;
+
+            //get the current user from the database and send it
+            pool.query('SELECT * FROM user WHERE userID = ?',[userID],function(err, results, fields){
+
+                if (err !== null){
+                    res.status(200).send({'payload':{'success':false},'error':{'errorCode':err.code, 'errorMessage':err.message}});
+                }else {
+                    if (results[0] !== undefined){
+                        res.status(200).send({'payload':{'success':true},'error':{'errorCode':null, 'errorMessage':null}});
+                    }else {
+                        res.status(200).send({'payload':{'success':false},'error':{'errorCode':'NO_ACCOUNT', 'errorMessage':'There was no matching account for this token'}});
+                    }
+                }
+            });
+        }
+    });
+
+});
+
 router.post('/api/signin', jsonParser, function(req,res){
 
     let email = req.body.email;

@@ -19,6 +19,7 @@ import { SignupConfirmComponent } from './auth/signup-confirm/signup-confirm.com
 import { VerifyAccountComponent } from './auth/verify-account/verify-account.component';
 import { ResendConfirmationComponent } from './auth/resend-confirmation/resend-confirmation.component';
 import { AuthorizeMessengerComponent } from './auth/authorize-messenger/authorize-messenger.component';
+import {MessengerAuthorizationService} from "./auth/messenger-authorization.service";
 
 const appRoutes: Routes = [
     {path: '', component: HomeComponentComponent},
@@ -57,7 +58,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule
   ],
-  providers: [AuthGuard, AccountManagerService],
+  providers: [AuthGuard, AccountManagerService, MessengerAuthorizationService],
   bootstrap: [HeaderComponent]
 })
 export class AppModule {

@@ -99,14 +99,10 @@ constructor(private accountManager: AccountManagerService, private router: Route
   }
 
   getUser(): Promise<User> {
-    if (this.accountManager.isLoggedIn()) {
-      return this.accountManager.getCurrentUser(this.accountManager.token).then( user => {
+      return this.accountManager.getCurrentUser().then( user => {
         this.currentUser = user;
         return user;
       });
-    }else {
-      this.currentUser = null;
-    }
   }
 
   linkAccountPressed() {

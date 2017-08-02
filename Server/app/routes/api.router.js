@@ -161,10 +161,9 @@ apiRouter.post('/api/verifyaccount',jsonParser, function(req,res){
     //get the verification token from the json body
     let token = req.body.token;
 
-
     //query from database to find a verification that matches the one we were given when we went to the site
     //if we don't find one we return that we could not find specified verification
-    connection.query('SELECT * FROM verification WHERE token = ?', [token], function(error, results,fields){
+    pool.query('SELECT * FROM verification WHERE token = ?', [token], function(error, results,fields){
         //there is no error
         if (error === null){
             //make sure we have a verification result from the server

@@ -8,18 +8,24 @@ import {AccountManagerService} from "../auth/account-manager.service";
 })
 export class HeaderComponent implements OnInit {
 
+    loggedIn = false;
 
-  constructor(private accountManager:AccountManagerService) { }
 
-  accountManagerLoggedIn():Boolean {
-    return this.accountManager.loggedIn;
-  }
+  constructor(private accountManager: AccountManagerService) { }
+
+
 
   ngOnInit() {
+      this.accountManager.isLoggedIn().then(res => {
+         this.loggedIn = res;
+      });
+
+      this.accountManager.login.subscribe((value) => {
+         this.loggedIn = value;
+      });
   }
 
   signOut() {
-    console.log(this.accountManager.loggedIn);
     this.accountManager.signOut();
   }
 

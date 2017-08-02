@@ -3,14 +3,17 @@
     <div class="col-sm-10 col-md-8">
       <form [formGroup]="loginForm" id="formGroup">
         <h2 id="sign-up-h1" style="font-weight: 300">Teller Sign In</h2>
-
-
           <input class="form-control form-control-lg" placeholder="Email" [(ngModel)]="email" formControlName="email">
           <input class="form-control form-control-lg" placeholder="Password" [(ngModel)]="password" type="password" formControlName="password">
           <p *ngIf="signInError" id="sign-in-error">{{signInErrorMessage}} </p>
             <p *ngIf="verifyError">Your account is not yet verified. Please check your email for the confirmation code. <a style="text-decoration: underline; cursor: pointer;" (click)="resendVerification()">Resend Verification Link</a>.</p>
             <button type="submit" class="col-12 btn btn-primary" id="submit-button" (click)="signin()" >Sign In</button>
-          <a (click)="resetPassword()" style="cursor: pointer; text-decoration: underline;">Reset Password</a>
+          <div>
+              <p style="display: inline;">Don't have an account? </p>
+              <a (click)="signUpRedirect()" style="cursor: pointer; text-decoration: underline;">Sign Up</a>
+              <a (click)="resetPassword()" style="cursor: pointer; text-decoration: underline; display: inline">Reset Password</a>
+          </div>
+
       </form>
     </div>
   </div>

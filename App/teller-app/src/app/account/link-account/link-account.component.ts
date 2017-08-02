@@ -46,9 +46,9 @@ export class LinkAccountComponent implements OnInit {
 
                 const token = localStorage.getItem('session');
 
-                this.accountManager.getCurrentUser(token).then(user => {
+                this.accountManager.getCurrentUser().then(user => {
                     console.log(user.userID);
-                    let publicToken = public_token
+                    const publicToken = public_token
                     // make an http call to add the new plaid token to the user to signify that we have linked a bank account
                     // we will also have to link an account with facebook so we can identify the user from the frontend
 
@@ -79,11 +79,9 @@ export class LinkAccountComponent implements OnInit {
         });
 
         linkhandler.open();
-
-        console.log('clicked');
     }
 
-    backToAccount(){
+    backToAccount() {
         this.router.navigate(['/account']);
     }
 }

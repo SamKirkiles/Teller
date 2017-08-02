@@ -5,12 +5,14 @@ import {MessengerAuthorizationService} from "../messenger-authorization.service"
     selector: 'app-authorize-messenger',
     templateUrl: './authorize-messenger.component.html',
     styleUrls: ['./authorize-messenger.component.css'],
-    providers: [MessengerAuthorizationService]
+    providers: []
 }   )
 export class AuthorizeMessengerComponent implements OnInit {
 
     constructor(private messengerService: MessengerAuthorizationService) {
+        this.messengerService.authenticationRedirect = true;
 
+        
     }
 
     ngOnInit() {

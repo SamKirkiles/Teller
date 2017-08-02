@@ -19,21 +19,12 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.accountManager.isLoggedIn()){
-      console.log('We are not logged in');
-      this.router.navigate(['/login']);
-    }
   }
 
   getUser() {
-    if (this.accountManager.isLoggedIn()) {
-      this.accountManager.getCurrentUser(this.accountManager.token).then( user => {
+      this.accountManager.getCurrentUser().then( user => {
         this.currentUser = user;
       });
-    }else {
-      this.currentUser = null;
-    }
-
   }
 
   editPressed() {

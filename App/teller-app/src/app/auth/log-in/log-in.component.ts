@@ -10,19 +10,19 @@ import {MessengerAuthorizationService} from "../messenger-authorization.service"
     selector: 'app-log-in',
     templateUrl: './log-in.component.html',
     styleUrls: ['./log-in.component.css'],
-    providers: [MessengerAuthorizationService]
+    providers: []
 })
 export class LogInComponent implements OnInit {
 
-    @Input() authorize:boolean = false;
+    @Input() authorize: boolean = false;
 
     signInError = false;
   signInErrorMessage = 'Invalid account. Please check your email/password combo.';
 
   verifyError = false;
 
-  email: string = '';
-  password: string = '';
+  email:string = '';
+  password:string = '';
 
   loginForm = new FormGroup({
     email: new FormControl('', Validators.email),
@@ -47,7 +47,14 @@ export class LogInComponent implements OnInit {
             const body = JSON.parse(response._body);
 
           if (body.payload.success === true){
-            this.router.navigate(['/']);
+            if (this.messengerAuth.authenticationRedirect === true) {
+                //else we need to get the variables form the auth manager and redirect the user
+                window.location.href = "https://google.com";
+            }else{
+                this.router.navigate(['/']);
+            }
+
+
           }else if (body.payload.success === false && body.error.errorCode === 'NOT_VERIFIED') {
               this.signInError = false;
               this.verifyError = true;
@@ -75,6 +82,10 @@ export class LogInComponent implements OnInit {
 
   ngOnInit() {
       console.log(this.authorize);
+  }
+
+  signUpRedirect() {
+      this.router.navigate(['/signup']);
   }
 
 }

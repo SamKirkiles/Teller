@@ -5,13 +5,15 @@ import {User} from "./user.model";
 import {Router} from '@angular/router';
 import {isNullOrUndefined} from 'util';
 import {environment} from '../../environments/environment';
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class AccountManagerService {
 
-  public loggedIn = false;
   public currentUser: User = null;
   public token: string;
+
+  public login: BehaviorSubject<boolean>;
 
 
 
@@ -20,32 +22,39 @@ export class AccountManagerService {
 
   constructor(private http: Http, private router: Router) {
 
-    const resultToken = localStorage.getItem('session');
-    if (!isNullOrUndefined(resultToken)) {
-      this.getCurrentUser(resultToken).then(userResult => {
+      this.login = new BehaviorSubject(false);
+
+      this.getCurrentUser().then(userResult => {
         if (!isNullOrUndefined(userResult)) {
-          this.loggedIn = true;
-          this.token = resultToken;
           this.currentUser = userResult;
         }else {
-          this.loggedIn = false;
-          this.token = null;
+
         }
+      });
+  }
+
+  isLoggedIn(): Promise<boolean> {
+    const resultToken = localStorage.getItem('session');
+
+    if (!isNullOrUndefined(resultToken)) {
+        return this.verifyLogin(resultToken).then(res => {
+            const body = JSON.parse(res['_body']);
+            this.login.next(body.payload.success);
+            return body.payload.success;
+        });
+    }else {
+
+      return new Promise((resolve, reject) => {
+          this.login.next(false);
+          resolve(false);
       });
     }
   }
 
-
-
-  isLoggedIn(): Boolean {
-    const loggedInCopy =  this.loggedIn;
-    const resultToken = localStorage.getItem('session');
-
-    if (!isNullOrUndefined(resultToken) && loggedInCopy) {
-      return true;
-    }else {
-      return false;
-    }
+  verifyLogin(token) {
+      return this.http.post(environment.apiUrl + '/api/verifylogin', JSON.stringify({
+          'token': token
+      }), {headers: this.headers}).toPromise();
   }
 
   signIn(email: String, password: String): Promise<any> {
@@ -64,26 +73,25 @@ export class AccountManagerService {
 
         if (body.payload.success === true){
 
-          this.loggedIn = true;
           this.token = body.payload.token;
 
           localStorage.setItem('session', this.token);
 
           // call our getCurrentUser method which returns a promise and use the user created from that
 
-          this.getCurrentUser(this.token).then(userResult => {
+          this.getCurrentUser().then(userResult => {
             if (!isNullOrUndefined(userResult)) {
-              this.loggedIn = true;
+              this.login.next(true);
               this.currentUser = userResult;
             }else {
-              this.loggedIn = false;
+              this.login.next(false);
               this.currentUser = null;
             }
           });
           // there was a problem signing in and we didnt even get the user
         }else {
             console.log('There was a problem signing in');
-            this.loggedIn = false;
+            this.login.next(false);
           this.token = null;
         }
       return res;
@@ -111,28 +119,22 @@ export class AccountManagerService {
     }), {headers: this.headers}).toPromise();
   }
 
-  getCurrentUser(token: String): Promise<User> {
+  getCurrentUser(): Promise<User> {
 
-    // if we already have a user, return it else we need to fetch
+      const token = localStorage.getItem('session');
 
-    if (!isNullOrUndefined(this.currentUser)) {
-      return new Promise<User>((resolve, reject) => {
-        resolve(this.currentUser);
-      });
-    }else {
       return this.http.post(environment.apiUrl + '/api/currentuser' , JSON.stringify({
         'token': token
       }), {headers: this.headers}).toPromise().then(res => {
         const body = JSON.parse(res['_body']);
         if (body.payload.success !== false) {
-          this.currentUser = new User(body.payload.result.fullname, body.payload.result.email, body.payload.result.userID, body.payload.result.facebookID);
+          this.currentUser = new User(body.payload.result.fullname, body.payload.result.email, body.payload.result.userID, body.payload.result.facebook);
           return this.currentUser;
         }else {
           this.currentUser = null;
           return null;
         }
       });
-    }
 
   }
 
@@ -140,7 +142,7 @@ export class AccountManagerService {
 
     if (confirm('Are you sure you want to log out?')) {
       // Save it!
-      this.loggedIn = false;
+      this.login.next(false);
       localStorage.clear();
 
     } else {
