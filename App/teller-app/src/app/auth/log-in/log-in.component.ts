@@ -3,12 +3,14 @@ import {AccountManagerService} from "../account-manager.service";
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import 'rxjs';
 import {Router, RouterModule} from "@angular/router";
+import {MessengerAuthorizationService} from "../messenger-authorization.service";
 
 
 @Component({
     selector: 'app-log-in',
     templateUrl: './log-in.component.html',
-    styleUrls: ['./log-in.component.css']
+    styleUrls: ['./log-in.component.css'],
+    providers: [MessengerAuthorizationService]
 })
 export class LogInComponent implements OnInit {
 
@@ -23,11 +25,12 @@ export class LogInComponent implements OnInit {
   password: string = '';
 
   loginForm = new FormGroup({
-    email: new FormControl('',Validators.email),
-    password: new FormControl('',Validators.minLength(8))
+    email: new FormControl('', Validators.email),
+    password: new FormControl('', Validators.minLength(8))
   });
 
-  constructor(private accountManager: AccountManagerService, private router: Router) { }
+  constructor(private accountManager: AccountManagerService, private router: Router,
+              private messengerAuth: MessengerAuthorizationService) { }
 
   signin() {
 
