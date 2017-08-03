@@ -28,64 +28,7 @@ export class AccountViewComponent implements OnInit {
 
 constructor(private accountManager: AccountManagerService, private router: Router, private http: Http) {
     this.getUser().then(user =>{
-
-        console.log("This is the current user");
-        console.log(user.facebookID);
     });
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = '//connect.facebook.net/en_US/sdk.js';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    window.fbAsyncInit = () => {
-        console.log("fbasyncinit")
-
-        FB.init({
-            appId            : '427920587581118',
-            autoLogAppEvents : true,
-            xfbml            : true,
-            version          : 'v2.10'
-        });
-        FB.AppEvents.logPageView();
-
-
-        //check to see if the user has linked their facebook account
-        this.getUser().then(user =>{
-
-            console.log(user.facebookID);
-
-            if (user.facebookID !== null){
-                FB.api('/' + user.facebookID, function(response){
-                   console.log(response);
-                });
-            }
-
-        });
-
-
-        // subscribe to status changed and post to database when we update the user
-        FB.Event.subscribe('auth.statusChange', (response => {
-
-            if (response.status === 'connected') {
-
-                const facebookID = response.authResponse.userID;
-                const userID = this.currentUser.userID;
-
-                this.http.post(environment.apiUrl + '/api/facebookID', JSON.stringify({
-                    'userID': userID,
-                    'facebookID': facebookID
-                }), {headers: this.headers} ).toPromise().then(res => {
-                    this.displayFB = false;
-                });
-            }
-
-        }));
-    };
 
   }
 

@@ -128,7 +128,7 @@ export class AccountManagerService {
       }), {headers: this.headers}).toPromise().then(res => {
         const body = JSON.parse(res['_body']);
         if (body.payload.success !== false) {
-          this.currentUser = new User(body.payload.result.fullname, body.payload.result.email, body.payload.result.userID, body.payload.result.facebook);
+          this.currentUser = new User(body.payload.result.fullname, body.payload.result.email, body.payload.result.userID);
           return this.currentUser;
         }else {
           this.currentUser = null;

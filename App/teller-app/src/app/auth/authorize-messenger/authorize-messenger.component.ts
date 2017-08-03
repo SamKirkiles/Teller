@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MessengerAuthorizationService} from "../messenger-authorization.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'app-authorize-messenger',
@@ -9,10 +10,13 @@ import {MessengerAuthorizationService} from "../messenger-authorization.service"
 }   )
 export class AuthorizeMessengerComponent implements OnInit {
 
-    constructor(private messengerService: MessengerAuthorizationService) {
+    constructor(private messengerService: MessengerAuthorizationService, private route: ActivatedRoute) {
         this.messengerService.authenticationRedirect = true;
 
-        
+        let linkingToken = this.route.snapshot.queryParams.account_linking_token;
+        let redirectURL = this.route.snapshot.queryParams.redirect_uri;
+
+        console.log(linkingToken);
     }
 
     ngOnInit() {

@@ -43,6 +43,8 @@ function handleUnregisteredUser(userID){
 }
 
 function sendLogOut(recipient, callback){
+
+
     var options = {
         url: 'https://graph.facebook.com/v2.6/me/messages',
         method: "POST",
@@ -59,8 +61,7 @@ function sendLogOut(recipient, callback){
                         text: "You need to login to access teller",
                         buttons:[
                             {
-                                type: "account_unlink"
-                                // "url": "https://www.tellerchatbot.com/authorize"
+                                type: "account_unlink",
                             }
                         ]
                     }
@@ -70,15 +71,20 @@ function sendLogOut(recipient, callback){
     };
 
     request(options,function(error,incomingMessage,response){
-        if (!error){
-            if (callback){
-                callback()
-            }
-        }
+        callback()
     });
 }
 
 function sendLogin(recipient, callback){
+
+    var login;
+    if (process.env.NODE_ENV === "Dev"){
+        login = 'https://teller-development-frontend.ngrok.io';
+    }else{
+        login = 'https;//tellerchatbot.com';
+    }
+
+
     var options = {
         url: 'https://graph.facebook.com/v2.6/me/messages',
         method: "POST",
@@ -96,8 +102,7 @@ function sendLogin(recipient, callback){
                         buttons:[
                             {
                                 type: "account_link",
-                                url: "https://1a9ed7dc.ngrok.io/api/authorize"
-                                // "url": "https://www.tellerchatbot.com/authorize"
+                                url: login + '/authorize'
                             }
                         ]
                     }
