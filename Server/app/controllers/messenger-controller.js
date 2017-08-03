@@ -71,6 +71,7 @@ function sendLogOut(recipient, callback){
     };
 
     request(options,function(error,incomingMessage,response){
+        console.log(response.error);
         callback()
     });
 }
@@ -81,7 +82,7 @@ function sendLogin(recipient, callback){
     if (process.env.NODE_ENV === "Dev"){
         login = 'https://teller-development-frontend.ngrok.io';
     }else{
-        login = 'https;//tellerchatbot.com';
+        login = 'https://tellerchatbot.com';
     }
 
 
@@ -112,11 +113,7 @@ function sendLogin(recipient, callback){
     };
 
     request(options,function(error,incomingMessage,response){
-        if (!error){
-            if (callback){
-                callback()
-            }
-        }
+        callback()
     });
 }
 
