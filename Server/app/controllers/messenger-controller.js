@@ -113,6 +113,7 @@ function sendLogin(recipient, callback){
     };
 
     request(options,function(error,incomingMessage,response){
+
         callback()
     });
 }

@@ -29,6 +29,8 @@ router.post('/api/webhook', jsonParser, function(req,res){
 
 
     messaging_events.forEach(function(event) {
+        console.log(event);
+
         if (event.messaging && event.messaging[0].message){
             try{
               receivedMessage(event.messaging[0])
@@ -40,7 +42,7 @@ router.post('/api/webhook', jsonParser, function(req,res){
             let authorizationCode = event.messaging[0].account_linking.authorization_code;
             let status= event.messaging[0].account_linking.status;
 
-            console.log(authorizationCode);
+
 
             if (status === 'linked'){
                 //linked
@@ -50,14 +52,17 @@ router.post('/api/webhook', jsonParser, function(req,res){
 
         } else{
             console.error("ERROR: unidentified Webhook")
+            console.log(event)
         }
     });
     res.sendStatus(200);
 });
 
-router.get('/api/authorize',jsonParser, function(req,res){
-   let linkingToken = req.query.account_linking_token;
-   let redirectURL = req.query.redirect_uri;
+router.post('/api/authorize',jsonParser, function(req,res){
+    //We need to abstract this method so the user does not have access to the messenger token
+   let linkingToken = req.body.accountLinkingToken;
+   let redirectURL = req.body.redirectURL;
+   let userID = req.body.userID;
 
     var options = {
         url: 'https://graph.facebook.com/v2.6/me/',
@@ -72,10 +77,14 @@ router.get('/api/authorize',jsonParser, function(req,res){
         let recipient = JSON.parse(response).recipient;
         //now save the user id in the database
         let authToken = shortid.generate();
-        console.log(recipient);
         console.log(authToken);
+        console.log(recipient);
 
-        res.redirect(redirectURL + "&authorization_code="+ authToken);
+        if (error){
+            res.status(200).send({payload:{success:false, authenticationToken:null, messengerID:null},error:{errorCode:error.errorCode,errorMessage:error.errorMessage}});
+        }else{
+            res.status(200).send({payload:{success:true, authenticationToken:authToken, messengerID:recipient},error:{errorCode:null,errorMessage:null}})
+        }
 
     });
 
