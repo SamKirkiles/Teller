@@ -69,9 +69,6 @@ function sendAccountVerificationLink(user){
 
             } else{
                 //we have a verification for this account and we can fetch the token
-                console.log("why is this happeneing");
-                console.log(results[0].token);
-                console.log(results[0]);
             }
         }else{
             console.log(error);

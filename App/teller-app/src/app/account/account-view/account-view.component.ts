@@ -11,8 +11,6 @@ import {isNullOrUndefined} from "util";
 declare var window: any;
 declare var FB: any;
 
-
-
 @Component({
   selector: 'app-account-view',
   templateUrl: './account-view.component.html',
@@ -29,16 +27,12 @@ export class AccountViewComponent implements OnInit {
 constructor(private accountManager: AccountManagerService, private router: Router, private http: Http) {
     this.getUser().then(user =>{
     });
-
   }
-
 
   ngOnInit() {
     if (window.FB) {
         window.FB.XFBML.parse();
     }
-
-
   }
 
   getUser(): Promise<User> {

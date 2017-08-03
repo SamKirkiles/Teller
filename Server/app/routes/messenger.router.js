@@ -12,6 +12,16 @@ let botManager = require(__dirname + "/../../bot/botManager.js");
 var messenger = require(path.resolve("./app/controllers/messenger-controller.js"));
 let Intent = require(__dirname + "/../../bot/intent-model.js");
 let shortid = require('shortid');
+let mysql = require('mysql');
+
+var pool  = mysql.createPool({
+    connectionƒLimit : 6,
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: 'teller_production_rds'
+});
+
 
 let jsonParser = bodyParser.json();
 
@@ -42,8 +52,6 @@ router.post('/api/webhook', jsonParser, function(req,res){
             let authorizationCode = event.messaging[0].account_linking.authorization_code;
             let status= event.messaging[0].account_linking.status;
 
-
-
             if (status === 'linked'){
                 //linked
             } else{
@@ -70,15 +78,19 @@ router.post('/api/authorize',jsonParser, function(req,res){
         qs: {
             access_token: process.env.FB_MESSENGER_TOKEN,
             fields:"recipient",
-            account_linking_token:linkingToken}
+            account_linking_token:linkingToken
+        }
     };
 
     request(options, function(error,incomingMessage,response){
         let recipient = JSON.parse(response).recipient;
         //now save the user id in the database
         let authToken = shortid.generate();
-        console.log(authToken);
-        console.log(recipient);
+
+        pool.query('UPDATE user SET messengerID=? WHERE userID=?', [recipient, userID] , function(error, results, fields){
+            console.log("The results of the query are:");
+            console.log(results);
+        });
 
         if (error){
             res.status(200).send({payload:{success:false, authenticationToken:null, messengerID:null},error:{errorCode:error.errorCode,errorMessage:error.errorMessage}});

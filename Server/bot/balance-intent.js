@@ -21,6 +21,7 @@ const plaidClient = new plaid.Client(
 
 function checkBalance(intent){
 
+    // get this from the database
     let access_token = 'access-sandbox-c4d2b9ff-a609-4753-878e-4ef6f1583594';
 
     plaidClient.getBalance(access_token, function(err, response){

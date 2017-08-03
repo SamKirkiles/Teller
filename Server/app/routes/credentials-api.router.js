@@ -67,12 +67,10 @@ router.post('/api/signin', jsonParser, function(req,res){
     pool.query('SELECT user.*, verification.confirmed FROM user LEFT JOIN verification ON verification.user=user.userID WHERE user.email=?;',[email],function(error, results, fields){
 
         if (results[0].confirmed === 0){
-            console.log("Good we didn't let them continue");
             let verifyErrorCode = "NOT_VERIFIED"
             let verifyErrorMessage = "The account was not verified";
             res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":verifyErrorCode,"message":verifyErrorMessage}})
         }else{
-            console.log("Why did thhey get let through")
             console.log(results[0].confirmed);
             //there should be no error here
             if (results[0] !== null  && error === null){
@@ -88,25 +86,25 @@ router.post('/api/signin', jsonParser, function(req,res){
                             userID: results[0].userID
                         };
 
+                        let userID = results[0].userID;
+
                         //the login was successful and we have a user that we have now turned into a stirng
 
                         jwt.sign({ userID: results[0].userID }, 'secret', { algorithm: 'HS256' }, function(jwtErr, token) {
 
                             if (jwtErr === null){
-                                res.status(200).send({"payload":{"success":true, "token":token},"error":{"errorCode":null, "message":null}});
+                                res.status(200).send({payload:{success:true, token:token, userID: userID},error:{errorCode:null, message:null}});
 
                             }else{
-                                res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":jwtErr.code, "message":jwtErr.message}});
+                                res.status(200).send({payload:{success:false, token:null, userID: null},error:{errorCode:jwtErr.code, message:jwtErr.message}});
                             }
-
                         });
-
                     }else{
-                        res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":null, "message":null}});
+                        res.status(200).send({payload:{success:false, token:null, userID: null},error:{errorCode:null, message:null}});
                     }
                 });
             }else{
-                res.status(200).send({"payload":{"success":false, "token":null},"error":{"errorCode":error.errorCode, "message":error.message}});
+                res.status(200).send({payload:{success:false, token:null, userID: null},error:{errorCode:error.errorCode, message:error.message}});
 
             }
         }

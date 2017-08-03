@@ -41,29 +41,24 @@ export class LogInComponent implements OnInit {
 
       this.signInError = false;
 
-
     if (this.loginForm.valid === true){
 
       this.accountManager.signIn(this.email, this.password)
         .then(response => {
             console.log('We are signing in');
 
-
             const body = JSON.parse(response._body);
 
           if (body.payload.success === true){
             if (this.messengerAuth.authenticationRedirect.redirect === true) {
-                // else we need to get the variables form the auth manager and redirect the u\
+                // else we need to get the variables form the auth manager and redirect the user
 
                 this.http.post(environment.apiUrl + '/api/authorize', JSON.stringify({
                     accountLinkingToken: this.messengerAuth.authenticationRedirect.token,
                     redirectURL: this.messengerAuth.authenticationRedirect.url,
-                    userID: null
+                    userID: body.payload.userID
                 }), {headers: this.headers}).toPromise().then(res => {
                     const body = JSON.parse(res['_body']);
-                    console.log(body.payload);
-                    console.log(this.messengerAuth.authenticationRedirect.url + '&account_linking_token='
-                        + body.payload.authenticationToken);
                     window.location.href = this.messengerAuth.authenticationRedirect.url + '&authorization_code='
                         + body.payload.authenticationToken;
                 });
