@@ -1,7 +1,7 @@
 import {Injectable, isDevMode, OnInit} from '@angular/core';
 import {Headers, Http} from "@angular/http";
 import 'rxjs';
-import {User} from "./user.model";
+import {User} from "../account/user.model";
 import {Router} from '@angular/router';
 import {isNullOrUndefined} from 'util';
 import {environment} from '../../environments/environment';

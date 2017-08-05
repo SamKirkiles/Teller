@@ -39,7 +39,6 @@ router.post('/api/webhook', jsonParser, function(req,res){
 
 
     messaging_events.forEach(function(event) {
-        console.log(event);
 
         if (event.messaging && event.messaging[0].message){
             try{
@@ -55,7 +54,10 @@ router.post('/api/webhook', jsonParser, function(req,res){
             if (status === 'linked'){
                 //linked
             } else{
-                //unlinked
+                let sender = event.messaging[0].sender.id;
+                pool.query('UPDATE user SET messengerID=null WHERE messengerID=?', [sender], function(error, results, fields){
+                    //the user has been logged out
+                });
             }
 
         } else{

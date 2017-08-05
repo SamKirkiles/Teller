@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HomeComponentComponent } from './home-component/home-component.component';
 import { HeaderComponent } from './header/header.component';
-import {RouterModule, Routes} from "@angular/router";
+import {RouterModule, Routes} from '@angular/router';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { LogInComponent } from './auth/log-in/log-in.component';
 import {AccountManagerService} from './auth/account-manager.service';
@@ -19,7 +19,8 @@ import { SignupConfirmComponent } from './auth/signup-confirm/signup-confirm.com
 import { VerifyAccountComponent } from './auth/verify-account/verify-account.component';
 import { ResendConfirmationComponent } from './auth/resend-confirmation/resend-confirmation.component';
 import { AuthorizeMessengerComponent } from './auth/authorize-messenger/authorize-messenger.component';
-import {MessengerAuthorizationService} from "./auth/messenger-authorization.service";
+import {MessengerAuthorizationService} from './auth/messenger-authorization.service';
+import {ViewTransactionsComponent} from './webviews/view-transactions/view-transactions.component';
 
 const appRoutes: Routes = [
     {path: '', component: HomeComponentComponent},
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
     {path: 'linkaccount', component: LinkAccountComponent, canActivate: [AuthGuard]},
     {path: 'verifyaccount/:token', component: VerifyAccountComponent},
     {path: 'authorize', component: AuthorizeMessengerComponent},
-    {path: 'resendconfirmation', component: ResendConfirmationComponent}
+    {path: 'resendconfirmation', component: ResendConfirmationComponent},
+    {path: 'viewtransactions', component: ViewTransactionsComponent}
 ];
 
 @NgModule({
@@ -50,6 +52,7 @@ const appRoutes: Routes = [
     VerifyAccountComponent,
     ResendConfirmationComponent,
     AuthorizeMessengerComponent,
+    ViewTransactionsComponent,
   ],
   imports: [
     BrowserModule,

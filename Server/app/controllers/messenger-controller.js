@@ -9,27 +9,26 @@ var pool  = mysql.createPool({
     database: 'teller_production_rds'
 });
 
-function verifyMessengerUser(userID, callback){
+function verifyMessengerUser(messengerID, callback){
 
-    callback({
-        suceeded: true
-    })
-    // pool.query('SELECT fullname, userID, facebookID FROM user WHERE facebookID=?', [userID], function(error, result, fields){
-    //     if (error) throw error;
-    //     else {
-    //         if (result.length === 0){
-    //             //this user has not yet registered with teller
-    //             callback({
-    //                 succeeded: false
-    //             });
-    //         }else{
-    //             //there is a user here so we can let them continue.
-    //             callback({
-    //                 succeeded: true
-    //             });
-    //         }
-    //     }
-    // });
+    pool.query('SELECT fullname, userID, messengerID FROM user WHERE messengerID=?', [messengerID], function(error, result, fields){
+        if (error) throw error;
+        else {
+            if (result.length === 0){
+                //this user has not yet registered with teller
+                callback({
+                    user: null,
+                    succeeded: false
+                });
+            }else{
+                //there is a user here so we can let them continue.
+                callback({
+                    user: result[0],
+                    succeeded: true
+                });
+            }
+        }
+    });
 }
 
 function handleUnregisteredUser(userID){
@@ -37,9 +36,10 @@ function handleUnregisteredUser(userID){
     let message = "It looks like you aren't registered with Teller yet. Please visit \n" +
         "https://tellerchatbot.com to get started";
 
-    sendMessage(userID, message, function(){
+    sendLogin(userID, function(){
 
     });
+
 }
 
 function sendLogOut(recipient, callback){
@@ -58,7 +58,7 @@ function sendLogOut(recipient, callback){
                     type: "template",
                     payload: {
                         template_type: "button",
-                        text: "You need to login to access teller",
+                        text: "Sign out from Teller with the button below.",
                         buttons:[
                             {
                                 type: "account_unlink",
@@ -74,6 +74,43 @@ function sendLogOut(recipient, callback){
         console.log(response.error);
         callback()
     });
+}
+
+function sendLink(recipient, text, link, linkTitle, callback){
+    var options = {
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        method: "POST",
+        qs: {access_token:process.env.FB_MESSENGER_TOKEN},
+        json:{
+            recipient: {
+                id: recipient
+            },
+            message:{
+                attachment:{
+                    type: "template",
+                    payload: {
+                        template_type: "button",
+                        text: text,
+                        buttons:[
+                            {
+                                "type":"web_url",
+                                "url":link,
+                                "title":linkTitle,
+                                "webview_height_ratio": "compact",
+                                "messenger_extensions": true
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    };
+
+    request(options,function(error,incomingMessage,response){
+
+        callback()
+    });
+
 }
 
 function sendLogin(recipient, callback){
@@ -99,7 +136,7 @@ function sendLogin(recipient, callback){
                     type: "template",
                     payload: {
                         template_type: "button",
-                        text: "You need to login to access teller",
+                        text: "It looks like you aren't logged in with Teller. Please visit the following link to get started.",
                         buttons:[
                             {
                                 type: "account_link",
@@ -148,5 +185,6 @@ module.exports = {
     verifyMessengerUser: verifyMessengerUser,
     handleUnregisteredUser: handleUnregisteredUser,
     sendLogin: sendLogin,
-    sendLogOut: sendLogOut
+    sendLogOut: sendLogOut,
+    sendLink: sendLink
 };

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AccountManagerService} from '../../auth/account-manager.service';
-import {User} from '../../auth/user.model';
+import {User} from '../user.model';
 import {Router} from '@angular/router';
 import {Headers, Http} from '@angular/http';
 import {environment} from '../../../environments/environment';
