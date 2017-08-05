@@ -21,6 +21,7 @@ import { ResendConfirmationComponent } from './auth/resend-confirmation/resend-c
 import { AuthorizeMessengerComponent } from './auth/authorize-messenger/authorize-messenger.component';
 import {MessengerAuthorizationService} from './auth/messenger-authorization.service';
 import {ViewTransactionsComponent} from './webviews/view-transactions/view-transactions.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const appRoutes: Routes = [
     {path: '', component: HomeComponentComponent},
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
     {path: 'verifyaccount/:token', component: VerifyAccountComponent},
     {path: 'authorize', component: AuthorizeMessengerComponent},
     {path: 'resendconfirmation', component: ResendConfirmationComponent},
-    {path: 'viewtransactions', component: ViewTransactionsComponent}
+    {path: 'viewtransactions', component: ViewTransactionsComponent},
+    {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
@@ -53,6 +55,7 @@ const appRoutes: Routes = [
     ResendConfirmationComponent,
     AuthorizeMessengerComponent,
     ViewTransactionsComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

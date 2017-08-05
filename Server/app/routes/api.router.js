@@ -12,7 +12,9 @@ let accountVerification = require(__dirname + "/../controllers/account/accountVe
 
 //Requires for other routers so we dont have to cluster the app.js
 let credsRouter = require(__dirname + "/credentials-api.router.js").router;
+let bankRouter = require(__dirname + "/bank.router.js").router;
 apiRouter.use(credsRouter);
+apiRouter.use(bankRouter);
 
 
 
