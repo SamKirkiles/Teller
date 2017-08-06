@@ -61,7 +61,7 @@ router.post('/api/transactions', jsonParser, function(req, res ,err){
             }
 
         }else{
-            res.status(200).send({payload:{success: false}, error:{errorCode:'NO_RESULTS', errorMessage:'There were no results for given token and psid.'}})
+            res.status(200).send({payload:{success: false}, error:{errorCode:'NO_RESULTS', errorMessage:'This link is not valid or has expired.'}})
         }
     });
 });

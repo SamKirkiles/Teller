@@ -1,4 +1,8 @@
 <div class="container" style="text-align: center; margin-bottom: 20px;">
+    <div class="alert alert-danger" *ngIf="error" style="margin-top: 20px;">
+        <strong>Error!</strong> {{errorText}}
+    </div>
+
     <div style="margin: 24px;">
         <h1>Transaction Summary</h1>
         <h5 style="color: darkgray">Dates: 2017/04/04 - 2017/05/01</h5>

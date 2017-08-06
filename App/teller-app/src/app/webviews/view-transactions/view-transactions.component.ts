@@ -17,6 +17,10 @@ declare var MessengerExtensions: any;
 export class ViewTransactionsComponent implements OnInit {
 
     transactions = [];
+
+    error = false;
+    errorText = "This page has expiered or is not available."
+
     private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private activatedRoute: ActivatedRoute, private http: Http, private ref: ChangeDetectorRef) {
@@ -44,14 +48,14 @@ export class ViewTransactionsComponent implements OnInit {
 
                           const body = JSON.parse(res['_body']);
 
-                          console.log("Can we make these transactionsw?")
                           if (body.payload.success === true) {
-                              console.log('TESTNE')
                               this.transactions = body.payload.results.transactions;
                               console.log(body.payload.results.transactions);
                               this.ref.detectChanges();
                           }else {
-                              console.log(body.error.errorMessage);
+                              this.error = true;
+                              this.errorText = body.error.errorMessage;
+                              this.ref.detectChanges();
                           }
 
 
