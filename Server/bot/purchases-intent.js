@@ -4,6 +4,8 @@ let path = require('path');
 var messenger = require(path.resolve("./app/controllers/messenger-controller.js"));
 let undefsafe = require('undefsafe');
 let shortid = require('shortid');
+const url = require('url');
+const querystring = require('querystring');
 
 
 var pool  = mysql.createPool({
@@ -44,7 +46,6 @@ function checkPurchases(intent){
         return;
     }
 
-
     plaidClient.getTransactions(accessToken,startDate, endDate, {}, function(err, results){
 
         if (err !== null){
@@ -54,18 +55,34 @@ function checkPurchases(intent){
             let total_transactions = undefsafe(results, 'total_transactions');
             var message;
 
-
             if (total_transactions > 0 || total_transactions !== undefined && total_transactions !== null) {
 
                 let token = shortid.generate();
 
-                message = "I found " + results.total_transactions + " transactions from this date." + token;
+                message = "I found " + results.total_transactions + " transactions from this date.";
 
                 pool.query('INSERT INTO view_transaction_request (token, startDate, endDate, messengerID) VALUES (?, ?, ?, ?)', [token, startDate, endDate, intent.accountID], function(error, results,fields){
-                    messenger.sendLink(intent.accountID, "Here is a list of your transactions", 'https://teller-development-frontend.ngrok.io/viewtransactions', 'Transactions', function(){
+
+
+                    var baseUrl;
+
+                    var baseUrl;
+                    if (process.env.NODE_ENV === "Dev"){
+                        login = 'https://teller-development-frontend.ngrok.io';
+                    }else{
+                        login = 'https://tellerchatbot.com';
+                    }
+
+                    let query = querystring.stringify({token:token});
+
+                    let url = login + '/viewtransactions' + '/?' + query;
+
+                    messenger.sendLink(intent.accountID, message, url, 'Transactions', function(){
 
                     });
                 });
+
+                return;
 
             } else {
                 message = "There were no transactions for this date";

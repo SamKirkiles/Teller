@@ -96,7 +96,7 @@ function sendLink(recipient, text, link, linkTitle, callback){
                                 "type":"web_url",
                                 "url":link,
                                 "title":linkTitle,
-                                "webview_height_ratio": "compact",
+                                "webview_height_ratio": "tall",
                                 "messenger_extensions": true
                             }
                         ]
