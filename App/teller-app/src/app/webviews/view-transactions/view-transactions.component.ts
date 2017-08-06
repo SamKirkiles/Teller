@@ -50,6 +50,8 @@ export class ViewTransactionsComponent implements OnInit {
                               this.transactions = body.payload.results.transactions;
                               console.log(body.payload.results.transactions);
                               this.ref.detectChanges();
+                          }else {
+                              console.log(body.error.errorMessage);
                           }
 
 

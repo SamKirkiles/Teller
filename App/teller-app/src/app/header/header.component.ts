@@ -11,7 +11,9 @@ export class HeaderComponent implements OnInit {
     loggedIn = false;
 
 
-  constructor(private accountManager: AccountManagerService) { }
+  constructor(private accountManager: AccountManagerService) {
+      console.log("not here");
+  }
 
 
 
