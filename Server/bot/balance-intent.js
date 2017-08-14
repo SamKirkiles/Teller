@@ -2,6 +2,9 @@ let plaid = require('plaid');
 let mysql = require('mysql');
 let path = require('path');
 var messenger = require(path.resolve("./app/controllers/messenger-controller.js"));
+let bankAccountManager = require(__dirname + '/../app/controllers/bankAccountManager.js')
+let undefsafe = require('undefsafe')
+
 
 var pool  = mysql.createPool({
     connectionƒLimit : 6,
@@ -22,28 +25,54 @@ const plaidClient = new plaid.Client(
 function checkBalance(intent){
 
     // get this from the database
-    let access_token = 'access-sandbox-c4d2b9ff-a609-4753-878e-4ef6f1583594';
 
-    plaidClient.getBalance(access_token, function(err, response){
-        if (err) throw err;
-        else if (intent.registered === false) {
-            messenger.handleUnregisteredUser(intent.accountID);
-        }
-        else {
-            let message = "Here is your balance rundown for all of you accounts: \n";
 
-            Array.from(response.accounts).forEach(function(item){
 
-                let balance = (item.balances.current || item.balances.available);
+    if (intent.registered === false) {
+        messenger.handleUnregisteredUser(intent.accountID);
+    }else{
 
-                message = message + item.name + " $" + balance +  "\n";
+        // we need to query the users bank access token
+
+        bankAccountManager.getPlaidAccessToken(null, intent.accountID, function(tokenRes,tokenError){
+            let tokenRes_undefsafe = undefsafe(tokenRes, '');
+            
+            if (tokenError) throw tokenError;
+            else if(tokenRes.length === 0 || tokenRes_undefsafe[0].plaid_private_ID === null){
+                messenger.sendMessage(intent.accountID, 'There is no bank linked to this Teller account.', function(callback){
+                    console.log("There is no bank linked to your account")
+                })
+
+                return;
+            }
+
+            let access_token = tokenRes[0].plaid_private_ID;
+
+            plaidClient.getBalance(access_token, function(err, response){
+                if (err) {
+                    console.log(err);
+                    throw err;
+                } else {
+                    let message = "Here is your balance rundown for all of you accounts: \n";
+
+                    Array.from(response.accounts).forEach(function(item){
+
+                        let balance = (item.balances.current || item.balances.available);
+
+                        message = message + item.name + " $" + balance +  "\n";
+                    });
+
+                    messenger.sendMessage(intent.accountID, message, function(callback){
+                        console.log("Intent Completed: " + intent.messageData.result.action + " User: " + intent.accountID + " Registered: " + intent.registered);
+                    })
+                }
             });
+        });
 
-            messenger.sendMessage(intent.accountID, message, function(callback){
-                console.log("Intent Completed: " + intent.messageData.result.action + " User: " + intent.accountID + " Registered: " + intent.registered);
-            })
-        }
-    });
+
+    }
+
+
 
 }
 

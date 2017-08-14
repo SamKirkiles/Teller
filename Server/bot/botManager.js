@@ -3,6 +3,7 @@ let balance = require(__dirname + "/balance-intent.js");
 let purchases = require(__dirname + "/purchases-intent.js")
 let Intent = require(__dirname + "/intent-model.js");
 let creds = require(__dirname + "/credentials-intent.js");
+let budget = require(__dirname + "/budget-intent.js")
 
 let smalltalk = require(__dirname + "/smalltalk-intent.js");
 
@@ -12,7 +13,8 @@ let intents = {
     "smalltalk": smalltalk.smalltalk,
     "logout": creds.logOut,
     "login": creds.logIn,
-    "view-transactions": purchases.checkPurchases
+    "view-transactions": purchases.checkPurchases,
+    "create-budget": budget.createBudget
 };
 
 function handleIntent(intent){

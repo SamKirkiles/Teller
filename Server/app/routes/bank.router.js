@@ -25,6 +25,22 @@ let pool = mysql.createPool({
     database: 'teller_production_rds'
 });
 
+router.post('/api/budgets', jsonParser, function(req,res,err){
+
+    let messengerID = req.body.messengerID;
+
+    pool.query('SELECT * FROM budget WHERE messengerID = ?', [messengerID], function(error, results, fields){
+
+       if (error){
+           res.status(200).send({payload:{success: false, results:null}, error:{errorCode:error.code, errorNumber:error.errorno}});
+       } else{
+           res.status(200).send({payload:{success: true, results:results}, error:{errorCode:null, errorNumber:null}});
+       }
+
+    });
+
+});
+
 //this will get all of the transactions the user currently has for the specified dates
 router.post('/api/transactions', jsonParser, function(req, res ,err){
     let psid = req.body.psid;

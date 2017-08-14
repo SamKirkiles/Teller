@@ -2,7 +2,7 @@ require('dotenv').config();
 let express = require('express');
 let router = express.Router();
 let bodyParser = require('body-parser');
-let apiaimanager = require(__dirname + "/apiaimanager.js");
+let apiaimanager = require(__dirname + "/../controllers/apiai-manager.js");
 let request = require("request");
 let balance = require(__dirname + "/../../balance.js");
 let path = require("path");
@@ -109,9 +109,9 @@ router.post('/api/authorize',jsonParser, function(req,res){
 //called when the user sends a message
 function receivedMessage(event){
 
-    apiaimanager.textRequest(event.message.text,function(response, error){
+    apiaimanager.textRequest(event.message.text, event.sender.id, function(response, error){
         messenger.verifyMessengerUser(event.sender.id, function(credsResponse) {
-            if (!response){
+            if (!credsResponse){
                 //we have an error
                 throw error
             }else{

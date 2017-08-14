@@ -11,6 +11,15 @@ let mysql = require('mysql');
 
 let fs = require("fs");
 
+var pool  = mysql.createPool({
+    connectionLimit : 6,
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: 'teller_production_rds'
+});
+
+
 const plaidClient = new plaid.Client(
     process.env.PLAID_CLIENT_ID,
     process.env.PLAID_SECRET,
@@ -35,30 +44,31 @@ function exchangeToken(token, callback){
     })
 }
 
+function getPlaidAccessToken(userID, messengerID, callback){
 
-
-function getBalance(access_token, callback){
-    plaidClient.getBalance(access_token, function(err, response){
-        if (err !== null){
-            console.error(err.error_message)
-        }else{
-            callback(response.accounts);
-        }
-    });
-
-}
-
-/** Wrapper for plaid get Transactions
- * @param {string} start_date - Start Date: The date to start fetching at
- * @param {string} end_date - End Date: THe date to end fetching the transactios
- * @param {string} access_token - Access Token: The access token to use to fetch the accounts
- * @param {string} callback - Callback Function: The function to use to obtain a response
- * */
-
-function getTransactions(start_date, end_date, access_token, callback){
-    plaidClient.getTransactions(access_token, start_date, end_date, {}, function(err,response){
-        callback(response)
-    })
+    if (userID){
+        //we have the user id so we can now use this to query
+        pool.query('SELECT plaid_private_ID FROM user WHERE userID=?', [userID], function(err, results, fields){
+           if (err){
+               callback(null, err);
+           }
+           else{
+               callback(results, null);
+           }
+        });
+    }else if (messengerID){
+        // we have the messenger id so we can use this to query the correct user
+        pool.query('SELECT plaid_private_ID FROM user WHERE messengerID=?', [messengerID], function(err, results, fields){
+            if (err){
+                callback(null, err);
+            }
+            else{
+                callback(results, null);
+            }
+        });
+    }else{
+        throw new Error('Both userID and messengerID were null');
+    }
 }
 
 function generateInsitutionsCSV(){
@@ -93,8 +103,7 @@ function generateInsitutionsCSV(){
 }
 
 module.exports = {
-    balance: getBalance,
-    transactions: getTransactions,
+    getPlaidAccessToken: getPlaidAccessToken,
     router: router,
     generateInsitutionsCSV: generateInsitutionsCSV,
     exchangeToken: exchangeToken

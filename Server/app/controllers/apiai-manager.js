@@ -2,13 +2,13 @@ var apiai = require('apiai');
 
 var app = apiai("011e5d4babb0438f91874bcb3e77b70a");
 
-var sendTextRequest = function(text, callback){
+function sendTextRequest(text, sessionID, callback){
     var request = app.textRequest(text, {
-        sessionId: 'session'
+        sessionId: sessionID
     });
 
     request.on('response', function(response) {
-            callback(response, null)
+        callback(response, null)
     });
 
     request.on('error', function(error) {

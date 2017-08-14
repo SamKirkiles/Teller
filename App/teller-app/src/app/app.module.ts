@@ -22,6 +22,7 @@ import { AuthorizeMessengerComponent } from './auth/authorize-messenger/authoriz
 import {MessengerAuthorizationService} from './auth/messenger-authorization.service';
 import {ViewTransactionsComponent} from './webviews/view-transactions/view-transactions.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { BudgetViewComponent } from './webviews/budget-view/budget-view.component';
 
 const appRoutes: Routes = [
     {path: '', component: HomeComponentComponent},
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     {path: 'authorize', component: AuthorizeMessengerComponent},
     {path: 'resendconfirmation', component: ResendConfirmationComponent},
     {path: 'viewtransactions', component: ViewTransactionsComponent},
+    {path: 'budgetview', component: BudgetViewComponent},
     {path: '**', component: NotFoundComponent}
 ];
 
@@ -56,6 +58,7 @@ const appRoutes: Routes = [
     AuthorizeMessengerComponent,
     ViewTransactionsComponent,
     NotFoundComponent,
+    BudgetViewComponent,
   ],
   imports: [
     BrowserModule,
