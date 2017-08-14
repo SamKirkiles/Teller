@@ -9,7 +9,7 @@ var balance = require(__dirname + "/../balance.js");
 
 describe('Get Balance', function(){
     this.timeout(30000);
-    
+
     //First test case
 
     it('Should always return a string', function(done){
