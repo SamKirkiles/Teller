@@ -1,22 +1,24 @@
 <div style="min-height: calc(100vh);">
-    <nav class="navbar navbar-toggleable-sm navbar-light  sticky-top" style="background-color: white; border-bottom-style: solid; border-bottom-color: gray; border-bottom-width: 1px;">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: white; border-bottom-style: solid; border-bottom-color: gray; border-bottom-width: 1px;">
       <!--this is the button with the issue-->
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navcollapse" style="z-index: 1">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-
-      <div class="container ">
+        <div class="container ">
 
 
 
-        <div class="navbar-brand mr-auto ">
+
+        <div class="navbar-brand">
           <h1 class="display-4 logo"> teller</h1>
         </div>
 
-        <div class="collapse navbar-collapse mr-auto" id="navcollapse">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcollapse" style="z-index: 1">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-          <div class="nav navbar-nav ml-auto" style="">
+
+        <div class="collapse navbar-collapse" id="navcollapse">
+
+            <div class="navbar-nav d-flex ml-auto" style="">
+
             <a href="#" routerLink="" class="nav-item nav-link">Home</a>
             <a href="#"  class="nav-item nav-link">Legal</a>
 
@@ -37,12 +39,12 @@
               <button type="button" routerLink="signup" class="btn btn-primary nav-item nav-link" id="signup-nav-button">Sign Up</button>
             </div>
 
+          </div>
+
 
           </div>
 
         </div>
-      </div>
-
 
     </nav>
 

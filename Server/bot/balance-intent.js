@@ -72,8 +72,6 @@ function checkBalance(intent){
 
     }
 
-
-
 }
 
 module.exports = {
