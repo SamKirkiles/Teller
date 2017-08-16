@@ -14,9 +14,12 @@ export class AuthGuard implements CanActivate{
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):Promise<boolean> | boolean{
 
     // we need to use async canActivate here
+      
+      console.log(route.url);
+      
       return this.accountManager.isLoggedIn().then(response => {
           if (response === false) {
-              this.router.navigate(['/login']);
+              this.router.navigate(['login', {redirect: route.url}]);
           }
           return response;
       });

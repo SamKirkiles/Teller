@@ -2,10 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AccountManagerService} from '../account-manager.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import 'rxjs';
-import {Router, RouterModule} from '@angular/router';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import {MessengerAuthorizationService} from '../messenger-authorization.service';
 import {Headers, Http} from '@angular/http';
 import {environment} from '../../../environments/environment';
+import {isNullOrUndefined} from "util";
 
 
 @Component({
@@ -35,7 +36,8 @@ export class LogInComponent implements OnInit {
   });
 
   constructor(private accountManager: AccountManagerService, private router: Router,
-              private messengerAuth: MessengerAuthorizationService, private http: Http) { }
+              private messengerAuth: MessengerAuthorizationService, private http: Http,
+                private route: ActivatedRoute) { }
 
   signin() {
 
@@ -63,7 +65,13 @@ export class LogInComponent implements OnInit {
                         + body.payload.authenticationToken;
                 });
             }else {
-                this.router.navigate(['/']);
+                let redirect = this.route.snapshot.params['redirect'];
+                if (!isNullOrUndefined(redirect)){
+                    this.router.navigate([redirect]);
+                }else{
+                    this.router.navigate(['/']);
+
+                }
             }
 
 

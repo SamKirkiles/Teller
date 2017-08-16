@@ -6,6 +6,8 @@ let undefsafe = require('undefsafe');
 let shortid = require('shortid');
 const url = require('url');
 const querystring = require('querystring');
+let bankAccountManager = require(__dirname + '/../app/controllers/bankAccountManager.js')
+
 
 
 var pool  = mysql.createPool({
@@ -43,7 +45,7 @@ function checkPurchases(intent){
                 return;
             }
 
-            let access_token = tokenRes[0].plaid_private_ID;
+            let accessToken = tokenRes[0].plaid_private_ID;
             var startDate;
             var endDate;
 
