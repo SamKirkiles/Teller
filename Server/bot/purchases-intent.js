@@ -60,15 +60,30 @@ function checkPurchases(intent){
             } else {
                 let message = "There were no transactions for this date";
                 messenger.sendMessage(intent.accountID, message, function (callback) {
-                    console.log("Intent Completed: " + intent.messageData.result.action + " User: " + intent.accountID + " Registered: " + intent.registered);
+                    console.log("Intent Completed: " + intent.messageData.result.action + " User: " +
+                        intent.accountID + " Registered: " + intent.registered);
                 });
                 return;
             }
 
-            plaidClient.getTransactions(accessToken, startDate, endDate, {}, function (err, results) {
+            plaidClient.getTransactions("access-sandbox-46a29bf7-8a98-43df-938a-839365a32bbe", startDate, endDate, {}, function (err, results) {
 
-                if (err !== null) {
-                    console.log(err.error_code + ': ' + err.error_message);
+                if (err) {
+                    if (err.error_code === 'ITEM_LOGIN_REQUIRED'){
+
+                        messenger.sendRevalidateBankCreds(intent.accountID, function(){
+                            console.log("Intent Completed: " + intent.messageData.result.action + " User: " +
+                                intent.accountID + " Registered: " + intent.registered +
+                                "Message: The user did not have valid bank credentials");
+                        });
+
+                    }else{
+
+                        messenger.sendMessage(intent.accountID, "Sorry! There was an unknown error processing your request.", function (callback) {
+                            console.log("Intent Completed: " + intent.messageData.result.action + " User: " + intent.accountID + " Registered: " + intent.registered + " Error: " + err.error_code);
+                        });
+                    }
+
                 } else {
 
                     let total_transactions = undefsafe(results, 'total_transactions');
@@ -82,8 +97,6 @@ function checkPurchases(intent){
 
                         pool.query('INSERT INTO view_transaction_request (token, startDate, endDate, messengerID) VALUES (?, ?, ?, ?)', [token, startDate, endDate, intent.accountID], function (error, results, fields) {
 
-
-                            var baseUrl;
 
                             var baseUrl;
                             if (process.env.NODE_ENV === "Dev") {

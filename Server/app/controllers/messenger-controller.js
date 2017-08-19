@@ -179,6 +179,40 @@ function sendMessage(recipient, recipientmessage, callback){
     });
 }
 
+function sendRevalidateBankCreds(recipient, callback){
+    var url;
+    if (process.env.NODE_ENV === "Dev") {
+        url = 'https://teller-development-frontend.ngrok.io';
+    } else {
+        url = 'https://tellerchatbot.com';
+    }
+
+    let accountUrl = url + '/account'
+
+    var options = {
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        method: "POST",
+        qs: {access_token:process.env.FB_MESSENGER_TOKEN},
+        json:{
+            recipient: {
+                id: recipient
+            },
+            message:{
+                text: "Your bank credentials are no longer valid and you must re enter them. Please visit: \n" + accountUrl
+            }
+        }
+    };
+
+    request(options,function(error,incomingMessage,response){
+        if (!error){
+            if (callback){
+                callback()
+            }
+        }
+    });
+
+}
+
 
 module.exports = {
     sendMessage: sendMessage,
@@ -186,5 +220,6 @@ module.exports = {
     handleUnregisteredUser: handleUnregisteredUser,
     sendLogin: sendLogin,
     sendLogOut: sendLogOut,
-    sendLink: sendLink
+    sendLink: sendLink,
+    sendRevalidateBankCreds: sendRevalidateBankCreds
 };

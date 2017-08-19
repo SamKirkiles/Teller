@@ -34,7 +34,7 @@ function checkBalance(intent){
 
         bankAccountManager.getPlaidAccessToken(null, intent.accountID, function(tokenRes,tokenError){
             let tokenRes_undefsafe = undefsafe(tokenRes, '');
-            
+
             if (tokenError) throw tokenError;
             else if(tokenRes.length === 0 || tokenRes_undefsafe[0].plaid_private_ID === null){
                 messenger.sendMessage(intent.accountID, 'There is no bank linked to this Teller account.', function(callback){
@@ -49,9 +49,11 @@ function checkBalance(intent){
             plaidClient.getBalance(access_token, function(err, response){
                 if (err) {
                     if (err.error_code === 'ITEM_LOGIN_REQUIRED'){
-                        messenger.sendMessage(intent.accountID, 'You must revalidate your bank credentials. Please visit: https://tellerchatbot.com/account', function(callback){
-                            console.log("Intent Completed: " + intent.messageData.result.action + " User: " + intent.accountID + " Registered: " + intent.registered);
-                        })
+
+                        messenger.sendRevalidateBankCreds(intent.accountID, function(){
+                            console.log("Intent Completed: " + intent.messageData.result.action + " User: " + intent.accountID + " Registered: " + intent.registered +
+                                "Message: The user did not have valid bank credentials");
+                        });
                     }else{
                         throw err;
                     }
