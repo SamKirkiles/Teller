@@ -51,7 +51,7 @@ export class LinkAccountComponent implements OnInit {
                     const publicToken = public_token
                     // make an http call to add the new plaid token to the user to signify that we have linked a bank account
                     // we will also have to link an account with facebook so we can identify the user from the frontend
-
+                    console.log(publicToken);
                     this.http.post(environment.apiUrl + '/api/plaidID', JSON.stringify({
                         'plaid_ID' : publicToken,
                         'user': user.userID
