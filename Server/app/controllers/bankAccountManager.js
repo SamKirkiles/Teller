@@ -37,6 +37,7 @@ function exchangeToken(token, callback){
         if (err === null){
             console.log("successfully authenticated account")
             const access_token = res.access_token;
+            console.log(access_token);
             callback(null, access_token);
         }else{
             callback(err, null);
