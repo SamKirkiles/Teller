@@ -3,7 +3,7 @@ node_js:
   - "6"
 env:
   - TEST_DIR=Server
-script: cd $TEST_DIR && npm install && npm test
+script: cd $TEST_DIR && npm install
 deploy:
   provider: codedeploy
   access_key_id: $AWSAccessKeyId
