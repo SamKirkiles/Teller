@@ -66,7 +66,7 @@ function checkPurchases(intent){
                 return;
             }
 
-            plaidClient.getTransactions("access-sandbox-46a29bf7-8a98-43df-938a-839365a32bbe", startDate, endDate, {}, function (err, results) {
+            plaidClient.getTransactions("access-sandbox-482a0022-3c4d-4e2c-85cb-cc71f9cc205d", startDate, endDate, {}, function (err, results) {
 
                 if (err) {
                     if (err.error_code === 'ITEM_LOGIN_REQUIRED'){
