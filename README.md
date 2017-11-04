@@ -1,4 +1,4 @@
-# Teller
+# Teller - your personal finance assistant
 
 <img src="http://i.imgur.com/fuxlaFc.png" width="200">
 
@@ -9,3 +9,18 @@ Development:
 
 
 A chatbot assistant for your personal finances
+
+## Gallery
+<p align="center">
+  <img src="https://i.imgur.com/fApimdo.jpg" width="600">
+</p>
+
+<p align="center">
+  <img src="https://i.imgur.com/GCpMQmQ.jpg" width="600">
+</p>
+
+<p align="center">
+  <img src="https://i.imgur.com/mOboEri.jpg" width="600">
+</p>
+
+
